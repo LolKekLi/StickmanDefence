@@ -1,56 +1,59 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Zenject;
-
-public enum TowerType
-{
-    None = 0,
-    Gunner = 1,
-}
 
 namespace Project.UI
 {
-    public class TowerSpawnButton : MonoBehaviour
+    public class TowerSpawnButton : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField]
         private Button _button = null;
 
-    }
+        [SerializeField]
+        private Image _icon = null;
 
-    public class UITowerSpawnController : MonoBehaviour
-    {
-        private TowerSpawnButton[] _towerSpawnButtons = null;
+        [SerializeField]
+        private Image _sectedImage = null;
+
+        private int _index = 0;
+
+        private TowerType _type = default;
+        private Action<int> _onClick;
 
         private void Start()
         {
-            _towerSpawnButtons = GetComponentsInChildren<TowerSpawnButton>();
-
-            for (int i = 0; i < _towerSpawnButtons.Length; i++)
-            {
-                //_towerSpawnButtons[i].Setup();
-            }
+            _button.onClick.AddListener(OnButtonClick);
         }
-    }
 
-    public class TowerSpawnController : MonoBehaviour
-    {
-        private UITowerSpawnController _uiTowerSpawnController = null;
-
-        [Inject]
-        private void Construct(UITowerSpawnController uiTowerSpawnController)
+        public void Setup(TowerSettings.TowerPreset towerPreset, int index, Action<int> onClick)
         {
-            _uiTowerSpawnController = uiTowerSpawnController;
+            _index = index;
+
+            _icon.sprite = towerPreset.UIIcon;
+
+            _onClick = onClick;
+
+            Refresh();
+        }
+
+        public void Refresh(bool isSelected = false)
+        {
+            _sectedImage.enabled = isSelected;
+        }
+
+        private void OnButtonClick()
+        {
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            _onClick?.Invoke(_index);
         }
     }
-}
-
-namespace Project
-{
-    public abstract class ToggleObject : MonoBehaviour
-    {
-        
-    }
-
 }
 

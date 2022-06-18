@@ -119,7 +119,7 @@ namespace Project.UI
         {
             _currentPos = eventData.position;
 
-            Dragged(eventData.delta);
+            Dragged(_currentPos);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -134,6 +134,7 @@ namespace Project.UI
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            
             Released();
 
             _isHolding = false;

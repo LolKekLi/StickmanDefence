@@ -18,6 +18,9 @@ namespace Project
 
         [SerializeField]
         private ParticleSettings _particleSettings = null;
+
+        [SerializeField]
+        private TowerSettings _towerSettings = null;
         
         public override void InstallBindings()
         {
@@ -42,6 +45,7 @@ namespace Project
             Container.BindInstance(_poolSettings).AsCached();
             Container.BindInstance(_particleSettings).AsCached();
             Container.BindInstance(_skinSettings).AsCached();
+            Container.BindInstance(_towerSettings).AsCached();
         }
 
         private void BindControllers()

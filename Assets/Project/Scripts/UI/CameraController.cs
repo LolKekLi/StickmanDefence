@@ -7,15 +7,17 @@ namespace Project
     [RequireComponent(typeof(Camera))]
     public class CameraController : MonoBehaviour
     {
-        private Camera _camera = null;
+        public Camera Camera
+        {
+            get;
+            private set;
+        }
 
         void Start()
         {
-            _camera = GetComponent<Camera>();
-            var cameraData = _camera.GetUniversalAdditionalCameraData();
+            Camera = GetComponent<Camera>();
+            var cameraData = Camera.GetUniversalAdditionalCameraData();
             cameraData.cameraStack.Add(UISystem.Instance.Camera);
-
         }
-
     }
 }

@@ -16,3 +16,4 @@ MonoBehaviour:
   _poolSettings: {fileID: 11400000, guid: ff8b82eacb783457e902207c9fe58cc5, type: 2}
   _skinSettings: {fileID: 11400000, guid: 3004a15418a434d8a8a84198466d8a87, type: 2}
   _particleSettings: {fileID: 11400000, guid: 2a5afd37a7c264c3d9ab8a711d7305a5, type: 2}
+  _towerSettings: {fileID: 11400000, guid: bff6bf9406043db45ae56e721b5ac8b9, type: 2}
