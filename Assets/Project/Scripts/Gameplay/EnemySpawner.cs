@@ -1,8 +1,8 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using PathCreation;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Zenject;
 
 namespace Project
 {
@@ -14,11 +14,54 @@ namespace Project
         [SerializeField]
         private List<PathCreator> _paths = null;
 
+        [SerializeField]
+        private int _enemyCount = 0;
+        [SerializeField]
+        private float _spawnDelay = 0f;
+
+        private int _currentEnemyCount = 0;
+
+        private EnemySettings _enemySettings = null;
+        private PoolManager _poolManager = null;
+
+        private Coroutine _spawnEnemyCor = null;
+        
+        public List<Enemy> Enemies
+        {
+            get;
+            private set;
+        }
+
+        [Inject]
+        private void Construct(EnemySettings enemySettings, PoolManager poolManager)
+        {
+            _enemySettings = enemySettings;
+            _poolManager = poolManager;
+        }
+        
         private void Start()
         {
-            var enemy = GameObject.CreatePrimitive(PrimitiveType.Cube).AddComponent<Enemy>();
+            Enemies = new List<Enemy>();
+
+            _spawnEnemyCor = StartCoroutine(SpawnEnemyCor());
+        }
+
+        private IEnumerator SpawnEnemyCor()
+        {
+            var waiter = new WaitForSeconds(_spawnDelay);
             
-            enemy.StartFollowPath(_paths[0], _endOfPathInstruction);
+            while (_currentEnemyCount < _enemyCount)
+            {
+                var enemyPreset = _enemySettings.GetEnemyPreset(EnemyType.Base);
+
+                var enemy = _poolManager.Get<Enemy>(enemyPreset.EnemyPrefab, _paths[0].bezierPath[0], Quaternion.identity);
+            
+                enemy.StartFollowPath(_paths[0], _endOfPathInstruction);
+
+                _currentEnemyCount++;
+
+                yield return waiter;
+            }
         }
     }
 }

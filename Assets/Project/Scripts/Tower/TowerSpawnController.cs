@@ -14,20 +14,27 @@ namespace Project
 
         private Vector3 _movePosition = Vector3.zero;
 
-        private Tower _currentTower = null;
-
         private TowerSettings _towerSettings = null;
         private CameraController _cameraController = null;
         private PoolManager _poolManager = null;
+        private SpawnZoneController _spawnZoneController = null;
 
         private Coroutine _towerSpawnCor = null;
 
+        public Tower CurrentTower
+        {
+            get;
+            private set;
+        }
+
         [Inject]
-        private void Construct(TowerSettings towerSettings, CameraController cameraController, PoolManager poolManager)
+        private void Construct(TowerSettings towerSettings, CameraController cameraController, PoolManager poolManager,
+            SpawnZoneController spawnZoneController)
         {
             _towerSettings = towerSettings;
             _cameraController = cameraController;
             _poolManager = poolManager;
+            _spawnZoneController = spawnZoneController;
         }
 
         private void OnEnable()
@@ -55,10 +62,10 @@ namespace Project
 
         private void SpawnTower()
         {
-            if (_currentTower.IsCanSpawn)
+            if (CurrentTower.IsCanSpawn)
             {
-                _currentTower.Spawn();
-                _currentTower = null;
+                CurrentTower.Spawn();
+                CurrentTower = null;
 
                 StopTowerSpawn();
             }
@@ -72,9 +79,10 @@ namespace Project
                 _towerSpawnCor = null;
             }
 
-            if (_currentTower != null)
+            if (CurrentTower != null)
             {
-               _currentTower.Free();
+                CurrentTower.Free();
+                CurrentTower = null;
             }
         }
 
@@ -90,9 +98,10 @@ namespace Project
                 yield return null;
             }
 
-            _currentTower = _poolManager.Get<Tower>(refTower, transform.position, Quaternion.identity);
-            _currentTower.transform.parent = transform;
-           // _currentTower = Instantiate(refTower, transform);
+            CurrentTower = _poolManager.Get<Tower>(refTower, hit.point, Quaternion.identity);
+            CurrentTower.transform.parent = transform;
+
+            _spawnZoneController.StartControlSpawn(CurrentTower);
 
             while (true)
             {
@@ -102,15 +111,20 @@ namespace Project
 
                 if (Physics.Raycast(screenPointToRay, out hit, MaxRayCastDistance, _layerMask))
                 {
-                    if (_currentTower != null)
+                    if (CurrentTower != null)
                     {
-                        _currentTower.Move(hit.point);
+                        CurrentTower.Move(hit.point);
                     }
 
                     if (Input.GetMouseButtonUp(0))
                     {
-                        if (_currentTower != null)
+                        if (CurrentTower != null)
                         {
+                            var cantSpawnZone = CurrentTower.CantSpawnZone;
+                            cantSpawnZone.ChangeBorderCenter(CurrentTower.transform.position);
+
+                            _spawnZoneController.AddSpawnZone(cantSpawnZone);
+
                             SpawnTower();
                         }
                     }

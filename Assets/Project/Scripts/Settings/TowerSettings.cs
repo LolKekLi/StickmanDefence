@@ -53,7 +53,8 @@ namespace Project
             }
             else
             {
-                Debug.Log($"{typeof(TowerSettings)} Нет пресета TowerPreset под тип {type}");
+                Debug.LogError($"{typeof(TowerSettings)} Нет пресета TowerPreset под тип {type}");
+                
                 return null;
             }
         }

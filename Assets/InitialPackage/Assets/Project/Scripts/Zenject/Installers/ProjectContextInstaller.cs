@@ -21,6 +21,9 @@ namespace Project
 
         [SerializeField]
         private TowerSettings _towerSettings = null;
+
+        [SerializeField]
+        private EnemySettings _enemySettings = null;
         
         public override void InstallBindings()
         {
@@ -46,6 +49,7 @@ namespace Project
             Container.BindInstance(_particleSettings).AsCached();
             Container.BindInstance(_skinSettings).AsCached();
             Container.BindInstance(_towerSettings).AsCached();
+            Container.BindInstance(_enemySettings).AsCached();
         }
 
         private void BindControllers()

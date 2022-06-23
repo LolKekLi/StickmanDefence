@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Project
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : PooledBehaviour
     {
         private Coroutine _followPathCor = null;
 
@@ -22,10 +22,17 @@ namespace Project
                 distanceTravelled += Time.deltaTime * 10;
                 transform.position = path.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
                 transform.rotation = path.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
-                transform.position += Vector3.up;
 
                 yield return null;
             }
+
+            Damaged();
+            Free();
+        }
+
+        private void Damaged()
+        {
+            
         }
     }
 }
