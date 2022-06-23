@@ -26,8 +26,6 @@ public class SpawnZoneController : MonoBehaviour
         _cantSpawnZones = GetComponentsInChildren<CantSpawnZone>().ToList();
     }
     
- 
-    
     public void AddSpawnZone(CantSpawnZone cantSpawnZone)
     {
         _cantSpawnZones.Add(cantSpawnZone);

@@ -55,7 +55,14 @@ namespace Project
                 var enemyPreset = _enemySettings.GetEnemyPreset(EnemyType.Base);
 
                 var enemy = _poolManager.Get<Enemy>(enemyPreset.EnemyPrefab, _paths[0].bezierPath[0], Quaternion.identity);
-            
+                
+                 Enemies.Add(enemy);
+
+                enemy.Setup(() =>
+                {
+                    Enemies.Remove(enemy);
+                });
+                
                 enemy.StartFollowPath(_paths[0], _endOfPathInstruction);
 
                 _currentEnemyCount++;

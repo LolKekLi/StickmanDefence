@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using Zenject;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 namespace Project
 {
@@ -17,20 +17,20 @@ namespace Project
         [SerializeField]
         private SkinnedMeshRenderer _skinnedMeshRenderer = null;
 
-        [SerializeField]
-        private Color _baseOutLineColor = default;
-
-        [SerializeField]
-        private Color _canrSpawnOutLIneColor = default;
-
         private bool _isTriggered = false;
 
         private Vector3 _velocity = Vector3.zero;
         private Color _startColor = default;
         private Color _spawnColor = default;
 
+        private Action _onSpawnAction = null;
+
         private TowerSettings _towerSettings = null;
+        private TowerSettings.TowerPreset _towerPreset = null;
         private MaterialPropertyBlock _materialPropertyBlock;
+
+        private Coroutine _attackCor = null;
+        private Coroutine _lookAtEnemyCor = null;
 
         [field: SerializeField]
         public CantSpawnZone CantSpawnZone
@@ -56,37 +56,58 @@ namespace Project
             private set;
         }
 
-        [Inject]
-        private void Construct(TowerSettings towerSettings)
+        public float SqrAttackRadius
         {
-            _towerSettings = towerSettings;
+            get => _towerPreset.AttackRadius * _towerPreset.AttackRadius;
         }
 
-        public override void SpawnFromPool()
+        public bool IsAttacked
         {
-            base.SpawnFromPool();
-            IsSpawned = false;
+            get => _attackCor != null;
+        }
 
-            _attackRadius.Setup(_towerSettings.GetPresetByType(Type).AttackRadius);
+        public Enemy Target
+        {
+            get;
+            set;
+        }
+
+        public void Spawn(TowerSettings towerSettings, Action action)
+        {
+            _towerSettings = towerSettings;
+            _towerPreset = _towerSettings.GetPresetByType(Type);
+
+            _attackRadius.Setup(_towerPreset.AttackRadius);
             _attackRadius.Show();
+            
+            IsSpawned = false;
 
             _materialPropertyBlock = new MaterialPropertyBlock();
 
             _startColor = _skinnedMeshRenderer.material.color;
             _spawnColor = new Color(_startColor.r, _startColor.g, _startColor.b, _startColor.a / 2);
 
-
             _materialPropertyBlock.SetColor(BaseColorID, _spawnColor);
-            _materialPropertyBlock.SetColor(OutLineColorID, _baseOutLineColor);
+            _materialPropertyBlock.SetColor(OutLineColorID, _towerSettings.SpawnOutLIneColor);
             _materialPropertyBlock.SetFloat(OutLineWidthID, 0.5f);
 
             _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
-        }
 
+            _onSpawnAction = action;
+        }
+        
         public void Move(Vector3 targetPosition)
         {
             transform.position =
                 Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _towerSettings.SmoothTime);
+        }
+
+        public void Attack(Enemy enemy)
+        {
+            Target = enemy;
+
+            _attackCor = StartCoroutine(AttackCor(enemy));
+            _lookAtEnemyCor = StartCoroutine(LookAtEnemyCor(enemy));
         }
 
         public void Spawn()
@@ -95,9 +116,11 @@ namespace Project
             _attackRadius.gameObject.SetActive(false);
 
             _materialPropertyBlock.SetColor(BaseColorID, _startColor);
-            _materialPropertyBlock.SetColor(OutLineColorID, Color.gray);
+            _materialPropertyBlock.SetColor(OutLineColorID, _towerSettings.BaseOutLineColor);
 
             _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
+
+            _onSpawnAction?.Invoke();
         }
 
         public void ToggleSpawnAbility(bool isCanSpawn)
@@ -106,7 +129,7 @@ namespace Project
             {
                 return;
             }
-            
+
             IsCanSpawn = isCanSpawn;
             _attackRadius.ChangeColor(isCanSpawn);
             ChangeOutLineColor(isCanSpawn);
@@ -114,9 +137,58 @@ namespace Project
 
         private void ChangeOutLineColor(bool isCanSpawn)
         {
-            _materialPropertyBlock.SetColor(OutLineColorID, isCanSpawn ? _baseOutLineColor : _canrSpawnOutLIneColor);
+            _materialPropertyBlock.SetColor(OutLineColorID,
+                isCanSpawn ? _towerSettings.SpawnOutLIneColor : _towerSettings.CantSpawnOutLIneColor);
 
             _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
+        }
+
+        public void StopAttack()
+        {
+            if (_attackCor != null)
+            {
+                StopCoroutine(_attackCor);
+                _attackCor = null;
+            }
+
+            if (_lookAtEnemyCor != null)
+            {
+                StopCoroutine(_lookAtEnemyCor);
+                _lookAtEnemyCor = null;
+            }
+        }
+
+        private IEnumerator AttackCor(Enemy enemy)
+        {
+            var waiter = new WaitForSeconds(1 / _towerPreset.FireRate);
+
+            while (!enemy.IsFree)
+            {
+                yield return waiter;
+            }
+
+            _attackCor = null;
+            Target = null;
+        }
+
+        private IEnumerator LookAtEnemyCor(Enemy enemy)
+        {
+            while (!enemy.IsFree)
+            {
+                transform.LookAt(enemy.transform);
+
+                yield return null;
+            }
+
+            _lookAtEnemyCor = null;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (_towerPreset != null)
+            {
+                Gizmos.DrawWireSphere(transform.position, _towerPreset.AttackRadius);
+            }
         }
     }
 }

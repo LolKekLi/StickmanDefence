@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using PathCreation;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace Project
 {
     public class Enemy : PooledBehaviour
     {
+        private Action _onFreeAction = null;
+
         private Coroutine _followPathCor = null;
 
         public void StartFollowPath(PathCreator path, EndOfPathInstruction endOfPathInstruction)
@@ -30,9 +33,21 @@ namespace Project
             Free();
         }
 
+        protected override void BeforeReturnToPool()
+        {
+            _onFreeAction?.Invoke();
+            
+            base.BeforeReturnToPool();
+        }
+
         private void Damaged()
         {
             
+        }
+
+        public void Setup(Action action)
+        {
+            _onFreeAction = action;
         }
     }
 }

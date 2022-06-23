@@ -47,7 +47,7 @@ namespace Project
             
             gameObject.SetActive(false);
             
-            _transform.localScale = Vector3.one * radius;
+            _transform.localScale = Vector3.one * (radius * 0.2f);
         }
 
         public void Show()

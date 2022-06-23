@@ -2482,7 +2482,6 @@ Transform:
   m_Children:
   - {fileID: 400489819}
   - {fileID: 1521188645}
-  - {fileID: 619570613}
   - {fileID: 1600449156}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -6602,68 +6601,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 17a4ffb1eae17e94298de2c66e171a1b, type: 3}
   m_PrefabInstance: {fileID: 615442430}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &619570611
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 619570613}
-  - component: {fileID: 619570612}
-  - component: {fileID: 619570614}
-  m_Layer: 0
-  m_Name: TowerSpawnController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &619570612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 619570611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40bbd1ce0e654a86a5a640e9f2a11b6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &619570613
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 619570611}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 199397240}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &619570614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 619570611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _components:
-  - {fileID: 619570612}
-  _identifier: 
-  _useSceneContext: 0
-  _context: {fileID: 0}
-  _bindType: 0
 --- !u!1001 &632832396
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18256,6 +18193,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1600449156}
   - component: {fileID: 1600449157}
+  - component: {fileID: 1600449159}
+  - component: {fileID: 1600449158}
   m_Layer: 0
   m_Name: TowerController
   m_TagString: Untagged
@@ -18275,7 +18214,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 199397240}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1600449157
 MonoBehaviour:
@@ -18287,6 +18226,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c481fd7fb67ba3249b3bb74db2139563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1600449158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600449155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 1600449157}
+  - {fileID: 1600449159}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
+--- !u!114 &1600449159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600449155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40bbd1ce0e654a86a5a640e9f2a11b6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1601277757
@@ -20908,6 +20878,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1775608428}
   - component: {fileID: 1775608427}
+  - component: {fileID: 1775608429}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -20930,7 +20901,7 @@ MonoBehaviour:
   _endOfPathInstruction: 2
   _paths:
   - {fileID: 577932942}
-  _enemyCount: 4
+  _enemyCount: 1
   _spawnDelay: 1
 --- !u!4 &1775608428
 Transform:
@@ -20946,6 +20917,24 @@ Transform:
   m_Father: {fileID: 1161618651}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1775608429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775608426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 1775608427}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1001 &1775891919
 PrefabInstance:
   m_ObjectHideFlags: 0

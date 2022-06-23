@@ -13,11 +13,12 @@ namespace Project
         private int _layerMask = 1;
 
         private Vector3 _movePosition = Vector3.zero;
+        private Quaternion _towerRotation = default;
 
         private TowerSettings _towerSettings = null;
         private CameraController _cameraController = null;
-        private PoolManager _poolManager = null;
         private SpawnZoneController _spawnZoneController = null;
+        private TowerController _towerController = null;
 
         private Coroutine _towerSpawnCor = null;
 
@@ -28,13 +29,13 @@ namespace Project
         }
 
         [Inject]
-        private void Construct(TowerSettings towerSettings, CameraController cameraController, PoolManager poolManager,
-            SpawnZoneController spawnZoneController)
+        private void Construct(TowerSettings towerSettings, CameraController cameraController,
+            SpawnZoneController spawnZoneController, TowerController towerController)
         {
             _towerSettings = towerSettings;
             _cameraController = cameraController;
-            _poolManager = poolManager;
             _spawnZoneController = spawnZoneController;
+            _towerController = towerController;
         }
 
         private void OnEnable()
@@ -53,6 +54,8 @@ namespace Project
         {
             _layerMask = 1 << LayerMask.NameToLayer(IgnoreRaycastLayer);
             _layerMask = ~_layerMask;
+
+            _towerRotation = Quaternion.Euler(new Vector3(0, 180, 0));
         }
 
         private void Update()
@@ -98,7 +101,8 @@ namespace Project
                 yield return null;
             }
 
-            CurrentTower = _poolManager.Get<Tower>(refTower, hit.point, Quaternion.identity);
+            CurrentTower = _towerController.GetTower(refTower, hit.point, _towerRotation);
+
             CurrentTower.transform.parent = transform;
 
             _spawnZoneController.StartControlSpawn(CurrentTower);
