@@ -38,6 +38,13 @@ namespace Project
                 get;
                 private set;
             }
+
+            [field: SerializeField]
+            public DamageType DamageType
+            {
+                get;
+                private set;
+            }
         }
 
         [field: SerializeField]

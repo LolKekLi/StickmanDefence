@@ -18,3 +18,4 @@ MonoBehaviour:
   _particleSettings: {fileID: 11400000, guid: 2a5afd37a7c264c3d9ab8a711d7305a5, type: 2}
   _towerSettings: {fileID: 11400000, guid: bff6bf9406043db45ae56e721b5ac8b9, type: 2}
   _enemySettings: {fileID: 11400000, guid: 017dcac80e89f034ca700196d675a824, type: 2}
+  _bulletSettings: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Project
@@ -26,6 +27,31 @@ namespace Project
 
             [field: SerializeField]
             public float MoveSpeed
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField]
+            public EnemyDiedPreset[] EnemyDiedPreset
+            {
+                get;
+                private set;
+            }
+        }
+        
+        [Serializable]
+        public class EnemyDiedPreset
+        {
+            [field: SerializeField, HorizontalGroup("Split")]
+            public EnemyType SpawnEnemyTypeBeforeDied
+            {
+                get;
+                private set;
+            }   
+
+            [field: SerializeField, HorizontalGroup("Split")]
+            public int Count
             {
                 get;
                 private set;

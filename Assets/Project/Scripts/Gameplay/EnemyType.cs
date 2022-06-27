@@ -2,6 +2,9 @@
 {
     public enum EnemyType
     {
-        Base = 0,
+        None = 0,
+        Base = 1,
+        Red = 2,
+        WithBodyArmor = 3,
     }
 }

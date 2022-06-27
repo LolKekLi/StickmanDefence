@@ -25,6 +25,9 @@ namespace Project
         [SerializeField]
         private EnemySettings _enemySettings = null;
         
+        [SerializeField]
+        private BulletSettings _bulletSettings = null;
+        
         public override void InstallBindings()
         {
             InstallSignalBus();
@@ -50,6 +53,7 @@ namespace Project
             Container.BindInstance(_skinSettings).AsCached();
             Container.BindInstance(_towerSettings).AsCached();
             Container.BindInstance(_enemySettings).AsCached();
+            Container.BindInstance(_bulletSettings).AsCached();
         }
 
         private void BindControllers()
