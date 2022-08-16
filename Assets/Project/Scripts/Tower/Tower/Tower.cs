@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Project
 {
@@ -12,23 +13,28 @@ namespace Project
         private static readonly string RenderModID = "_RenderingMode";
 
         [SerializeField]
+        private Vector3 _firePosition = Vector3.zero;
+        
+        [SerializeField]
         private AttackRadius _attackRadius = null;
 
         [SerializeField]
         private SkinnedMeshRenderer _skinnedMeshRenderer = null;
-
+        
         private bool _isTriggered = false;
-
+        
         private Vector3 _velocity = Vector3.zero;
         private Color _startColor = default;
         private Color _spawnColor = default;
-
         private Action _onSpawnAction = null;
 
         private TowerSettings _towerSettings = null;
         private TowerSettings.TowerPreset _towerPreset = null;
         private MaterialPropertyBlock _materialPropertyBlock;
-
+        private BulletSettings _bulletSettings = null;
+        private BulletSettings.BulletPreset _bulletPreset = null;
+        private PoolManager _poolManager = null;
+        
         private Coroutine _attackCor = null;
         private Coroutine _lookAtEnemyCor = null;
 
@@ -72,8 +78,15 @@ namespace Project
             set;
         }
 
-        public void Spawn(TowerSettings towerSettings, Action action)
+        [Inject]
+        private void Construct(BulletSettings bulletSettings)
         {
+            _bulletSettings = bulletSettings;
+        }
+
+        public void Spawn(TowerSettings towerSettings, PoolManager poolManager,  Action action)
+        {
+            _poolManager = poolManager;
             _towerSettings = towerSettings;
             _towerPreset = _towerSettings.GetPresetByType(Type);
 
@@ -105,8 +118,9 @@ namespace Project
         public void Attack(Enemy enemy)
         {
             Target = enemy;
+            _bulletPreset = _bulletSettings.GetPresetByType(_towerPreset.DamageType);
 
-            _attackCor = StartCoroutine(AttackCor(enemy));
+            _attackCor = StartCoroutine(AttackCor(enemy, _bulletPreset));
             _lookAtEnemyCor = StartCoroutine(LookAtEnemyCor(enemy));
         }
 
@@ -158,12 +172,13 @@ namespace Project
             }
         }
 
-        private IEnumerator AttackCor(Enemy enemy)
+        private IEnumerator AttackCor(Enemy enemy, BulletSettings.BulletPreset bulletPreset)
         {
             var waiter = new WaitForSeconds(1 / _towerPreset.FireRate);
 
             while (!enemy.IsFree)
             {
+               // _poolManager.Get<Bullet>(_poolManager.PoolSettings.GetBulletByType(_towerPreset.DamageType) ,_firePosition, Quaternion.identity);
                 yield return waiter;
             }
 

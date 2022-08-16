@@ -75,10 +75,10 @@ namespace Project
                 return;
             }
 
-            var audio = _instance._poolManager.Get<PooledAudio>(_instance._poolManager.PoolSettings.PooledAudio,
-                position, Quaternion.identity);
+            // var audio = _instance._poolManager.Get<PooledAudio>(_instance._poolManager.PoolSettings.PooledAudio,
+            //     position, Quaternion.identity);
 
-            audio.Setup(clip, pitch);
+           // audio.Setup(clip, pitch);
         }
         
         private static void Play2D(AudioClip clip)

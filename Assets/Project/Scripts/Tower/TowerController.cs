@@ -56,7 +56,7 @@ public class TowerController : MonoBehaviour
     {
         var twr = _poolManager.Get<Tower>(tower, hitPoint, quaternion);
 
-        twr.Spawn(_towerSettings, () =>
+        twr.Spawn(_towerSettings, _poolManager, () =>
         {
             _towers.Add(twr);
         });
