@@ -41,8 +41,7 @@ namespace Project
 
         [SerializeField]
         private BulletPreset[] _bulletPresets = null;
-
-
+        
         public BulletPreset GetPresetByType(DamageType type)
         {
             var bulletPreset = _bulletPresets.FirstOrDefault(x => x.DamageType == type);

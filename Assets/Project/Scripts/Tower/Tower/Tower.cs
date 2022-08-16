@@ -13,16 +13,16 @@ namespace Project
         private static readonly string RenderModID = "_RenderingMode";
 
         [SerializeField]
-        private Vector3 _firePosition = Vector3.zero;
-        
+        private Transform _firePosition = null;
+
         [SerializeField]
         private AttackRadius _attackRadius = null;
 
         [SerializeField]
         private SkinnedMeshRenderer _skinnedMeshRenderer = null;
-        
+
         private bool _isTriggered = false;
-        
+
         private Vector3 _velocity = Vector3.zero;
         private Color _startColor = default;
         private Color _spawnColor = default;
@@ -34,7 +34,7 @@ namespace Project
         private BulletSettings _bulletSettings = null;
         private BulletSettings.BulletPreset _bulletPreset = null;
         private PoolManager _poolManager = null;
-        
+
         private Coroutine _attackCor = null;
         private Coroutine _lookAtEnemyCor = null;
 
@@ -64,18 +64,20 @@ namespace Project
 
         public float SqrAttackRadius
         {
-            get => _towerPreset.AttackRadius * _towerPreset.AttackRadius;
+            get =>
+                _towerPreset.AttackRadius * _towerPreset.AttackRadius;
         }
 
         public bool IsAttacked
         {
-            get => _attackCor != null;
+            get =>
+                _attackCor != null;
         }
 
         public Enemy Target
         {
             get;
-            set;
+            private set;
         }
 
         [Inject]
@@ -84,15 +86,17 @@ namespace Project
             _bulletSettings = bulletSettings;
         }
 
-        public void Spawn(TowerSettings towerSettings, PoolManager poolManager,  Action action)
+        public void Spawn(TowerSettings towerSettings, PoolManager poolManager, Action action)
         {
             _poolManager = poolManager;
             _towerSettings = towerSettings;
             _towerPreset = _towerSettings.GetPresetByType(Type);
 
+            _bulletPreset = _bulletSettings.GetPresetByType(_towerPreset.DamageType);
+
             _attackRadius.Setup(_towerPreset.AttackRadius);
             _attackRadius.Show();
-            
+
             IsSpawned = false;
 
             _materialPropertyBlock = new MaterialPropertyBlock();
@@ -108,7 +112,7 @@ namespace Project
 
             _onSpawnAction = action;
         }
-        
+
         public void Move(Vector3 targetPosition)
         {
             transform.position =
@@ -118,7 +122,6 @@ namespace Project
         public void Attack(Enemy enemy)
         {
             Target = enemy;
-            _bulletPreset = _bulletSettings.GetPresetByType(_towerPreset.DamageType);
 
             _attackCor = StartCoroutine(AttackCor(enemy, _bulletPreset));
             _lookAtEnemyCor = StartCoroutine(LookAtEnemyCor(enemy));
@@ -178,7 +181,12 @@ namespace Project
 
             while (!enemy.IsFree)
             {
-               // _poolManager.Get<Bullet>(_poolManager.PoolSettings.GetBulletByType(_towerPreset.DamageType) ,_firePosition, Quaternion.identity);
+                var bullet = _poolManager.Get<Bullet>(_poolManager.PoolSettings.Bullet, _firePosition.position,
+                    Quaternion.identity);
+
+                bullet.Setup(_bulletPreset);
+                bullet.Shoot(enemy.transform.position - transform.position);
+
                 yield return waiter;
             }
 

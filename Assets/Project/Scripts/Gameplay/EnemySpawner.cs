@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PathCreation;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -43,7 +45,15 @@ namespace Project
         {
             Enemies = new List<Enemy>();
 
-            _spawnEnemyCor = StartCoroutine(SpawnEnemyCor());
+         //   _spawnEnemyCor = StartCoroutine(SpawnEnemyCor());
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SpawnEnemy();
+            }
         }
 
         private IEnumerator SpawnEnemyCor()
@@ -52,23 +62,28 @@ namespace Project
             
             while (_currentEnemyCount < _enemyCount)
             {
-                var enemyPreset = _enemySettings.GetEnemyPreset(EnemyType.Base);
-
-                var enemy = _poolManager.Get<Enemy>(enemyPreset.EnemyPrefab, _paths[0].bezierPath[0], Quaternion.identity);
+                SpawnEnemy();
                 
-                 Enemies.Add(enemy);
-
-                enemy.Setup(() =>
-                {
-                    Enemies.Remove(enemy);
-                });
-                
-                enemy.StartFollowPath(_paths[0], _endOfPathInstruction);
-
-                _currentEnemyCount++;
-
                 yield return waiter;
             }
+        }
+
+        private void SpawnEnemy()
+        {
+            var enemyPreset = _enemySettings.GetEnemyPreset(EnemyType.Base);
+
+            var enemy = _poolManager.Get<Enemy>(enemyPreset.EnemyPrefab, _paths[0].bezierPath[0], Quaternion.identity);
+                
+            Enemies.Add(enemy);
+
+            enemy.Setup(() =>
+            {
+                Enemies.Remove(enemy);
+            });
+                
+            enemy.StartFollowPath(_paths[0], _endOfPathInstruction);
+
+            _currentEnemyCount++;
         }
     }
 }

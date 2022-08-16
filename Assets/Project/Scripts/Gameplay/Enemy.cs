@@ -47,19 +47,14 @@ namespace Project
         {
             var bulletDamageType = bullet.DamageType;
 
-            bullet.GetDamage();
+           _hp -= bullet.GetDamage();
+
+           if (_hp <= 0)
+           {
+               Die();
+           }
         }
-
-        private void Damaged()
-        {
-            _hp--;
-
-            if (_hp <= 0)
-            {
-                Die();
-            }
-        }
-
+        
         private void Die()
         {
             Died(_spawnEnemyType);
@@ -79,8 +74,7 @@ namespace Project
 
                 yield return null;
             }
-
-            Damaged();
+            
             Free();
         }
     }
