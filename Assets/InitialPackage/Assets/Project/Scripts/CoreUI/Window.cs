@@ -9,6 +9,8 @@ namespace Project.UI
     {
         public static event Action<Window> Shown = delegate { };
         public static event Action<Window> Hidden = delegate { };
+
+        private Action _onHideAction = null;
         
         public abstract bool IsPopup
         {
@@ -30,8 +32,10 @@ namespace Project.UI
 
         }
 
-        public void Show()
+        public void Show(Action onHideAction)
         {
+            _onHideAction = onHideAction;
+            
             OnShow();
 
             Shown(this);
@@ -43,6 +47,8 @@ namespace Project.UI
 
         public void Hide()
         {
+            _onHideAction?.Invoke();
+            
             OnHide();
 
             Hidden(this);

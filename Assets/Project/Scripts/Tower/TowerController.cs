@@ -9,7 +9,12 @@ public class TowerController : MonoBehaviour
     private EnemySpawner _enemySpawner = null;
     private TowerSettings _towerSettings = null;
 
-    private List<Tower> _towers = new List<Tower>();
+    [field: SerializeField]
+    public List<Tower> Towers
+    {
+        get;
+        private set;
+    } = new List<Tower>();
 
     [Inject]
     private void Construct(PoolManager poolManager, EnemySpawner enemySpawner, TowerSettings towerSettings)
@@ -18,38 +23,71 @@ public class TowerController : MonoBehaviour
         _enemySpawner = enemySpawner;
         _towerSettings = towerSettings;
     }
-    
+
     void Update()
     {
-        if (_towers.Count > 0 && _enemySpawner.Enemies.Count > 0)
+        if (Towers.Count > 0 && _enemySpawner.Enemies.Count > 0)
         {
-            for (int i = 0; i < _towers.Count; i++)
+            for (int i = 0; i < Towers.Count; i++)
             {
-                var tower = _towers[i];
+                var tower = Towers[i];
 
-                if (!tower.IsAttacked)
+                if (!tower.IsAttack)
                 {
-                    for (int j = _enemySpawner.Enemies.Count - 1; j >= 0; j--)
+                    for (int j = 0; j < _enemySpawner.Enemies.Count; j++)
                     {
                         var enemy = _enemySpawner.Enemies[j];
 
-                        if ((tower.transform.position.ChangeY(enemy.transform.position.y) - enemy.transform.position).sqrMagnitude <= tower.SqrAttackRadius)
+                        if ((tower.transform.position.ChangeY(enemy.transform.position.y) - enemy.transform.position)
+                            .sqrMagnitude <= tower.SqrAttackRadius)
                         {
                             tower.Attack(enemy);
-                            
+
                             break;
                         }
                     }
                 }
                 else
                 {
-                    if ((tower.transform.position - tower.Target.transform.position).sqrMagnitude >= tower.SqrAttackRadius)
+                    if ((tower.transform.position - tower.Target.transform.position).sqrMagnitude >=
+                        tower.SqrAttackRadius)
                     {
+                        var enemy = TryFindNewTarget(tower);
+
+                        if (enemy != null)
+                        {
+                            tower.ChangeTarget(enemy);
+                        }
+                        else
+                        {
+                            Debug.Log("TowerController stop attack");
+                            tower.StopAttack();
+                        }
+                    }
+                    else if (tower.Target.IsDied)
+                    {
+                        Debug.Log("TowerController stop attack 1");
                         tower.StopAttack();
                     }
                 }
             }
         }
+    }
+
+    private Enemy TryFindNewTarget(Tower tower)
+    {
+        for (int i = 0; i < _enemySpawner.Enemies.Count; i++)
+        {
+            var enemy = _enemySpawner.Enemies[i];
+
+            if ((tower.transform.position.ChangeY(enemy.transform.position.y) - enemy.transform.position)
+                .sqrMagnitude <= tower.SqrAttackRadius)
+            {
+                return enemy;
+            }
+        }
+
+        return null;
     }
 
     public Tower GetTower(Tower tower, Vector3 hitPoint, Quaternion quaternion)
@@ -58,9 +96,16 @@ public class TowerController : MonoBehaviour
 
         twr.Spawn(_towerSettings, _poolManager, () =>
         {
-            _towers.Add(twr);
+            Towers.Add(twr);
         });
 
         return twr;
+    }
+
+    public void CellTower(Tower targetTower)
+    {
+        Towers.Remove(targetTower);
+        
+        targetTower.Cell();
     }
 }

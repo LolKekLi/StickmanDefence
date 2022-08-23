@@ -20,13 +20,14 @@ namespace Project
 
         [SerializeField]
         private SkinnedMeshRenderer _skinnedMeshRenderer = null;
-
+        
         private bool _isTriggered = false;
 
         private Vector3 _velocity = Vector3.zero;
         private Color _startColor = default;
         private Color _spawnColor = default;
         private Action _onSpawnAction = null;
+        private Quaternion _startRotation = default;
 
         private TowerSettings _towerSettings = null;
         private TowerSettings.TowerPreset _towerPreset = null;
@@ -37,6 +38,7 @@ namespace Project
 
         private Coroutine _attackCor = null;
         private Coroutine _lookAtEnemyCor = null;
+        private Coroutine _rotatrToOrigineCor = null;
 
         [field: SerializeField]
         public CantSpawnZone CantSpawnZone
@@ -68,16 +70,15 @@ namespace Project
                 _towerPreset.AttackRadius * _towerPreset.AttackRadius;
         }
 
-        public bool IsAttacked
-        {
-            get =>
-                _attackCor != null;
-        }
-
         public Enemy Target
         {
             get;
             private set;
+        }
+
+        public bool IsAttack
+        {
+            get => _attackCor != null;
         }
 
         [Inject]
@@ -88,6 +89,8 @@ namespace Project
 
         public void Spawn(TowerSettings towerSettings, PoolManager poolManager, Action action)
         {
+            _startRotation = transform.rotation;
+            
             _poolManager = poolManager;
             _towerSettings = towerSettings;
             _towerPreset = _towerSettings.GetPresetByType(Type);
@@ -121,10 +124,16 @@ namespace Project
 
         public void Attack(Enemy enemy)
         {
+            if (_rotatrToOrigineCor != null)
+            {
+                StopCoroutine(_rotatrToOrigineCor);
+                _rotatrToOrigineCor = null;
+            }
+            
             Target = enemy;
 
-            _attackCor = StartCoroutine(AttackCor(enemy, _bulletPreset));
-            _lookAtEnemyCor = StartCoroutine(LookAtEnemyCor(enemy));
+            _lookAtEnemyCor = StartCoroutine(LookAtTargetCor(enemy));
+            _attackCor = StartCoroutine(AttackCor(_bulletPreset));
         }
 
         public void Spawn()
@@ -149,6 +158,7 @@ namespace Project
 
             IsCanSpawn = isCanSpawn;
             _attackRadius.ChangeColor(isCanSpawn);
+            
             ChangeOutLineColor(isCanSpawn);
         }
 
@@ -159,9 +169,16 @@ namespace Project
 
             _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
         }
+        
+        public void ChangeTarget(Enemy enemy)
+        {
+            Target = enemy;
+        }
 
         public void StopAttack()
         {
+            Target = null;
+            
             if (_attackCor != null)
             {
                 StopCoroutine(_attackCor);
@@ -173,32 +190,49 @@ namespace Project
                 StopCoroutine(_lookAtEnemyCor);
                 _lookAtEnemyCor = null;
             }
+
+            if (_rotatrToOrigineCor == null)
+            {
+                _rotatrToOrigineCor = StartCoroutine(RotateToOrigin());
+            }
+        }
+        
+        public void Cell()
+        {
+            StopAttack();
+            Free();
         }
 
-        private IEnumerator AttackCor(Enemy enemy, BulletSettings.BulletPreset bulletPreset)
+        private IEnumerator AttackCor( BulletSettings.BulletPreset bulletPreset)
         {
             var waiter = new WaitForSeconds(1 / _towerPreset.FireRate);
 
-            while (!enemy.IsFree)
+            while (!Target.IsDied)
             {
+                yield return waiter;
+
+                if (Target.IsDied)
+                {
+                    break;
+                }
+                
                 var bullet = _poolManager.Get<Bullet>(_poolManager.PoolSettings.Bullet, _firePosition.position,
                     Quaternion.identity);
 
                 bullet.Setup(_bulletPreset);
-                bullet.Shoot(enemy.transform.position - transform.position);
-
-                yield return waiter;
+                bullet.Shoot((Target.transform.position - transform.position).normalized);
             }
-
-            _attackCor = null;
-            Target = null;
+            
+            Debug.Log("Attack cor stop attack");
+            
+            StopAttack();
         }
 
-        private IEnumerator LookAtEnemyCor(Enemy enemy)
+        private IEnumerator LookAtTargetCor(Enemy enemy)
         {
-            while (!enemy.IsFree)
+            while (!Target.IsDied)
             {
-                transform.LookAt(enemy.transform);
+                transform.LookAt(enemy.transform.position);
 
                 yield return null;
             }
@@ -206,12 +240,39 @@ namespace Project
             _lookAtEnemyCor = null;
         }
 
+        private IEnumerator RotateToOrigin()
+        {
+            float time = 0;
+            float timeCor = 1;
+            float progress = 0;
+
+            while (time <= timeCor)
+            {
+                time += Time.deltaTime;
+                progress = time / timeCor;
+
+                transform.rotation = Quaternion.Lerp(transform.rotation, _startRotation, progress);
+
+                yield return null;
+            }
+
+            _rotatrToOrigineCor = null;
+        }
+
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (_towerPreset != null)
             {
                 Gizmos.DrawWireSphere(transform.position, _towerPreset.AttackRadius);
             }
+
+            if (Target != null && !Target.IsDied)
+            {
+                Gizmos.DrawLine(transform.position, Target.transform.position);
+            }
         }
+#endif
+      
     }
 }

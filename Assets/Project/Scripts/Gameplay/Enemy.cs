@@ -13,10 +13,17 @@ namespace Project
         private EnemyType _spawnEnemyType = default;
 
         private int _hp = 0;
+        private float _speed = 0;
 
         private Action _onFreeAction = null;
 
         private Coroutine _followPathCor = null;
+
+        public bool IsDied
+        {
+            get;
+            private set;
+        } = false;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -26,8 +33,13 @@ namespace Project
             }
         }
 
-        public void Setup(Action action)
+        public void Setup(EnemySettings.EnemyPreset enemyPreset, Action action)
         {
+            IsDied = false;
+
+            _hp = enemyPreset.HP;
+            _speed = enemyPreset.MoveSpeed;
+
             _onFreeAction = action;
         }
 
@@ -47,35 +59,55 @@ namespace Project
         {
             var bulletDamageType = bullet.DamageType;
 
-           _hp -= bullet.GetDamage();
+            _hp -= bullet.GetDamage();
 
-           if (_hp <= 0)
-           {
-               Die();
-           }
+
+            if (_hp <= 0)
+            {
+                Die();
+            }
         }
-        
+
         private void Die()
         {
             Died(_spawnEnemyType);
-            
+
+            IsDied = true;
             Free();
         }
 
         private IEnumerator FollowPathCor(PathCreator path, EndOfPathInstruction endOfPathInstruction)
         {
-            float distanceTravelled = 0;
+            var distanceTravelled = 0f;
+            var enemyTransform = transform;
+            var enemyTransformPosition = enemyTransform.position;
+            var oldTransformPosition = enemyTransformPosition.ChangeX(enemyTransformPosition.x - 1);
 
-            while (path != null)
+            while (true)
             {
-                distanceTravelled += Time.deltaTime * 10;
-                transform.position = path.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
-                transform.rotation = path.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
+                distanceTravelled += Time.deltaTime * _speed;
+                enemyTransform.position = path.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
+                enemyTransform.rotation = path.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
+
+                if (oldTransformPosition == enemyTransform.position)
+                {
+                    break;
+                }
+
+                oldTransformPosition = enemyTransform.position;
 
                 yield return null;
             }
-            
+
             Free();
         }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position,transform.position+ transform.forward);
+        }
+#endif
     }
 }

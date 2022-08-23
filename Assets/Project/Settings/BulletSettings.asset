@@ -15,9 +15,9 @@ MonoBehaviour:
   _bulletPresets:
   - <DamageType>k__BackingField: 0
     <LifeTime>k__BackingField: 3
-    <Speed>k__BackingField: 10
+    <Speed>k__BackingField: 20
     <Mesh>k__BackingField: {fileID: 4300000, guid: 3e34ed5de12890343a2700cd46e57d8a, type: 3}
   - <DamageType>k__BackingField: 1
     <LifeTime>k__BackingField: 3
-    <Speed>k__BackingField: 5
+    <Speed>k__BackingField: 40
     <Mesh>k__BackingField: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using PathCreation;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -27,7 +25,8 @@ namespace Project
         private PoolManager _poolManager = null;
 
         private Coroutine _spawnEnemyCor = null;
-        
+
+        [field: SerializeField]
         public List<Enemy> Enemies
         {
             get;
@@ -76,7 +75,7 @@ namespace Project
                 
             Enemies.Add(enemy);
 
-            enemy.Setup(() =>
+            enemy.Setup(enemyPreset,() =>
             {
                 Enemies.Remove(enemy);
             });

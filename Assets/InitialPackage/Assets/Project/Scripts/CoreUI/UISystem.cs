@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace Project.UI
 {
@@ -21,6 +22,13 @@ namespace Project.UI
         private Dictionary<string, object> _data = new Dictionary<string, object>();
 
         private static UISystem _instance = null;
+
+        [InjectOptional]
+        public TowerController TowerController
+        {
+            get;
+            private set;
+        }
 
         public Window CurrentWindow
         {
@@ -56,7 +64,7 @@ namespace Project.UI
             where T : Window
         {
             _instance.SetData(data);
-
+            
             var window = GetWindow<T>();
             
             if (!window.IsPopup)
@@ -71,7 +79,11 @@ namespace Project.UI
             
             Instance._stack.Push(window);
 
-            window.Show();
+            window.Show(() =>
+            {
+                Instance._stack.Pop();
+                Instance._current = Instance._stack.Peek();
+            });
 
             Instance._current = window;
         }

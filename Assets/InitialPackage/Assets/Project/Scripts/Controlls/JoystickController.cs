@@ -6,7 +6,7 @@ namespace Project.UI
 {
 	public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
 	{
-        public static event Action Clicked = delegate { };
+        public static event Action<Vector2> Clicked = delegate { };
         public static event Action<Vector2> Dragged = delegate { };
         public static event Action Released = delegate { };
 
@@ -129,7 +129,7 @@ namespace Project.UI
 
             _isHolding = true;
 
-            Clicked();
+            Clicked(eventData.position);
         }
 
         public void OnPointerUp(PointerEventData eventData)

@@ -33,6 +33,13 @@ namespace Project
             }
 
             [field: SerializeField]
+            public int HP
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField]
             public EnemyDiedPreset[] EnemyDiedPreset
             {
                 get;

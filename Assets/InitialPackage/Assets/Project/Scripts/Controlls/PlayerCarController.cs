@@ -247,7 +247,7 @@ namespace Project
             SetCarMoveAllowed(true, true);
         }
         
-        private void JoystickController_Clicked()
+        private void JoystickController_Clicked(Vector2 vector2)
         {
             //_delta = 0;
         }

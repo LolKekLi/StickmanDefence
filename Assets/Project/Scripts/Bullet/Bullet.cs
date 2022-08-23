@@ -9,7 +9,7 @@ namespace Project
         private MeshFilter _meshRenderer = null;
         
         private int _damageAbility = 0;
-        private int _damage = 0;
+        private int _damage = 1;
         
         private float _lifeTime = 0f;
         private float _speed = 0f;
@@ -24,8 +24,6 @@ namespace Project
 
         public void Setup(BulletSettings.BulletPreset bulletPreset)
         {
-            Debug.Log("Setup");
-                
             _lifeTime = bulletPreset.LifeTime;
             _speed = bulletPreset.Speed;
             _meshRenderer.mesh = bulletPreset.Mesh;
