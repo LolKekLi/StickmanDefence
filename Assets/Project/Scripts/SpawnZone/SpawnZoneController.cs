@@ -13,7 +13,7 @@ public class SpawnZoneController : MonoBehaviour
     
     private Coroutine _controlSpawnCor = null;
 
-    public void StartControlSpawn(Tower currentTower)
+    public void StartControlSpawn(BaseTower currentTower)
     {
         _controlSpawnCor = StartCoroutine(ControlSpawnCor(currentTower));
     }
@@ -30,7 +30,7 @@ public class SpawnZoneController : MonoBehaviour
         _cantSpawnZones.Add(cantSpawnZone);
     }
 
-    private IEnumerator ControlSpawnCor(Tower currentTower)
+    private IEnumerator ControlSpawnCor(BaseTower currentTower)
     {
         bool isZoneContainsTower = false;
 

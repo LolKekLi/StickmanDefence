@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Project.UI;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Project
     public class TowerUpdateController : MonoBehaviour
     {
         public static readonly string TowerKey = "TowerKey";
+        public static readonly string OnCloseWindowKey = "OnCloseWindow";
 
         private CameraController _cameraController = null;
 
@@ -33,11 +35,13 @@ namespace Project
 
             if (Physics.Raycast(screenPointToRay, out var hit))
             {
-                if (hit.collider.TryGetComponent(out Tower tower))
+                if (hit.collider.TryGetComponent(out BaseTower tower))
                 {
                     var currentWindow = UISystem.Instance.CurrentWindow;
 
                     var upgradeTowerPopup = currentWindow as UpgradeTowerPopup;
+
+                    tower.ToggleHighlight(true);
 
                     if (upgradeTowerPopup != null)
                     {
@@ -45,9 +49,15 @@ namespace Project
                     }
                     else
                     {
+                        Action onCloseWindow = () =>
+                        {
+                            tower.ToggleHighlight(false);
+                        };
+
                         UISystem.ShowWindow<UpgradeTowerPopup>(new Dictionary<string, object>()
                         {
-                            { TowerKey, tower }
+                            { TowerKey, tower },
+                            { OnCloseWindowKey, onCloseWindow }
                         });
                     }
                 }

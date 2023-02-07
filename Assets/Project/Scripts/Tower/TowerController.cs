@@ -1,111 +1,112 @@
 using System.Collections.Generic;
-using Project;
 using UnityEngine;
 using Zenject;
 
-public class TowerController : MonoBehaviour
+namespace Project
 {
-    private PoolManager _poolManager = null;
-    private EnemySpawner _enemySpawner = null;
-    private TowerSettings _towerSettings = null;
-
-    [field: SerializeField]
-    public List<Tower> Towers
+    public class TowerController : MonoBehaviour
     {
-        get;
-        private set;
-    } = new List<Tower>();
+        private PoolManager _poolManager = null;
+        private EnemySpawner _enemySpawner = null;
+        private TowerSettings _towerSettings = null;
 
-    [Inject]
-    private void Construct(PoolManager poolManager, EnemySpawner enemySpawner, TowerSettings towerSettings)
-    {
-        _poolManager = poolManager;
-        _enemySpawner = enemySpawner;
-        _towerSettings = towerSettings;
-    }
-
-    void Update()
-    {
-        if (Towers.Count > 0 && _enemySpawner.Enemies.Count > 0)
+        [field: SerializeField]
+        public List<BaseTower> Towers
         {
-            for (int i = 0; i < Towers.Count; i++)
+            get;
+            private set;
+        } = new List<BaseTower>();
+
+        [Inject]
+        private void Construct(PoolManager poolManager, EnemySpawner enemySpawner, TowerSettings towerSettings)
+        {
+            _poolManager = poolManager;
+            _enemySpawner = enemySpawner;
+            _towerSettings = towerSettings;
+        }
+
+        private void Update()
+        {
+            if (Towers.Count > 0 && _enemySpawner.Enemies.Count > 0)
             {
-                var tower = Towers[i];
-
-                if (!tower.IsAttack)
+                for (int i = 0; i < Towers.Count; i++)
                 {
-                    for (int j = 0; j < _enemySpawner.Enemies.Count; j++)
+                    var tower = Towers[i];
+
+                    if (!tower.IsAttack)
                     {
-                        var enemy = _enemySpawner.Enemies[j];
-
-                        if ((tower.transform.position.ChangeY(enemy.transform.position.y) - enemy.transform.position)
-                            .sqrMagnitude <= tower.SqrAttackRadius)
+                        for (int j = 0; j < _enemySpawner.Enemies.Count; j++)
                         {
-                            tower.Attack(enemy);
+                            var enemy = _enemySpawner.Enemies[j];
 
-                            break;
+                            if ((tower.transform.position.ChangeY(enemy.transform.position.y) -
+                                    enemy.transform.position)
+                                .sqrMagnitude <= tower.SqrAttackRadius)
+                            {
+                                tower.ChangeTarget(enemy);
+                                tower.Attack();
+
+                                break;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    if ((tower.transform.position - tower.Target.transform.position).sqrMagnitude >=
-                        tower.SqrAttackRadius)
+                    else
                     {
-                        var enemy = TryFindNewTarget(tower);
+                        if ((tower.transform.position - tower.Target.transform.position).sqrMagnitude >=
+                            tower.SqrAttackRadius)
+                        {
+                            var enemy = TryFindNewTarget(tower);
 
-                        if (enemy != null)
-                        {
-                            tower.ChangeTarget(enemy);
+                            if (enemy != null)
+                            {
+                                tower.ChangeTarget(enemy);
+                            }
+                            else
+                            {
+                                Debug.Log("TowerController stop attack");
+                                tower.StopAttack();
+                            }
                         }
-                        else
+                        else if (tower.Target.IsDied)
                         {
-                            Debug.Log("TowerController stop attack");
+                            Debug.Log("TowerController stop attack 1");
                             tower.StopAttack();
                         }
                     }
-                    else if (tower.Target.IsDied)
-                    {
-                        Debug.Log("TowerController stop attack 1");
-                        tower.StopAttack();
-                    }
                 }
             }
         }
-    }
 
-    private Enemy TryFindNewTarget(Tower tower)
-    {
-        for (int i = 0; i < _enemySpawner.Enemies.Count; i++)
+        private Enemy TryFindNewTarget(BaseTower tower)
         {
-            var enemy = _enemySpawner.Enemies[i];
-
-            if ((tower.transform.position.ChangeY(enemy.transform.position.y) - enemy.transform.position)
-                .sqrMagnitude <= tower.SqrAttackRadius)
+            for (int i = 0; i < _enemySpawner.Enemies.Count; i++)
             {
-                return enemy;
+                var enemy = _enemySpawner.Enemies[i];
+
+                if ((tower.transform.position.ChangeY(enemy.transform.position.y) - enemy.transform.position)
+                    .sqrMagnitude <= tower.SqrAttackRadius)
+                {
+                    return enemy;
+                }
             }
+
+            return null;
         }
 
-        return null;
-    }
-
-    public Tower GetTower(Tower tower, Vector3 hitPoint, Quaternion quaternion)
-    {
-        var twr = _poolManager.Get<Tower>(tower, hitPoint, quaternion);
-
-        twr.Spawn(_towerSettings, _poolManager, () =>
+        public BaseTower GetTower(BaseTower tower, Vector3 hitPoint, Quaternion quaternion)
         {
-            Towers.Add(twr);
-        });
+            var twr = _poolManager.Get<BaseTower>(tower, hitPoint, quaternion);
 
-        return twr;
-    }
+            twr.Spawn(_towerSettings, _poolManager, () => { Towers.Add(twr); });
 
-    public void CellTower(Tower targetTower)
-    {
-        Towers.Remove(targetTower);
-        
-        targetTower.Cell();
+            return twr;
+        }
+
+        public void CellTower(BaseTower targetTower)
+        {
+            Towers.Remove(targetTower);
+
+            targetTower.Cell();
+        }
     }
 }

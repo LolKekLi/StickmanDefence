@@ -15,7 +15,7 @@ MonoBehaviour:
   _enemyPresets:
   - <Type>k__BackingField: 1
     <EnemyPrefab>k__BackingField: {fileID: 6795167622310427168, guid: b2133e563d02c5d4c81844eceb0b106c, type: 3}
-    <MoveSpeed>k__BackingField: 2
+    <MoveSpeed>k__BackingField: 5
     <HP>k__BackingField: 10000
     <EnemyDiedPreset>k__BackingField:
     - <SpawnEnemyTypeBeforeDied>k__BackingField: 0

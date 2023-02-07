@@ -12,7 +12,7 @@ namespace Project
         public class TowerPreset
         {
             [field: SerializeField]
-            public Tower Tower
+            public BaseTower Tower
             {
                 get;
                 private set;

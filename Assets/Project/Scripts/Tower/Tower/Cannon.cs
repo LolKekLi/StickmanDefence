@@ -1,6 +1,6 @@
 namespace Project
 {
-    public class Cannon : Tower
+    public class Cannon : BaseTower
     {
         public override TowerType Type
         {

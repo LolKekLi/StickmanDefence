@@ -95,7 +95,7 @@ namespace Project
                 _pooledObjects[obj].Enqueue(pooledObject);
 
 #if UNITY_EDITOR
-                Debug.LogError($"prepare object: {obj}");
+                //Debug.LogError($"prepare object: {obj}");
 #endif
             }
         }

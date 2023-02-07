@@ -27,11 +27,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4084018505868504675}
   - {fileID: 1032803734699178880}
   - {fileID: 9026249521440508025}
   - {fileID: 1051665174845290015}
   - {fileID: 9205718562414879305}
-  - {fileID: 4084018505868504675}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7840965168489638882, guid: 3f97182fd1b00412c871d6c9390ebd2d, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7840965168489638882, guid: 3f97182fd1b00412c871d6c9390ebd2d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -175,7 +175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1614928301200796172, guid: 57e0963278c5a4662b10a39b59e98ac3, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1614928301200796172, guid: 57e0963278c5a4662b10a39b59e98ac3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -257,7 +257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2332238406532146980, guid: 89504500d16c74bfaa388ce8e4445422, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2332238406532146980, guid: 89504500d16c74bfaa388ce8e4445422, type: 3}
       propertyPath: m_AnchorMax.x
@@ -363,7 +363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2332238406532146980, guid: 440f68fe99c0c4406a21397fa161898a, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2332238406532146980, guid: 440f68fe99c0c4406a21397fa161898a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -459,6 +459,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1525107625205393229}
     m_Modifications:
+    - target: {fileID: 1450866665609623033, guid: a95f3c25de066084f884c521b646edc2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 750.9009
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450866665609623033, guid: a95f3c25de066084f884c521b646edc2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -540
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450866665609623033, guid: a95f3c25de066084f884c521b646edc2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3701932884571751221, guid: a95f3c25de066084f884c521b646edc2, type: 3}
       propertyPath: m_Name
       value: UpgardeTowerPopup
@@ -473,7 +485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6551455245103159361, guid: a95f3c25de066084f884c521b646edc2, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6551455245103159361, guid: a95f3c25de066084f884c521b646edc2, type: 3}
       propertyPath: m_AnchorMax.x

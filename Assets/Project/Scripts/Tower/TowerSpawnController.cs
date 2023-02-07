@@ -22,7 +22,7 @@ namespace Project
 
         private Coroutine _towerSpawnCor = null;
 
-        public Tower CurrentTower
+        public BaseTower CurrentTower
         {
             get;
             private set;
@@ -61,6 +61,11 @@ namespace Project
         private void Update()
         {
             _movePosition = Input.mousePosition;
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                StopTowerSpawn();
+            }
         }
 
         private void SpawnTower()
@@ -89,7 +94,7 @@ namespace Project
             }
         }
 
-        private IEnumerator TowerSpawnCor(Tower refTower)
+        private IEnumerator TowerSpawnCor(BaseTower refTower)
         {
             Ray screenPointToRay = default;
             RaycastHit hit = default;
