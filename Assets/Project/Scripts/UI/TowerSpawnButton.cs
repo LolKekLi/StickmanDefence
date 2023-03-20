@@ -20,6 +20,12 @@ namespace Project.UI
 
         private TowerType _type = default;
         private Action<int> _onClick;
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+        }
 
         private void Start()
         {
@@ -39,17 +45,15 @@ namespace Project.UI
 
         public void Refresh(bool isSelected = false)
         {
+            _isSelected = isSelected;
             _sectedImage.enabled = isSelected;
         }
 
         private void OnButtonClick()
         {
         }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-        }
-
+        
+        //Нужно чтобы именно вытягивать башенку из списка 
         public void OnPointerDown(PointerEventData eventData)
         {
             _onClick?.Invoke(_index);

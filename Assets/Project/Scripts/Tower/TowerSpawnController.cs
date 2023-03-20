@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Project.UI;
 using UnityEngine;
 using Zenject;
@@ -7,11 +8,12 @@ namespace Project
 {
     public class TowerSpawnController : MonoBehaviour
     {
-        private readonly string IgnoreRaycastLayer = "Tower";
         private readonly int MaxRayCastDistance = 1000;
-
-        private int _layerMask = 1;
-
+        public static event Action TowerSpawned = delegate {  };
+        
+        [SerializeField]
+        private  LayerMask _ignoreRaycastLayerMask ;
+        
         private Vector3 _movePosition = Vector3.zero;
         private Quaternion _towerRotation = default;
 
@@ -21,6 +23,7 @@ namespace Project
         private TowerController _towerController = null;
 
         private Coroutine _towerSpawnCor = null;
+        private TowerUpgradeController _towerUpgradeController;
 
         public BaseTower CurrentTower
         {
@@ -30,8 +33,9 @@ namespace Project
 
         [Inject]
         private void Construct(TowerSettings towerSettings, CameraController cameraController,
-            SpawnZoneController spawnZoneController, TowerController towerController)
+            SpawnZoneController spawnZoneController, TowerController towerController, TowerUpgradeController towerUpgradeController)
         {
+            _towerUpgradeController = towerUpgradeController;
             _towerSettings = towerSettings;
             _cameraController = cameraController;
             _spawnZoneController = spawnZoneController;
@@ -52,9 +56,7 @@ namespace Project
 
         private void Start()
         {
-            _layerMask = 1 << LayerMask.NameToLayer(IgnoreRaycastLayer);
-            _layerMask = ~_layerMask;
-
+            _ignoreRaycastLayerMask = ~_ignoreRaycastLayerMask;
             _towerRotation = Quaternion.Euler(new Vector3(0, 180, 0));
         }
 
@@ -72,10 +74,16 @@ namespace Project
         {
             if (CurrentTower.IsCanSpawn)
             {
-                CurrentTower.Spawn();
+                TowerSpawned();
+                
+                CurrentTower.OnSpawn();
                 CurrentTower = null;
-
+                
                 StopTowerSpawn();
+
+#if UNITY_EDITOR
+                _towerController.RefreshName();
+#endif
             }
         }
 
@@ -99,7 +107,7 @@ namespace Project
             Ray screenPointToRay = default;
             RaycastHit hit = default;
 
-            while (!Physics.Raycast(screenPointToRay, out hit, MaxRayCastDistance, _layerMask))
+            while (!Physics.Raycast(screenPointToRay, out hit, MaxRayCastDistance, _ignoreRaycastLayerMask))
             {
                 screenPointToRay = _cameraController.Camera.ScreenPointToRay(_movePosition);
 
@@ -118,7 +126,7 @@ namespace Project
 
                 screenPointToRay = _cameraController.Camera.ScreenPointToRay(_movePosition);
 
-                if (Physics.Raycast(screenPointToRay, out hit, MaxRayCastDistance, _layerMask))
+                if (Physics.Raycast(screenPointToRay, out hit, MaxRayCastDistance, _ignoreRaycastLayerMask))
                 {
                     if (CurrentTower != null)
                     {
@@ -143,10 +151,15 @@ namespace Project
 
         private void UITowerSpawnController_PointerExited(TowerType currentTowerType)
         {
-            var currentTowerPreset = _towerSettings.GetPresetByType(currentTowerType);
+            var currentTowerPreset = _towerSettings.GetTowerPresetByType(currentTowerType);
 
             StopTowerSpawn();
 
+            if (_towerUpgradeController.CurrentTower != null)
+            {
+                _towerUpgradeController.UnselectedCurrentTower();
+            }
+            
             StartCoroutine(TowerSpawnCor(currentTowerPreset.Tower));
         }
 

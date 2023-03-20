@@ -7,7 +7,7 @@ namespace Project
 {
     public static class UniTaskExtensions
     {
-        public static async void Lerp(Action<float> action, float executionTime, AnimationCurve curve,
+        public static async UniTask Lerp(Action<float> action, float executionTime, AnimationCurve curve,
             CancellationToken token)
         {
             float time = 0f;

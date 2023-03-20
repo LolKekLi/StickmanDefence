@@ -49,7 +49,7 @@ public class SpawnZoneController : MonoBehaviour
                     break;
                 }
             }
-
+            
             currentTower.ToggleSpawnAbility(!isZoneContainsTower);
             isZoneContainsTower = false;
         }

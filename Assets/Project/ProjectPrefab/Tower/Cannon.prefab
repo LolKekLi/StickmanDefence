@@ -99,7 +99,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &9007827687955059876
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -112,10 +112,11 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &678228567198015666
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +416,12 @@ MonoBehaviour:
   _firePosition: {fileID: 3991442160002495491}
   _attackRadius: {fileID: 8209926682010056988}
   _skinnedMeshRenderer: {fileID: 7705730555721961039}
+  _towerLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  _xrayLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
   <CantSpawnZone>k__BackingField: {fileID: 5392693869657157446}
 --- !u!114 &5392693869657157446
 MonoBehaviour:

@@ -17,17 +17,29 @@ namespace Project.UI
         private TowerSpawnButton _towerSpawnButtonPrefab = null;
 
         private bool _isClicked = false;
+        private int _selectedButtonIndex = -1;
 
         private TowerType _currentTowerType = default;
 
         private TowerSettings _towerSettings = null;
 
         private TowerSpawnButton[] _towerSpawnButtons = null;
+      
 
         [Inject]
         private void Construct(TowerSettings towerSettings)
         {
             _towerSettings = towerSettings;
+        }
+
+        private void OnEnable()
+        {
+            TowerSpawnController.TowerSpawned += TowerSpawnController_TowerSpawned;
+        }
+        
+        private void OnDisable()
+        {
+            TowerSpawnController.TowerSpawned -= TowerSpawnController_TowerSpawned;
         }
 
         private void Start()
@@ -42,16 +54,29 @@ namespace Project.UI
 
                 _towerSpawnButtons[i] = towerSpawnButton;
 
-                towerSpawnButton.Setup(_towerSettings.GetPresetByType(towerType), i, (index) =>
+                towerSpawnButton.Setup(_towerSettings.GetTowerPresetByType(towerType), i, (index) =>
                 {
-                    _currentTowerType = towerType;
-                    _isClicked = true;
+                    var isSameButtonClick = _selectedButtonIndex == index;
+                    var isFirstClick = _selectedButtonIndex < 0;
 
-                    for (int j = 0; j < _towerSpawnButtons.Length; j++)
+                    if (!isFirstClick)
                     {
-                        _towerSpawnButtons[j].Refresh(j == index);
+                        if (isSameButtonClick && _towerSpawnButtons[_selectedButtonIndex].IsSelected)
+                        {
+                            _isClicked = false;
+                            
+                            _towerSpawnButtons[_selectedButtonIndex].Refresh(false);
+                        
+                            return;
+                        }
+                        
+                        _towerSpawnButtons[_selectedButtonIndex].Refresh(false);
                     }
                     
+                    _selectedButtonIndex = index;
+                    _towerSpawnButtons[_selectedButtonIndex].Refresh(true);
+                    _currentTowerType = towerType;
+                    _isClicked = true;
                 });
             }
         }
@@ -59,6 +84,11 @@ namespace Project.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             PointerEntered();
+
+            if (_selectedButtonIndex >= 0)
+            {
+                _towerSpawnButtons[_selectedButtonIndex].Refresh(false);
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -69,6 +99,11 @@ namespace Project.UI
 
                 PointerExited(_currentTowerType);
             }
+        }
+        
+        private void TowerSpawnController_TowerSpawned()
+        {
+            _towerSpawnButtons[_selectedButtonIndex].Refresh(false);
         }
     }
 }

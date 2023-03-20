@@ -52,7 +52,7 @@ namespace Project
 
         public void Show()
         {
-            gameObject.SetActive(true);
+           ToggleActive(true);
         }
 
         public void ChangeColor(bool isCanSpawn)
@@ -61,6 +61,11 @@ namespace Project
             _basePropertyBlock.SetColor(OutlineColorID, isCanSpawn ? _baseColor.OutLineColor : _cantSpawnColor.OutLineColor);
             
             _meshRenderer.SetPropertyBlock(_basePropertyBlock);
+        }
+
+        public void ToggleActive(bool isActive)
+        {
+           gameObject.SetActive(isActive);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -20,16 +19,38 @@ namespace Project.UI
         private Button _closeButton = null;
 
         [SerializeField]
-        private DOTweenAnimation _onShowAnimation = null;
+        private float _clickSideDetectOffset;
+
+        [SerializeField, Header("Tweens")]
+        private Vector2 _startPositionRight = Vector2.zero;
 
         [SerializeField]
-        private DOTweenAnimation _onCloseAnimation = null;
+        private Vector2 _endPositionRight = Vector2.zero;
 
-        private bool _isClose = false;
+        [SerializeField]
+        private Vector2 _startPositionLeft = Vector2.zero;
+
+        [SerializeField]
+        private Vector2 _endPositionLeft = Vector2.zero;
+
+        [SerializeField]
+        private RectTransform _backgroundRectTransform;
+
+        [SerializeField]
+        private float _duration = 0f;
+
+        [SerializeField]
+        private AnimationCurve _tweenCurve;
+
+        private bool _isClosing = false;
+        private bool _isMoving = false;
+        private bool _isRightClick;
 
         private Action _onCloseCallback = null;
+        private CancellationToken _moveToken;
 
-        private BaseTower _targetTower = null;
+        private IUpgradeable _targetTower = null;
+        private CancellationTokenSource _moveTokenSource = null;
 
         [Inject]
         private UISystem _uiSystem = null;
@@ -37,8 +58,7 @@ namespace Project.UI
         [Inject]
         private TowerSettings _towerSettings = null;
 
-        private CancellationTokenSource _closeToken;
-        private CancellationToken _cancellationToken;
+        private TowerUpgradeController _towerUpgradeController;
 
         public override bool IsPopup
         {
@@ -52,30 +72,47 @@ namespace Project.UI
 
             _closeButton.onClick.AddListener(OnClose);
             _cellButton.onClick.AddListener(OnCellTower);
+
+            _moveToken = UniTaskUtil.RefreshToken(ref _moveTokenSource);
         }
 
         protected override void OnShow()
         {
             base.OnShow();
-            
-            _onShowAnimation.Play();
 
-            _targetTower = GetDataValue<BaseTower>(TowerUpdateController.TowerKey);
-            _onCloseCallback = GetDataValue<Action>(TowerUpdateController.OnCloseWindowKey);
+            _targetTower = GetDataValue<BaseTower>(TowerUpgradeController.TowerKey);
+            _onCloseCallback = GetDataValue<Action>(TowerUpgradeController.OnCloseWindowKey);
+            var mousePositionX = GetDataValue<float>(TowerUpgradeController.MousePositionXKey);
+            
+            //DOTO: Инжектить это дело 
+            _towerUpgradeController = GetDataValue<TowerUpgradeController>(TowerUpgradeController.TowerUpgradeControllerKey);
+
+            _isRightClick = IsRightClick(mousePositionX);
+
+            _backgroundRectTransform.anchoredPosition = _isRightClick ? _startPositionLeft : _startPositionRight;
+            
+            MoveTo(_isRightClick ? _endPositionLeft : _endPositionRight).Forget();
 
             SetupElements();
         }
 
-        public void RefreshData(BaseTower newTargetTower)
+        public void RefreshData(IUpgradeable newTargetTower, float mousePositionX)
         {
-            if (_isClose)
+            if (_isClosing)
             {
-                _isClose = false;
-                UniTaskUtil.CancelToken(ref _closeToken);
-                _onShowAnimation.Play();
+                var isRightClick = IsRightClick(mousePositionX);
+
+                if (isRightClick != _isRightClick)
+                {
+                    _backgroundRectTransform.anchoredPosition = isRightClick ? _startPositionLeft : _startPositionRight;
+                    
+                }
+                
+                _isRightClick = isRightClick;
+                
+                MoveTo(_isRightClick ? _endPositionLeft : _endPositionRight).Forget();
             }
             
-            _targetTower.ToggleHighlight(false);
             _targetTower = newTargetTower;
 
             SetupElements();
@@ -83,31 +120,34 @@ namespace Project.UI
 
         private void SetupElements()
         {
-            var towerPreset = _towerSettings.GetPresetByType(_targetTower.Type);
+            var towerPreset = _towerSettings.GetTowerPresetByType(_targetTower.Type);
 
             _icon.sprite = towerPreset.UIIcon;
         }
 
+        protected override void OnHide()
+        {
+            base.OnHide();
+            
+            _targetTower = null;
+        }
+
         private async void OnClose()
         {
-            if (!_isClose)
+            if (!_isClosing)
             {
                 try
                 {
-                    _isClose = true;
+                    _isClosing = true;
 
                     _onCloseCallback?.Invoke();
 
-                    _onCloseAnimation.Play();
+                    await MoveTo(_isRightClick ? _startPositionLeft : _startPositionRight, () =>
+                    {
+                        Hide();
+                    });
 
-                    _cancellationToken = UniTaskUtil.RefreshToken(ref _closeToken);
-
-                    await UniTask.Delay(TimeSpan.FromSeconds(_onCloseAnimation.duration),
-                        cancellationToken: _cancellationToken);
-
-                    _isClose = false;
-
-                    Hide();
+                    _isClosing = false;
                 }
                 catch (OperationCanceledException e)
                 {
@@ -119,12 +159,56 @@ namespace Project.UI
         {
             if (_targetTower != null)
             {
-                _uiSystem.TowerController.CellTower(_targetTower);
-
-                _targetTower = null;
-
+                //TODO: сделать инжект сразу в окна
+                _towerUpgradeController.CellTower();
+                
                 OnClose();
             }
+        }
+
+        private bool IsRightClick(float xPos)
+        {
+            var isRightClick = xPos > Screen.height / 2f - _clickSideDetectOffset;
+            return isRightClick;
+        }
+
+        private async UniTask MoveTo(Vector2 pos, Action callback = null)
+        {
+            if (_isMoving)
+            {
+                _moveToken = UniTaskUtil.RefreshToken(ref _moveTokenSource);
+            }
+
+            await MoveAsync(pos, _moveToken, callback);
+        }
+
+        private async UniTask MoveAsync(Vector2 endPos, CancellationToken token, Action callback)
+        {
+            try
+            {
+                _isMoving = true;
+
+                var startPosition = _backgroundRectTransform.anchoredPosition;
+
+                // var currentDuration = Math.Abs(startPosition.x - endPos.x) * _duration /
+                //     (_startPositionRight.x - _endPositionRight.x);
+
+                await UniTaskExtensions.Lerp(
+                    x => { _backgroundRectTransform.anchoredPosition = Vector2.Lerp(startPosition, endPos, x); },
+                    _duration, _tweenCurve, token);
+
+                _isMoving = false;
+
+                callback?.Invoke();
+            }
+            catch (OperationCanceledException e)
+            {
+            }
+        }
+
+        public void Close()
+        {
+           OnClose();
         }
     }
 }

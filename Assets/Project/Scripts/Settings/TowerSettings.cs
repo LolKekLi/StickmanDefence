@@ -46,6 +46,24 @@ namespace Project
                 private set;
             }
         }
+        
+        [Serializable]
+        public class HighlightPreset
+        {
+            [field: SerializeField]
+            public TowerInteractionState TowerInteractionState
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField]
+            public Color Color
+            {
+                get;
+                private set;
+            }
+        }
 
         [field: SerializeField]
         public float SmoothTime
@@ -56,7 +74,7 @@ namespace Project
 
 
         [field: SerializeField]
-        public Color BaseOutLineColor
+        public Color UnslectedOutLineColor
         {
             get;
             private set;
@@ -70,7 +88,7 @@ namespace Project
         }
 
         [field: SerializeField]
-        public Color SpawnOutLIneColor
+        public Color SelectedOutLineColor
         {
             get;
             private set;
@@ -79,7 +97,10 @@ namespace Project
         [SerializeField]
         private TowerPreset[] _towerPresets = null;
 
-        public TowerPreset GetPresetByType(TowerType type)
+        [SerializeField]
+        private HighlightPreset[] _highlightPresets = null;
+
+        public TowerPreset GetTowerPresetByType(TowerType type)
         {
             var towerPreset = _towerPresets.FirstOrDefault(x => x.Tower.Type == type);
 
@@ -93,6 +114,20 @@ namespace Project
 
                 return null;
             }
+        }
+
+        public HighlightPreset GetHighlightPresetByType(TowerInteractionState towerInteractionState)
+        {
+            var highlightPreset = _highlightPresets.FirstOrDefault(x=>x.TowerInteractionState == towerInteractionState);
+
+            if (highlightPreset == null)
+            {
+                Debug.LogError($"{typeof(TowerSettings)} Нет HighlightPreset TowerPreset под тип {towerInteractionState}");
+                
+                return null;
+            }
+
+            return highlightPreset;
         }
     }
 }

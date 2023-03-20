@@ -12,6 +12,8 @@ namespace Project
         [SerializeField]
         private float _freeTimeout = 0f;
 
+        private Transform _defaultParent;
+
         public PooledObjectType Type
         {
             get => _type;
@@ -40,6 +42,7 @@ namespace Project
 
         public virtual void Prepare(PooledObjectType pooledType)
         {
+            _defaultParent = transform.parent;
             _type = pooledType;
         }
 
@@ -61,6 +64,7 @@ namespace Project
 
         protected virtual void ReturnToPool()
         {
+            transform.parent = _defaultParent;   
             gameObject.SetActive(false);
         }
 

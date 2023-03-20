@@ -97,16 +97,31 @@ namespace Project
         {
             var twr = _poolManager.Get<BaseTower>(tower, hitPoint, quaternion);
 
-            twr.Spawn(_towerSettings, _poolManager, () => { Towers.Add(twr); });
+            twr.OnGetTowerFromPool(_towerSettings, _poolManager,
+                () =>
+            {
+                Towers.Add(twr);
+            }, 
+                () =>
+            {
+                Towers.Remove(twr);
 
+#if UNITY_EDITOR
+                RefreshName();
+#endif
+            });
+            
             return twr;
         }
 
-        public void CellTower(BaseTower targetTower)
+#if UNITY_EDITOR
+        public void RefreshName()
         {
-            Towers.Remove(targetTower);
-
-            targetTower.Cell();
+            for (var i = 0; i < Towers.Count; i++)
+            {
+                Towers[i].transform.name = $"{Towers[i].Type} {i}";
+            }
         }
+#endif
     }
 }

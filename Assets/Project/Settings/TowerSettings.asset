@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TowerSettings
   m_EditorClassIdentifier: 
   <SmoothTime>k__BackingField: 0.025
-  <BaseOutLineColor>k__BackingField: {r: 0.6323425, g: 0.6410278, b: 0.6603774, a: 1}
+  <UnslectedOutLineColor>k__BackingField: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
   <CantSpawnOutLIneColor>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
-  <SpawnOutLIneColor>k__BackingField: {r: 0, g: 0.30980393, b: 1, a: 1}
+  <SelectedOutLineColor>k__BackingField: {r: 0, g: 0.1406796, b: 1, a: 1}
   _towerPresets:
   - <Tower>k__BackingField: {fileID: 3171717336070501216, guid: 36be8af63dd72964bad327a47851a454, type: 3}
     <UIIcon>k__BackingField: {fileID: 21300000, guid: 09bb274d64bfd464d9d7b90e8821c864, type: 3}
@@ -27,3 +27,4 @@ MonoBehaviour:
     <AttackRadius>k__BackingField: 20
     <FireRate>k__BackingField: 1
     <DamageType>k__BackingField: 1
+  _highlightPresets: []
