@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: ccf08a579a49c1c4b8bf70251b73c061
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - VAG World
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 59e105d6a3ffba141bdf61e91c216652, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

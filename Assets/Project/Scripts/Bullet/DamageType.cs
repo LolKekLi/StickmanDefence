@@ -5,4 +5,12 @@ namespace Project
         Base = 0,
         Fire = 1,
     }
+
+    public enum WeaponType
+    {
+        Pistol,
+        ShotGun,
+        PP,
+        SilencedPistol
+    }
 }

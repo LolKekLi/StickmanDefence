@@ -13,7 +13,7 @@ namespace Project.UI
         private Button _cellButton = null;
 
         [SerializeField]
-        private Image _icon = null;
+        private Image _towerIcon = null;
 
         [SerializeField]
         private Button _closeButton = null;
@@ -59,11 +59,23 @@ namespace Project.UI
         private TowerSettings _towerSettings = null;
 
         private TowerUpgradeController _towerUpgradeController;
+        private Vector2 _startCloseButtonPos;
+        private RectTransform _closeButtonRectTransform;
 
         public override bool IsPopup
         {
             get =>
                 true;
+        }
+
+        public override void Preload()
+        {
+            base.Preload();
+            
+            _closeButtonRectTransform = _closeButton.GetComponent<RectTransform>();
+
+            _startCloseButtonPos = _closeButtonRectTransform.anchoredPosition;
+
         }
 
         protected override void Start()
@@ -72,7 +84,7 @@ namespace Project.UI
 
             _closeButton.onClick.AddListener(OnClose);
             _cellButton.onClick.AddListener(OnCellTower);
-
+            
             _moveToken = UniTaskUtil.RefreshToken(ref _moveTokenSource);
         }
 
@@ -90,6 +102,10 @@ namespace Project.UI
             _isRightClick = IsRightClick(mousePositionX);
 
             _backgroundRectTransform.anchoredPosition = _isRightClick ? _startPositionLeft : _startPositionRight;
+
+            _closeButtonRectTransform.anchoredPosition = !_isRightClick
+                ? _startCloseButtonPos.ChangeX(-_startCloseButtonPos.x)
+                : _startCloseButtonPos;
             
             MoveTo(_isRightClick ? _endPositionLeft : _endPositionRight).Forget();
 
@@ -122,7 +138,7 @@ namespace Project.UI
         {
             var towerPreset = _towerSettings.GetTowerPresetByType(_targetTower.Type);
 
-            _icon.sprite = towerPreset.UIIcon;
+            _towerIcon.sprite = towerPreset.UIIcon;
         }
 
         protected override void OnHide()

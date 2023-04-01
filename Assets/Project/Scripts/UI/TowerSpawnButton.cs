@@ -15,6 +15,11 @@ namespace Project.UI
 
         [SerializeField]
         private Image _sectedImage = null;
+        
+        [SerializeField]
+        private Color _selcetedColor = Color.black;
+        [SerializeField]
+        private Color _unselcetedColor = Color.black;
 
         private int _index = 0;
 
@@ -46,7 +51,7 @@ namespace Project.UI
         public void Refresh(bool isSelected = false)
         {
             _isSelected = isSelected;
-            _sectedImage.enabled = isSelected;
+            _sectedImage.color = isSelected ? _selcetedColor : _unselcetedColor;
         }
 
         private void OnButtonClick()
