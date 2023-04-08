@@ -13,18 +13,26 @@ MonoBehaviour:
   m_Name: TowerSettings
   m_EditorClassIdentifier: 
   <SmoothTime>k__BackingField: 0.025
-  <UnslectedOutLineColor>k__BackingField: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
-  <CantSpawnOutLIneColor>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
-  <SelectedOutLineColor>k__BackingField: {r: 0, g: 0.1406796, b: 1, a: 1}
   _towerPresets:
-  - <Tower>k__BackingField: {fileID: 3171717336070501216, guid: 36be8af63dd72964bad327a47851a454, type: 3}
+  - <TowerPrefab>k__BackingField: {fileID: 3171717336070501216, guid: 36be8af63dd72964bad327a47851a454, type: 3}
     <UIIcon>k__BackingField: {fileID: 21300000, guid: 09bb274d64bfd464d9d7b90e8821c864, type: 3}
+    <TowerLabel>k__BackingField: "\u0447\u0435\u043B \u0441 \u0431\u0430\u0437\u0443\u043A\u043E\u0439"
+    <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
+    <FireRate>k__BackingField: 1
+    <FireType>k__BackingField: 0
+    <BulletCount>k__BackingField: 0
+    <DelayBetweenBullet>k__BackingField: 0
+    <AttackRadiusType>k__BackingField: 0
     <AttackRadius>k__BackingField: 100
-    <FireRate>k__BackingField: 1
-    <DamageType>k__BackingField: 0
-  - <Tower>k__BackingField: {fileID: 3171717336070501216, guid: 9054509fe25307a48845835e2a139568, type: 3}
+    <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+  - <TowerPrefab>k__BackingField: {fileID: 3171717336070501216, guid: 9054509fe25307a48845835e2a139568, type: 3}
     <UIIcon>k__BackingField: {fileID: 21300000, guid: c519191c2d5060f40951692ae33a4ede, type: 3}
-    <AttackRadius>k__BackingField: 20
+    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u043F\u0438\u0441\u0442\u043E\u043B\u0435\u0442\u043E\u043C"
+    <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
     <FireRate>k__BackingField: 1
-    <DamageType>k__BackingField: 1
-  _highlightPresets: []
+    <FireType>k__BackingField: 1
+    <BulletCount>k__BackingField: 0
+    <DelayBetweenBullet>k__BackingField: 0
+    <AttackRadiusType>k__BackingField: 0
+    <AttackRadius>k__BackingField: 20
+    <AttackBoxSize>k__BackingField: {x: 0, y: 0}

@@ -22,12 +22,12 @@ namespace Project
             private set;
         }
 
-        public void Setup(BulletSettings.BulletPreset bulletPreset)
+        public void Setup(BulletSettings bulletSettings)
         {
-            _lifeTime = bulletPreset.LifeTime;
-            _speed = bulletPreset.Speed;
-            _meshRenderer.mesh = bulletPreset.Mesh;
-            DamageType = bulletPreset.DamageType;
+            _lifeTime = bulletSettings.LifeTime;
+            _speed = bulletSettings.Speed;
+            _meshRenderer.mesh = bulletSettings.Mesh;
+            DamageType = bulletSettings.DamageType;
         }
 
         public void Shoot(Vector3 direction)

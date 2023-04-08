@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -20,6 +21,9 @@ namespace Project.UI
 
         [SerializeField]
         private float _clickSideDetectOffset;
+
+        [SerializeField]
+        private TextMeshProUGUI _towerLabel = null;
 
         [SerializeField, Header("Tweens")]
         private Vector2 _startPositionRight = Vector2.zero;
@@ -139,6 +143,7 @@ namespace Project.UI
             var towerPreset = _towerSettings.GetTowerPresetByType(_targetTower.Type);
 
             _towerIcon.sprite = towerPreset.UIIcon;
+            _towerLabel.text = towerPreset.TowerLabel;
         }
 
         protected override void OnHide()

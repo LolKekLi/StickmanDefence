@@ -40,7 +40,7 @@ namespace Project
             }
             
             [field: SerializeField, ShowIf("UpdateType", UpdateType.UpdateWeapon)]
-            public WeaponType UpgradeWeaponType
+            public TowerType UpgradeTowerType
             {
                 get;
                 private set;

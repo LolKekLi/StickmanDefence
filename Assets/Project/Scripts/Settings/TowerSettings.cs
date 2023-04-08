@@ -12,26 +12,33 @@ namespace Project
         public class TowerPreset
         {
             [field: SerializeField]
-            public BaseTower Tower
+            public BaseTower TowerPrefab
             {
                 get;
                 private set;
             }
 
-            [field: SerializeField, PreviewField]
+            [field: SerializeField, PreviewField(100), HideLabel]
             public Sprite UIIcon
             {
                 get;
                 private set;
             }
 
-            [field: SerializeField]
-            public float AttackRadius
+            [field: SerializeField, TextArea]
+            public string TowerLabel
             {
                 get;
                 private set;
             }
-
+            
+            [field: SerializeField]
+            public BulletSettings BulletSettings
+            {
+                get;
+                private set;
+            }
+            
             [field: SerializeField]
             public float FireRate
             {
@@ -40,31 +47,48 @@ namespace Project
             }
 
             [field: SerializeField]
-            public DamageType DamageType
+            public FireType FireType
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField, ShowIf("FireType", FireType.Multi)]
+            public uint BulletCount
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField, ShowIf("FireType", FireType.Multi)]
+            public uint DelayBetweenBullet
+            {
+                get;
+                private set;
+            }
+            
+            [field: SerializeField]
+            public AttackRadiusType AttackRadiusType
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField, ShowIf("AttackRadiusType", AttackRadiusType.Circle)]
+            public float AttackRadius
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField, ShowIf("AttackRadiusType", AttackRadiusType.Box)]
+            public Vector2 AttackBoxSize
             {
                 get;
                 private set;
             }
         }
         
-        [Serializable]
-        public class HighlightPreset
-        {
-            [field: SerializeField]
-            public TowerInteractionState TowerInteractionState
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField]
-            public Color Color
-            {
-                get;
-                private set;
-            }
-        }
-
         [field: SerializeField]
         public float SmoothTime
         {
@@ -73,36 +97,12 @@ namespace Project
         } = 0.3f;
 
 
-        [field: SerializeField]
-        public Color UnslectedOutLineColor
-        {
-            get;
-            private set;
-        }
-
-        [field: SerializeField]
-        public Color CantSpawnOutLIneColor
-        {
-            get;
-            private set;
-        }
-
-        [field: SerializeField]
-        public Color SelectedOutLineColor
-        {
-            get;
-            private set;
-        }
-
-        [SerializeField]
+        [SerializeField, TableList]
         private TowerPreset[] _towerPresets = null;
-
-        [SerializeField]
-        private HighlightPreset[] _highlightPresets = null;
-
+        
         public TowerPreset GetTowerPresetByType(TowerType type)
         {
-            var towerPreset = _towerPresets.FirstOrDefault(x => x.Tower.Type == type);
+            var towerPreset = _towerPresets.FirstOrDefault(x => x.TowerPrefab.Type == type);
 
             if (towerPreset != null)
             {
@@ -114,20 +114,6 @@ namespace Project
 
                 return null;
             }
-        }
-
-        public HighlightPreset GetHighlightPresetByType(TowerInteractionState towerInteractionState)
-        {
-            var highlightPreset = _highlightPresets.FirstOrDefault(x=>x.TowerInteractionState == towerInteractionState);
-
-            if (highlightPreset == null)
-            {
-                Debug.LogError($"{typeof(TowerSettings)} Нет HighlightPreset TowerPreset под тип {towerInteractionState}");
-                
-                return null;
-            }
-
-            return highlightPreset;
         }
     }
 }

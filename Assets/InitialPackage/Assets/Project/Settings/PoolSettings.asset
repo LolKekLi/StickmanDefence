@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PoolSettings
   m_EditorClassIdentifier: 
   <Bullet>k__BackingField: {fileID: 3132477814174353257, guid: b4c78322b96b0be45b353eb8b2a5d2da, type: 3}
+  <PistolWeapon>k__BackingField: {fileID: 6393599817694256008, guid: 21d6f62bc87b1f640b76dd2ace38b8c3, type: 3}

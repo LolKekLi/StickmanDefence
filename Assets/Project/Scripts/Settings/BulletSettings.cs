@@ -7,51 +7,32 @@ namespace Project
     [CreateAssetMenu(fileName = "BulletSettings", menuName = "MySettings/Bullet Settings", order = 0)]
     public class BulletSettings : ScriptableObject
     {
-        [Serializable]
-        public class BulletPreset
+        [field: SerializeField]
+        public DamageType DamageType
         {
-            [field: SerializeField]
-            public DamageType DamageType
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField]
-            public float LifeTime
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField]
-            public float Speed
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField]
-            public Mesh Mesh
-            {
-                get;
-                private set;
-            }
+            get;
+            private set;
         }
 
-        [SerializeField]
-        private BulletPreset[] _bulletPresets = null;
-        
-        public BulletPreset GetPresetByType(DamageType type)
+        [field: SerializeField]
+        public float LifeTime
         {
-            var bulletPreset = _bulletPresets.FirstOrDefault(x => x.DamageType == type);
+            get;
+            private set;
+        }
 
-            if (bulletPreset == null)
-            {
-                Debug.LogError($"{typeof(BulletSettings)} не найден пресет пули под тип дамаг {type}");
-            }
+        [field: SerializeField]
+        public float Speed
+        {
+            get;
+            private set;
+        }
 
-            return bulletPreset;
+        [field: SerializeField]
+        public Mesh Mesh
+        {
+            get;
+            private set;
         }
     }
 }

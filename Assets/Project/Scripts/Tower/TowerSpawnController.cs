@@ -70,13 +70,13 @@ namespace Project
             }
         }
 
-        private void SpawnTower()
+        private void BuildTower()
         {
             if (CurrentTower.IsCanSpawn)
             {
                 TowerSpawned();
                 
-                CurrentTower.OnSpawn();
+                CurrentTower.OnBuild();
                 CurrentTower = null;
                 
                 StopTowerSpawn();
@@ -142,7 +142,7 @@ namespace Project
 
                             _spawnZoneController.AddSpawnZone(cantSpawnZone);
 
-                            SpawnTower();
+                            BuildTower();
                         }
                     }
                 }
@@ -160,7 +160,7 @@ namespace Project
                 _towerUpgradeController.UnselectedCurrentTower();
             }
             
-            StartCoroutine(TowerSpawnCor(currentTowerPreset.Tower));
+            StartCoroutine(TowerSpawnCor(currentTowerPreset.TowerPrefab));
         }
 
         private void UITowerSpawnController_PointerEntered()

@@ -24,9 +24,9 @@ namespace Project
 
         [SerializeField]
         private EnemySettings _enemySettings = null;
-        
+
         [SerializeField]
-        private BulletSettings _bulletSettings = null;
+        private TowerHighLightSettings _towerHighLightSettings = null;
         
         public override void InstallBindings()
         {
@@ -37,9 +37,13 @@ namespace Project
             BindControllers();
             
             BindManagers();
+            
+            BindFactory();
 
             BindMeta();
         }
+
+       
 
         private void InstallSignalBus()
         {
@@ -53,14 +57,14 @@ namespace Project
             Container.BindInstance(_skinSettings).AsCached();
             Container.BindInstance(_towerSettings).AsCached();
             Container.BindInstance(_enemySettings).AsCached();
-            Container.BindInstance(_bulletSettings).AsCached();
+            Container.BindInstance(_towerHighLightSettings).AsCached();
         }
 
         private void BindControllers()
         {
             Container.BindInstance(new LevelFlowController(_levelSettings)).AsCached();
         }
-
+        
         private void BindManagers()
         {
             BindManager(PoolManager.GetManager);
@@ -74,6 +78,10 @@ namespace Project
 #if FORCE_DEBUG
             BindManager(UIDebug.DebugMenu.GetManager);
 #endif
+        }
+        
+        private void BindFactory()
+        {
         }
 
         private void BindMeta()

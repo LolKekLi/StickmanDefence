@@ -492,6 +492,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1525107625205393229}
     m_Modifications:
     - target: {fileID: 1402321557812973939, guid: a95f3c25de066084f884c521b646edc2, type: 3}
+      propertyPath: _towerLabel
+      value: 
+      objectReference: {fileID: 8287290657062803978}
+    - target: {fileID: 1402321557812973939, guid: a95f3c25de066084f884c521b646edc2, type: 3}
       propertyPath: _clickSideDetectOffset
       value: -400
       objectReference: {fileID: 0}
@@ -590,3 +594,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6551455245103159361, guid: a95f3c25de066084f884c521b646edc2, type: 3}
   m_PrefabInstance: {fileID: 7081392428037944866}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8287290657062803978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1244249230314564648, guid: a95f3c25de066084f884c521b646edc2, type: 3}
+  m_PrefabInstance: {fileID: 7081392428037944866}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

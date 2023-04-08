@@ -5,12 +5,17 @@ namespace Project
         Base = 0,
         Fire = 1,
     }
-
-    public enum WeaponType
+    
+    public enum AttackRadiusType
     {
-        Pistol,
-        ShotGun,
-        PP,
-        SilencedPistol
+        Circle,
+        Box,
+    }
+
+    public enum FireType
+    {
+        Single,
+        Multi,
+        Shots,
     }
 }

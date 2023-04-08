@@ -39,9 +39,7 @@ namespace Project
                         {
                             var enemy = _enemySpawner.Enemies[j];
 
-                            if ((tower.transform.position.ChangeY(enemy.transform.position.y) -
-                                    enemy.transform.position)
-                                .sqrMagnitude <= tower.SqrAttackRadius)
+                            if(tower.SeeTarget(enemy.transform.position))
                             {
                                 tower.ChangeTarget(enemy);
                                 tower.Attack();
@@ -52,8 +50,7 @@ namespace Project
                     }
                     else
                     {
-                        if ((tower.transform.position - tower.Target.transform.position).sqrMagnitude >=
-                            tower.SqrAttackRadius)
+                        if (tower.IsLostTarget)
                         {
                             var enemy = TryFindNewTarget(tower);
 
@@ -63,13 +60,11 @@ namespace Project
                             }
                             else
                             {
-                                Debug.Log("TowerController stop attack");
                                 tower.StopAttack();
                             }
                         }
                         else if (tower.Target.IsDied)
                         {
-                            Debug.Log("TowerController stop attack 1");
                             tower.StopAttack();
                         }
                     }
@@ -83,8 +78,7 @@ namespace Project
             {
                 var enemy = _enemySpawner.Enemies[i];
 
-                if ((tower.transform.position.ChangeY(enemy.transform.position.y) - enemy.transform.position)
-                    .sqrMagnitude <= tower.SqrAttackRadius)
+                if (tower.SeeTarget(enemy.transform.position))
                 {
                     return enemy;
                 }
