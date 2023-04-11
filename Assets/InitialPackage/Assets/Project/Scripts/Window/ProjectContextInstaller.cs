@@ -28,6 +28,7 @@ namespace Project
         [SerializeField]
         private TowerHighLightSettings _towerHighLightSettings = null;
         
+        
         public override void InstallBindings()
         {
             InstallSignalBus();

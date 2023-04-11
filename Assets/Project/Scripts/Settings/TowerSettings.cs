@@ -31,14 +31,14 @@ namespace Project
                 get;
                 private set;
             }
-            
+
             [field: SerializeField]
             public BulletSettings BulletSettings
             {
                 get;
                 private set;
             }
-            
+
             [field: SerializeField]
             public float FireRate
             {
@@ -66,7 +66,7 @@ namespace Project
                 get;
                 private set;
             }
-            
+
             [field: SerializeField]
             public AttackRadiusType AttackRadiusType
             {
@@ -88,7 +88,7 @@ namespace Project
                 private set;
             }
         }
-        
+
         [field: SerializeField]
         public float SmoothTime
         {
@@ -99,10 +99,29 @@ namespace Project
 
         [SerializeField, TableList]
         private TowerPreset[] _towerPresets = null;
-        
+
+        [SerializeField]
+        private TowerUpgradeSettings[] _towerUpgradeSettings = null;
+
         public TowerPreset GetTowerPresetByType(TowerType type)
         {
             var towerPreset = _towerPresets.FirstOrDefault(x => x.TowerPrefab.Type == type);
+
+            if (towerPreset != null)
+            {
+                return towerPreset;
+            }
+            else
+            {
+                Debug.LogError($"{typeof(TowerSettings)} Нет пресета TowerPreset под тип {type}");
+
+                return null;
+            }
+        }
+
+        public TowerUpgradeSettings GetTowerUpdateSettings(TowerType type)
+        {
+            var towerPreset = _towerUpgradeSettings.FirstOrDefault(x => x.TowerType == type);
 
             if (towerPreset != null)
             {

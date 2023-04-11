@@ -6,6 +6,13 @@ using Zenject;
 
 namespace Project
 {
+    public enum UpgradeLinePerkType
+    {
+        FirstLine = 0,
+        SecondLine = 1,
+        ThirdLine = 2,
+    }
+
     public class TowerUpgradeController : MonoBehaviour
     {
         public static readonly string TowerKey = "TowerKey";
@@ -13,12 +20,19 @@ namespace Project
         public static readonly string MousePositionXKey = "MousePosition";
         public static readonly string TowerUpgradeControllerKey = "TowerUpgradeController";
 
+        public readonly int MaxUpgradeLvl = 4;
+        public readonly int MiddleUpgradeLvl = 2;
+
         private Action _onCloseWindowCallback = null;
-        
+
         private CameraController _cameraController = null;
         private IUpgradeable _oldTower = null;
-        private Dictionary<string, object> _upgrateTowerPopupInfo = null;
+        private Dictionary<string, object> _upgradeTowerPopupInfo = null;
         private TowerController _towerController;
+
+        private UpgradeLinePerkType[] _upgradeLinePerkTypes;
+        private TowerSettings _towerSettings;
+        private TowerUpgradePopup _upgradeTowerPopup;
 
         public IUpgradeable CurrentTower
         {
@@ -27,31 +41,12 @@ namespace Project
         }
 
         [Inject]
-        private void Construct(CameraController cameraController, TowerController towerController)
+        private void Construct(CameraController cameraController, TowerController towerController,
+            TowerSettings towerSettings)
         {
+            _towerSettings = towerSettings;
             _towerController = towerController;
             _cameraController = cameraController;
-        }
-
-        private void Start()
-        {
-            _onCloseWindowCallback = () =>
-            {
-                if (CurrentTower == null)
-                {
-                    return;
-                }
-                
-                CurrentTower.UnSelected();
-            };
-            
-            _upgrateTowerPopupInfo = new Dictionary<string, object>()
-            {
-                { TowerKey, null },
-                { MousePositionXKey, null },
-                { OnCloseWindowKey, _onCloseWindowCallback},
-                { TowerUpgradeControllerKey, this }
-            };
         }
 
         private void OnEnable()
@@ -64,48 +59,33 @@ namespace Project
             JoystickController.Clicked -= JoystickController_Clicked;
         }
 
-        private void JoystickController_Clicked(Vector2 clickPosition)
+        private void Start()
         {
-            var screenPointToRay = _cameraController.Camera.ScreenPointToRay(clickPosition);
+            _upgradeLinePerkTypes = (UpgradeLinePerkType[])Enum.GetValues(typeof(UpgradeLinePerkType));
 
-            if (Physics.Raycast(screenPointToRay, out var hit))
+            _onCloseWindowCallback = () =>
             {
-                if (hit.collider.TryGetComponent(out IUpgradeable tower))
+                if (CurrentTower == null)
                 {
-                    CurrentTower = tower;
-                    
-                    if (_oldTower != null)
-                    {
-                        _oldTower.UnSelected();
-                    }
-                    
-                    _oldTower = tower;
-                    
-                    var currentWindow = UISystem.Instance.CurrentWindow;
-
-                    var upgradeTowerPopup = currentWindow as UpgradeTowerPopup;
-
-                    CurrentTower.Selected();
-
-                    if (upgradeTowerPopup != null && upgradeTowerPopup)
-                    {
-                        upgradeTowerPopup.RefreshData(CurrentTower,  Input.mousePosition.x);
-                    }
-                    else
-                    {
-
-                        RefreshTowerPopupInfo(tower, Input.mousePosition.x );
-                        
-                        UISystem.ShowWindow<UpgradeTowerPopup>(_upgrateTowerPopupInfo);
-                    }
+                    return;
                 }
-            }
+
+                CurrentTower.UnSelected();
+            };
+
+            _upgradeTowerPopupInfo = new Dictionary<string, object>()
+            {
+                { TowerKey, null },
+                { MousePositionXKey, null },
+                { OnCloseWindowKey, _onCloseWindowCallback },
+                { TowerUpgradeControllerKey, this },
+            };
         }
 
         private void RefreshTowerPopupInfo(IUpgradeable tower, float mousePositionX)
         {
-            _upgrateTowerPopupInfo[TowerKey] = tower;
-            _upgrateTowerPopupInfo[MousePositionXKey] = mousePositionX;
+            _upgradeTowerPopupInfo[TowerKey] = tower;
+            _upgradeTowerPopupInfo[MousePositionXKey] = mousePositionX;
         }
 
         public void CellTower()
@@ -118,14 +98,141 @@ namespace Project
         public void UnselectedCurrentTower()
         {
             CurrentTower.UnSelected();
+
             var currentWindow = UISystem.Instance.CurrentWindow;
 
-            var upgradeTowerPopup = currentWindow as UpgradeTowerPopup;
+            var upgradeTowerPopup = currentWindow as TowerUpgradePopup;
 
             if (upgradeTowerPopup != null)
             {
                 upgradeTowerPopup.Close();
             }
+        }
+
+        public bool CanUpgrade(UpgradeLinePerkType upgradeLinePerkType)
+        {
+            var maxUpgradeType = CurrentTower.GetUpgradeInfo().MaxUpgradeType;
+
+            if (maxUpgradeType.HasValue && maxUpgradeType.Value != upgradeLinePerkType)
+            {
+                return CurrentTower.GetUpgradeLevel(upgradeLinePerkType) < MiddleUpgradeLvl;
+            }
+
+            return CurrentTower.GetUpgradeLevel(upgradeLinePerkType) < MaxUpgradeLvl;
+        }
+
+        private void JoystickController_Clicked(Vector2 clickPosition)
+        {
+            var screenPointToRay = _cameraController.Camera.ScreenPointToRay(clickPosition);
+
+            if (Physics.Raycast(screenPointToRay, out var hit))
+            {
+                if (hit.collider.TryGetComponent(out IUpgradeable tower))
+                {
+                    CurrentTower = tower;
+
+                    if (_oldTower != null)
+                    {
+                        _oldTower.UnSelected();
+                    }
+
+                    _oldTower = tower;
+
+                    _upgradeTowerPopup = UISystem.Instance.CurrentWindow as TowerUpgradePopup;
+
+                    CurrentTower.Selected();
+
+                    if (_upgradeTowerPopup != null && _upgradeTowerPopup)
+                    {
+                        _upgradeTowerPopup.RefreshData(CurrentTower, Input.mousePosition.x);
+                    }
+                    else
+                    {
+                        RefreshTowerPopupInfo(tower, Input.mousePosition.x);
+
+                        UISystem.ShowWindow<TowerUpgradePopup>(_upgradeTowerPopupInfo);
+
+                        _upgradeTowerPopup = UISystem.Instance.CurrentWindow as TowerUpgradePopup;
+                    }
+                }
+            }
+        }
+
+
+        public UpgradeLinePerkType? GetLockLineType()
+        {
+            var upgradeInfo = CurrentTower.GetUpgradeInfo();
+
+            if (upgradeInfo.LockLineType.HasValue)
+            {
+                return upgradeInfo.LockLineType.Value;
+            }
+
+            int zeroCount = 0;
+            UpgradeLinePerkType? result = null;
+
+            for (int i = 0; i < _upgradeLinePerkTypes.Length; i++)
+            {
+                var upgradeLinePerkType = _upgradeLinePerkTypes[i];
+
+                if (CurrentTower.GetUpgradeLevel(upgradeLinePerkType) == 0)
+                {
+                    zeroCount++;
+
+                    if (zeroCount > 1)
+                    {
+                        return null;
+                    }
+
+                    result = upgradeLinePerkType;
+                }
+            }
+
+            if (result.HasValue)
+            {
+                upgradeInfo.SetLockLineType(result.Value);
+            }
+
+            return result;
+        }
+
+        public UpgradeLinePerkType? GetMaxUpgradeType()
+        {
+            var upgradeInfo = CurrentTower.GetUpgradeInfo();
+
+            if (upgradeInfo.MaxUpgradeType.HasValue)
+            {
+                return upgradeInfo.MaxUpgradeType.Value;
+            }
+
+            UpgradeLinePerkType? result = null;
+
+            for (int i = 0; i < _upgradeLinePerkTypes.Length; i++)
+            {
+                var upgradeLevel = CurrentTower.GetUpgradeLevel(_upgradeLinePerkTypes[i]);
+                if (upgradeLevel > 2)
+                {
+                    result = _upgradeLinePerkTypes[i];
+                }
+            }
+
+            if (result.HasValue)
+            {
+                upgradeInfo.SetMaxUpgradeType(result.Value);
+                _upgradeTowerPopup.OnFindMaxUpgradeType(result.Value);
+            }
+
+            return result;
+        }
+
+        public void UpgradeTower(UpgradeLinePerkType upgradeLinePerkType)
+        {
+            CurrentTower.Upgrade(upgradeLinePerkType);
+        }
+
+        public int GetUpgradeLevel(UpgradeLinePerkType perkLineType)
+        {
+            return CurrentTower.GetUpgradeLevel(perkLineType);
         }
     }
 }

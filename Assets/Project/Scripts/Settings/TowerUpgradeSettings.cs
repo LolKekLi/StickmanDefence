@@ -12,14 +12,21 @@ namespace Project
         FireRadius,
     }
     
-    [CreateAssetMenu(fileName = "TowerUpdateSettings", menuName = "MySettings/TowerUpdateSettings", order = 0)]
-    public class TowerUpdateSettings : ScriptableObject
+    [CreateAssetMenu(fileName = "TowerUpgradeSettings", menuName = "MySettings/TowerUpgradeSettings", order = 0)]
+    public class TowerUpgradeSettings : ScriptableObject
     {
         [Serializable]
         public class UpdatePreset
         {
             [field: SerializeField]
             public UpdateType UpdateType
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField, PreviewField(100)]
+            public Sprite UIIcon
             {
                 get;
                 private set;
@@ -67,5 +74,17 @@ namespace Project
         private UpdatePreset[] _secondLineUpdatePresets = null;
         [SerializeField, ListDrawerSettings(ShowIndexLabels = true), TableList]
         private UpdatePreset[] _thirdLineUpdatePresets = null;
+
+        public UpdatePreset[] GetPresetByLineType(UpgradeLinePerkType perkType)
+        {
+            return perkType switch
+            {
+                UpgradeLinePerkType.FirstLine => _firstLineUpdatePresets,
+                UpgradeLinePerkType.SecondLine => _secondLineUpdatePresets,
+                UpgradeLinePerkType.ThirdLine => _thirdLineUpdatePresets,
+                _=> null,
+
+            };
+        }
     }
 }

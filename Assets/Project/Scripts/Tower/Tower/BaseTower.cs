@@ -1,10 +1,57 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 namespace Project
 {
+    public class UpdateInfo
+    {
+        public UpgradeLinePerkType? MaxUpgradeType
+        {
+            get;
+            private set;
+        }
+
+        public UpgradeLinePerkType? LockLineType
+        {
+            get;
+            private set;
+        }
+
+        public Dictionary<UpgradeLinePerkType, int> LevelInfo
+        {
+            get;
+            private set;
+        }
+            
+        public UpdateInfo()
+        {
+            LevelInfo = new Dictionary<UpgradeLinePerkType, int>()
+            {
+                {UpgradeLinePerkType.FirstLine, 0},
+                {UpgradeLinePerkType.SecondLine, 0},
+                {UpgradeLinePerkType.ThirdLine, 0},
+            };
+        }
+
+        public void Update(UpgradeLinePerkType upgradeLinePerkType)
+        {
+            LevelInfo[upgradeLinePerkType]++;
+        }
+
+        public void SetLockLineType(UpgradeLinePerkType result)
+        {
+            LockLineType = result;
+        }
+
+        public void SetMaxUpgradeType(UpgradeLinePerkType result)
+        {
+            MaxUpgradeType = result;
+        }
+    }
+    
     public abstract class BaseTower : PooledBehaviour, IUpgradeable
     {
         private static readonly string BaseColorID = "_BaseColor";
@@ -36,6 +83,7 @@ namespace Project
         private Color _spawnColor = default;
         private Action _onBuildAction = null;
         private Quaternion _startRotation = default;
+        private Action _onCellAction;
 
         private TowerSettings _towerSettings = null;
         private TowerSettings.TowerPreset _towerPreset = null;
@@ -43,13 +91,15 @@ namespace Project
         
         private BulletSettings _bulletPreset = null;
         private PoolManager _poolManager = null;
-
         private Coroutine _attackCor = null;
         private Coroutine _lookAtEnemyCor = null;
         private Coroutine _rotateToOrigineCor = null;
-        private Action _onCellAction;
+      
         private Collider _collider;
         private TowerHighLightSettings _highLightSettings;
+        
+        private UpdateInfo _updateInfos = null;
+        
 
         [field: SerializeField]
         public CantSpawnZone CantSpawnZone
@@ -100,6 +150,8 @@ namespace Project
                 SqrAttackRadius;
         }
 
+        
+            
         [Inject]
         private void Construct(TowerHighLightSettings highLightSettings)
         {
@@ -140,6 +192,8 @@ namespace Project
             _towerPreset = _towerSettings.GetTowerPresetByType(Type);
             _bulletPreset = _towerPreset.BulletSettings;
 
+            _updateInfos = new UpdateInfo();
+            
             _attackRadius.Setup(_towerPreset.AttackRadius);
 
             IsSpawned = false;
@@ -319,7 +373,22 @@ namespace Project
             return transform.name;
         }
 
-        private void ChangeInteractionState(TowerInteractionState interactionState)
+         int IUpgradeable.GetUpgradeLevel(UpgradeLinePerkType perkLineType)
+         {
+             return _updateInfos.LevelInfo [perkLineType];
+         }
+
+         void IUpgradeable.Upgrade(UpgradeLinePerkType upgradeLinePerkType)
+         {
+             _updateInfos.Update(upgradeLinePerkType);
+         }
+
+         UpdateInfo IUpgradeable.GetUpgradeInfo()
+         {
+             return _updateInfos;
+         }
+
+         private void ChangeInteractionState(TowerInteractionState interactionState)
         {
             _skinnedMeshRenderer.GetPropertyBlock(_materialPropertyBlock);
 

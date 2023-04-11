@@ -36,3 +36,5 @@ MonoBehaviour:
     <AttackRadiusType>k__BackingField: 0
     <AttackRadius>k__BackingField: 20
     <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+  _towerUpgradeSettings:
+  - {fileID: 11400000, guid: fa2daae6cbc5f444fbe317bad72d48c2, type: 2}

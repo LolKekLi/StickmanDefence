@@ -6,11 +6,13 @@
         {
             get;
         }
-        
+
         void UnSelected();
         void Selected();
         void Cell();
-
         string GetTransformName();
+        int GetUpgradeLevel(UpgradeLinePerkType perkLineType);
+        void Upgrade(UpgradeLinePerkType upgradeLinePerkType);
+        UpdateInfo GetUpgradeInfo();
     }
 }

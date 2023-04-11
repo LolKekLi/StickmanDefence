@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -8,7 +9,7 @@ using Zenject;
 
 namespace Project.UI
 {
-    public class UpgradeTowerPopup : Window
+    public class TowerUpgradePopup : Window
     {
         [SerializeField]
         private Button _cellButton = null;
@@ -24,6 +25,9 @@ namespace Project.UI
 
         [SerializeField]
         private TextMeshProUGUI _towerLabel = null;
+
+        [SerializeField, Header("PerkItem")]
+        private UIUpdatePerkItem[] _upgardePerkItems = null;
 
         [SerializeField, Header("Tweens")]
         private Vector2 _startPositionRight = Vector2.zero;
@@ -53,6 +57,7 @@ namespace Project.UI
         private Action _onCloseCallback = null;
         private CancellationToken _moveToken;
 
+        //TODO: есть ли смысл в этой перменной ?
         private IUpgradeable _targetTower = null;
         private CancellationTokenSource _moveTokenSource = null;
 
@@ -65,6 +70,8 @@ namespace Project.UI
         private TowerUpgradeController _towerUpgradeController;
         private Vector2 _startCloseButtonPos;
         private RectTransform _closeButtonRectTransform;
+        private TowerUpgradeSettings _towerUpdateSettings;
+        private UpgradeLinePerkType? _maxUpgradeLinePerkType;
 
         public override bool IsPopup
         {
@@ -75,11 +82,22 @@ namespace Project.UI
         public override void Preload()
         {
             base.Preload();
-            
-            _closeButtonRectTransform = _closeButton.GetComponent<RectTransform>();
 
+            _closeButtonRectTransform = _closeButton.GetComponent<RectTransform>();
             _startCloseButtonPos = _closeButtonRectTransform.anchoredPosition;
 
+            _upgardePerkItems.Do(x =>
+            {
+                x.Prepare(() =>
+                {
+                    if (_towerUpgradeController.CanUpgrade(x.PerkLineType))
+                    {
+                        _towerUpgradeController.UpgradeTower(x.PerkLineType);
+
+                        SetupPerkItems();
+                    }
+                });
+            });
         }
 
         protected override void Start()
@@ -88,7 +106,7 @@ namespace Project.UI
 
             _closeButton.onClick.AddListener(OnClose);
             _cellButton.onClick.AddListener(OnCellTower);
-            
+
             _moveToken = UniTaskUtil.RefreshToken(ref _moveTokenSource);
         }
 
@@ -97,11 +115,13 @@ namespace Project.UI
             base.OnShow();
 
             _targetTower = GetDataValue<BaseTower>(TowerUpgradeController.TowerKey);
+
             _onCloseCallback = GetDataValue<Action>(TowerUpgradeController.OnCloseWindowKey);
             var mousePositionX = GetDataValue<float>(TowerUpgradeController.MousePositionXKey);
-            
-            //DOTO: Инжектить это дело 
-            _towerUpgradeController = GetDataValue<TowerUpgradeController>(TowerUpgradeController.TowerUpgradeControllerKey);
+
+            //TODO: Инжектить это дело 
+            _towerUpgradeController =
+                GetDataValue<TowerUpgradeController>(TowerUpgradeController.TowerUpgradeControllerKey);
 
             _isRightClick = IsRightClick(mousePositionX);
 
@@ -110,7 +130,7 @@ namespace Project.UI
             _closeButtonRectTransform.anchoredPosition = !_isRightClick
                 ? _startCloseButtonPos.ChangeX(-_startCloseButtonPos.x)
                 : _startCloseButtonPos;
-            
+
             MoveTo(_isRightClick ? _endPositionLeft : _endPositionRight).Forget();
 
             SetupElements();
@@ -125,20 +145,98 @@ namespace Project.UI
                 if (isRightClick != _isRightClick)
                 {
                     _backgroundRectTransform.anchoredPosition = isRightClick ? _startPositionLeft : _startPositionRight;
-                    
                 }
-                
+
                 _isRightClick = isRightClick;
-                
+
                 MoveTo(_isRightClick ? _endPositionLeft : _endPositionRight).Forget();
             }
-            
+
             _targetTower = newTargetTower;
 
             SetupElements();
         }
 
         private void SetupElements()
+        {
+            SetupTowerUpdateSettings();
+
+            var upgradeLinePerkType = _towerUpgradeController.GetMaxUpgradeType();
+
+            OnFindMaxUpgradeType(upgradeLinePerkType);
+
+            SetupTowerInfo();
+
+            SetupPerkItems();
+        }
+
+        private void SetupTowerUpdateSettings()
+        {
+            _towerUpdateSettings = _towerSettings.GetTowerUpdateSettings(_targetTower.Type);
+        }
+
+        private void RefreshUpgradeLevelIndicators(UpgradeLinePerkType? upgradeLinePerkType)
+        {
+            _upgardePerkItems.Do(x =>
+            {
+                var maxUpgradeLvl = upgradeLinePerkType.HasValue
+                    ? (x.PerkLineType == upgradeLinePerkType.Value
+                        ? _towerUpgradeController.MaxUpgradeLvl
+                        : _towerUpgradeController.MiddleUpgradeLvl)
+                    : _towerUpgradeController.MaxUpgradeLvl;
+
+                x.RefreshUpgradeLevelIndicator(_targetTower.GetUpgradeLevel(x.PerkLineType), maxUpgradeLvl);
+            });
+        }
+
+        public void OnFindMaxUpgradeType(UpgradeLinePerkType? upgradeLinePerkType)
+        {
+            RefreshUpgradeLevelIndicators(upgradeLinePerkType);
+
+            ChangePerkItemsBackColor(upgradeLinePerkType);
+        }
+
+        private void ChangePerkItemsBackColor(UpgradeLinePerkType? maxUpgradeLinePerkType)
+        {
+            _upgardePerkItems.Do(x =>
+            {
+                var upgradeLevel = _towerUpgradeController.GetUpgradeLevel(x.PerkLineType);
+
+                x.ChangeBackColor(maxUpgradeLinePerkType.HasValue && (x.PerkLineType == maxUpgradeLinePerkType.Value
+                    ? upgradeLevel == _towerUpgradeController.MaxUpgradeLvl
+                    : upgradeLevel == _towerUpgradeController.MiddleUpgradeLvl));
+            });
+        }
+
+        private void SetupPerkItems()
+        {
+            var maxUpgradeType = _towerUpgradeController.GetMaxUpgradeType();
+            var lockLinePerkType = _towerUpgradeController.GetLockLineType();
+
+            for (int i = 0; i < _upgardePerkItems.Length; i++)
+            {
+                var uiUpdatePerkItem = _upgardePerkItems[i];
+
+                var upgradeLevel = _towerUpgradeController.GetUpgradeLevel(uiUpdatePerkItem.PerkLineType);
+
+                var presetByLineType = _towerUpdateSettings.GetPresetByLineType(uiUpdatePerkItem.PerkLineType);
+
+                var isMaxUpgradeLvlLine = maxUpgradeType.HasValue &&
+                    (maxUpgradeType.Value == uiUpdatePerkItem.PerkLineType
+                        ? upgradeLevel == _towerUpgradeController.MaxUpgradeLvl
+                        : upgradeLevel == _towerUpgradeController.MiddleUpgradeLvl);
+
+                var isLock = lockLinePerkType.HasValue && lockLinePerkType.Value == uiUpdatePerkItem.PerkLineType;
+
+                var updatePreset =
+                    presetByLineType[upgradeLevel == presetByLineType.Length ? upgradeLevel - 1 : upgradeLevel];
+
+                uiUpdatePerkItem.Setup(updatePreset,
+                    isMaxUpgradeLvlLine, isLock, upgradeLevel - 1);
+            }
+        }
+
+        private void SetupTowerInfo()
         {
             var towerPreset = _towerSettings.GetTowerPresetByType(_targetTower.Type);
 
@@ -149,7 +247,7 @@ namespace Project.UI
         protected override void OnHide()
         {
             base.OnHide();
-            
+
             _targetTower = null;
         }
 
@@ -163,10 +261,7 @@ namespace Project.UI
 
                     _onCloseCallback?.Invoke();
 
-                    await MoveTo(_isRightClick ? _startPositionLeft : _startPositionRight, () =>
-                    {
-                        Hide();
-                    });
+                    await MoveTo(_isRightClick ? _startPositionLeft : _startPositionRight, () => { Hide(); });
 
                     _isClosing = false;
                 }
@@ -182,7 +277,7 @@ namespace Project.UI
             {
                 //TODO: сделать инжект сразу в окна
                 _towerUpgradeController.CellTower();
-                
+
                 OnClose();
             }
         }
@@ -229,7 +324,7 @@ namespace Project.UI
 
         public void Close()
         {
-           OnClose();
+            OnClose();
         }
     }
 }
