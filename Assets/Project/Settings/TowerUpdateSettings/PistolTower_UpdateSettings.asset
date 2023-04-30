@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3da715bb62941d49c286d0415197445, type: 3}
   m_Name: PistolTower_UpdateSettings
   m_EditorClassIdentifier: 
-  <TowerType>k__BackingField: 0
+  <TowerTypes>k__BackingField: 00000000
   _firstLineUpdatePresets:
   - <UpdateType>k__BackingField: 0
     <UIIcon>k__BackingField: {fileID: 21300000, guid: 2526b69bbcb4f7541878a746e89d1fc7, type: 3}
@@ -65,7 +65,7 @@ MonoBehaviour:
     <UIIcon>k__BackingField: {fileID: 0}
     <Cost>k__BackingField: 350
     <Value>k__BackingField: 0
-    <UpgradeTowerType>k__BackingField: 0
+    <UpgradeTowerType>k__BackingField: 1
     <UpdateDescription>k__BackingField: "\u0421\u0442\u0440\u0435\u043B\u044F\u0435\u0442
       3 \u043F\u0430\u0442\u0440\u043E\u043D\u0430\u043C\u0438 \u0437\u0430 \u0440\u0430\u0437
       \u041F\u041F"

@@ -34,5 +34,12 @@ namespace Project
             get;
             private set;
         }
+
+        [field: SerializeField]
+        public int BaseDamage
+        {
+            get;
+            private set;
+        } = 1;
     }
 }

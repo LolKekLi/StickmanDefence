@@ -3,18 +3,19 @@ using UnityEngine;
 
 namespace Project
 {
-    public  class Bullet : PooledBehaviour
+    public class Bullet : PooledBehaviour
     {
         [SerializeField]
         private MeshFilter _meshRenderer = null;
-        
+
         private int _damageAbility = 0;
         private int _damage = 1;
-        
+
         private float _lifeTime = 0f;
         private float _speed = 0f;
 
         private Coroutine _shootCor = null;
+        private float _damageUpdateProcent;
 
         public DamageType DamageType
         {
@@ -22,8 +23,10 @@ namespace Project
             private set;
         }
 
-        public void Setup(BulletSettings bulletSettings)
+        public void Setup(BulletSettings bulletSettings, float damageUpdateProcent)
         {
+            _damageUpdateProcent = damageUpdateProcent;
+            _damage = bulletSettings.BaseDamage;
             _lifeTime = bulletSettings.LifeTime;
             _speed = bulletSettings.Speed;
             _meshRenderer.mesh = bulletSettings.Mesh;
@@ -55,7 +58,7 @@ namespace Project
                 Free();
             }
 
-            return _damage;
+            return _damage + (int)(_damage * _damageUpdateProcent / 100);
         }
 
         private IEnumerator ShootCor(Vector3 direction)
@@ -72,7 +75,7 @@ namespace Project
             }
 
             _shootCor = null;
-            
+
             Free();
         }
     }

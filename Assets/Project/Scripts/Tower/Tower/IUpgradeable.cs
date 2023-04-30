@@ -12,7 +12,7 @@
         void Cell();
         string GetTransformName();
         int GetUpgradeLevel(UpgradeLinePerkType perkLineType);
-        void Upgrade(UpgradeLinePerkType upgradeLinePerkType);
+        void Upgrade(UpgradeLinePerkType upgradeLinePerkType, TowerUpgradeSettings.UpdatePreset[] presetByLineType);
         UpdateInfo GetUpgradeInfo();
     }
 }

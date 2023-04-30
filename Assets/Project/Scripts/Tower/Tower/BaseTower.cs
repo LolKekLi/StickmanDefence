@@ -25,14 +25,14 @@ namespace Project
             get;
             private set;
         }
-            
+
         public UpdateInfo()
         {
             LevelInfo = new Dictionary<UpgradeLinePerkType, int>()
             {
-                {UpgradeLinePerkType.FirstLine, 0},
-                {UpgradeLinePerkType.SecondLine, 0},
-                {UpgradeLinePerkType.ThirdLine, 0},
+                { UpgradeLinePerkType.FirstLine, 0 },
+                { UpgradeLinePerkType.SecondLine, 0 },
+                { UpgradeLinePerkType.ThirdLine, 0 },
             };
         }
 
@@ -51,7 +51,7 @@ namespace Project
             MaxUpgradeType = result;
         }
     }
-    
+
     public abstract class BaseTower : PooledBehaviour, IUpgradeable
     {
         private static readonly string BaseColorID = "_BaseColor";
@@ -78,6 +78,9 @@ namespace Project
         private int _towerLayer;
         private int _xRayLayer;
 
+        public float _damageUpdateProcent = 0;
+        public float _fireSpeedUpdateProcent = 0;
+
         private Vector3 _velocity = Vector3.zero;
         private Color _startColor = default;
         private Color _spawnColor = default;
@@ -88,18 +91,18 @@ namespace Project
         private TowerSettings _towerSettings = null;
         private TowerSettings.TowerPreset _towerPreset = null;
         private MaterialPropertyBlock _materialPropertyBlock;
-        
+
         private BulletSettings _bulletPreset = null;
         private PoolManager _poolManager = null;
         private Coroutine _attackCor = null;
         private Coroutine _lookAtEnemyCor = null;
         private Coroutine _rotateToOrigineCor = null;
-      
+
         private Collider _collider;
         private TowerHighLightSettings _highLightSettings;
-        
-        private UpdateInfo _updateInfos = null;
-        
+
+        private UpdateInfo _updateInfo = null;
+        private WaitForSeconds _attackDelay;
 
         [field: SerializeField]
         public CantSpawnZone CantSpawnZone
@@ -150,12 +153,10 @@ namespace Project
                 SqrAttackRadius;
         }
 
-        
-            
         [Inject]
         private void Construct(TowerHighLightSettings highLightSettings)
         {
-            _highLightSettings = highLightSettings; 
+            _highLightSettings = highLightSettings;
         }
 
         public override void Prepare(PooledObjectType pooledType)
@@ -183,7 +184,7 @@ namespace Project
             Action onCellAction)
         {
             SetupLayers();
-
+            
             _skinnedMeshRenderer.gameObject.layer = _towerLayer;
             _startRotation = transform.rotation;
             _poolManager = poolManager;
@@ -192,8 +193,8 @@ namespace Project
             _towerPreset = _towerSettings.GetTowerPresetByType(Type);
             _bulletPreset = _towerPreset.BulletSettings;
 
-            _updateInfos = new UpdateInfo();
-            
+            _updateInfo = new UpdateInfo();
+
             _attackRadius.Setup(_towerPreset.AttackRadius);
 
             IsSpawned = false;
@@ -202,7 +203,7 @@ namespace Project
             _materialPropertyBlock.SetColor(BaseColorID, _spawnColor);
 
             ChangeInteractionState(TowerInteractionState.Spawned);
-
+            SetupMesh(_towerPreset.BaseMesh);
             _onBuildAction = onBuildAction;
             _onCellAction = onCellAction;
         }
@@ -254,7 +255,16 @@ namespace Project
             }
 
             _lookAtEnemyCor = StartCoroutine(LookAtTargetCor());
+            
+            RefreshAttackDelay();
             _attackCor = StartCoroutine(AttackCor(_bulletPreset));
+        }
+
+        private void RefreshAttackDelay()
+        {
+            var fireRate = 1 / _towerPreset.FireRate;
+            fireRate -= fireRate * _fireSpeedUpdateProcent;
+            _attackDelay = new WaitForSeconds(fireRate);
         }
 
         public void ToggleSpawnAbility(bool isCanSpawn)
@@ -304,26 +314,25 @@ namespace Project
 
         private IEnumerator AttackCor(BulletSettings bulletPreset)
         {
-            var waiter = new WaitForSeconds(1 / _towerPreset.FireRate);
-        
+
             while (!Target.IsDied)
             {
-                yield return waiter;
-        
+                yield return _attackDelay;
+
                 if (Target.IsDied)
                 {
                     break;
                 }
-        
+
                 var bullet = _poolManager.Get<Bullet>(_poolManager.PoolSettings.Bullet, _firePosition.position,
                     Quaternion.identity);
-        
-                bullet.Setup(_bulletPreset);
+
+                bullet.Setup(_bulletPreset, _damageUpdateProcent);
                 bullet.Shoot((Target.transform.position - transform.position).normalized);
             }
-        
+
             Debug.Log("Attack cor stop attack");
-        
+
             StopAttack();
         }
 
@@ -373,22 +382,64 @@ namespace Project
             return transform.name;
         }
 
-         int IUpgradeable.GetUpgradeLevel(UpgradeLinePerkType perkLineType)
-         {
-             return _updateInfos.LevelInfo [perkLineType];
-         }
+        int IUpgradeable.GetUpgradeLevel(UpgradeLinePerkType perkLineType)
+        {
+            return _updateInfo.LevelInfo[perkLineType];
+        }
 
-         void IUpgradeable.Upgrade(UpgradeLinePerkType upgradeLinePerkType)
-         {
-             _updateInfos.Update(upgradeLinePerkType);
-         }
+        void IUpgradeable.Upgrade(UpgradeLinePerkType upgradeLinePerkType,
+            TowerUpgradeSettings.UpdatePreset[] presetByLineType)
+        {
+            _updateInfo.Update(upgradeLinePerkType);
+            var updatePreset = presetByLineType[_updateInfo.LevelInfo[upgradeLinePerkType]];
+            var updateType = updatePreset.UpdateType;
 
-         UpdateInfo IUpgradeable.GetUpgradeInfo()
-         {
-             return _updateInfos;
-         }
+            switch (updateType)
+            {
+                case UpdateType.Damage:
+                    UpdateDamage(updatePreset.Value);
+                    break;
+                case UpdateType.FireSpeed:
+                    UpdateFireSpeed(updatePreset.Value);
+                    break;
+                case UpdateType.FireRadius:
+                    UpdateFireRadius(updatePreset.Value);
+                    break;
+            }
+            
+            if (updatePreset.NeedChangeVisual)
+            {
+                SetupMesh(updatePreset.TowerMeshType);
+            }
+        }
 
-         private void ChangeInteractionState(TowerInteractionState interactionState)
+        private void SetupMesh(TowerMeshType towerMeshType)
+        {
+            
+        }
+
+        private void UpdateFireRadius(float updatePresetValue)
+        {
+            
+        }
+
+        private void UpdateFireSpeed(float updatePresetValue)
+        {
+            _fireSpeedUpdateProcent = updatePresetValue;
+            RefreshAttackDelay();
+        }
+
+        private void UpdateDamage(float updatePresetValue)
+        {
+            _damageUpdateProcent = updatePresetValue;
+        }
+
+        UpdateInfo IUpgradeable.GetUpgradeInfo()
+        {
+            return _updateInfo;
+        }
+
+        private void ChangeInteractionState(TowerInteractionState interactionState)
         {
             _skinnedMeshRenderer.GetPropertyBlock(_materialPropertyBlock);
 

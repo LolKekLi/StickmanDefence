@@ -25,6 +25,13 @@ namespace Project
                 private set;
             }
 
+            [field: SerializeField]
+            public TowerMeshType BaseMesh
+            {
+                get;
+                private set;
+            }
+
             [field: SerializeField, TextArea]
             public string TowerLabel
             {
@@ -121,7 +128,7 @@ namespace Project
 
         public TowerUpgradeSettings GetTowerUpdateSettings(TowerType type)
         {
-            var towerPreset = _towerUpgradeSettings.FirstOrDefault(x => x.TowerType == type);
+            var towerPreset = _towerUpgradeSettings.FirstOrDefault(x => x.TowerType == type );
 
             if (towerPreset != null)
             {

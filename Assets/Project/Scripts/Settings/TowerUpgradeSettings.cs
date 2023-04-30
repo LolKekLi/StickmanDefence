@@ -7,11 +7,10 @@ namespace Project
     public enum UpdateType
     {
         Damage,
-        Speed,
-        UpdateWeapon,
+        FireSpeed,
         FireRadius,
     }
-    
+
     [CreateAssetMenu(fileName = "TowerUpgradeSettings", menuName = "MySettings/TowerUpgradeSettings", order = 0)]
     public class TowerUpgradeSettings : ScriptableObject
     {
@@ -31,7 +30,7 @@ namespace Project
                 get;
                 private set;
             }
-            
+
             [field: SerializeField]
             public uint Cost
             {
@@ -39,15 +38,22 @@ namespace Project
                 private set;
             }
 
-            [field: SerializeField, HideIf("UpdateType", UpdateType.UpdateWeapon)]
+            [field: SerializeField]
             public float Value
             {
                 get;
                 private set;
             }
-            
-            [field: SerializeField, ShowIf("UpdateType", UpdateType.UpdateWeapon)]
-            public TowerType UpgradeTowerType
+
+            [field: SerializeField]
+            public bool NeedChangeVisual
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField, ShowIf("UpdateType", true)]
+            public TowerMeshType TowerMeshType
             {
                 get;
                 private set;

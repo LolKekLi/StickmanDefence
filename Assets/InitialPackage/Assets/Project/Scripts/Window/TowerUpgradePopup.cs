@@ -70,7 +70,6 @@ namespace Project.UI
         private TowerUpgradeController _towerUpgradeController;
         private Vector2 _startCloseButtonPos;
         private RectTransform _closeButtonRectTransform;
-        private TowerUpgradeSettings _towerUpdateSettings;
         private UpgradeLinePerkType? _maxUpgradeLinePerkType;
 
         public override bool IsPopup
@@ -159,8 +158,6 @@ namespace Project.UI
 
         private void SetupElements()
         {
-            SetupTowerUpdateSettings();
-
             var upgradeLinePerkType = _towerUpgradeController.GetMaxUpgradeType();
 
             OnFindMaxUpgradeType(upgradeLinePerkType);
@@ -170,10 +167,6 @@ namespace Project.UI
             SetupPerkItems();
         }
 
-        private void SetupTowerUpdateSettings()
-        {
-            _towerUpdateSettings = _towerSettings.GetTowerUpdateSettings(_targetTower.Type);
-        }
 
         private void RefreshUpgradeLevelIndicators(UpgradeLinePerkType? upgradeLinePerkType)
         {
@@ -219,7 +212,9 @@ namespace Project.UI
 
                 var upgradeLevel = _towerUpgradeController.GetUpgradeLevel(uiUpdatePerkItem.PerkLineType);
 
-                var presetByLineType = _towerUpdateSettings.GetPresetByLineType(uiUpdatePerkItem.PerkLineType);
+                var presetByLineType =
+                    _towerUpgradeController.CurrentTowerUpdateSettings.GetPresetByLineType(
+                        uiUpdatePerkItem.PerkLineType);
 
                 var isMaxUpgradeLvlLine = maxUpgradeType.HasValue &&
                     (maxUpgradeType.Value == uiUpdatePerkItem.PerkLineType

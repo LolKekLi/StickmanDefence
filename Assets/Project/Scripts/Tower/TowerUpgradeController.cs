@@ -6,13 +6,6 @@ using Zenject;
 
 namespace Project
 {
-    public enum UpgradeLinePerkType
-    {
-        FirstLine = 0,
-        SecondLine = 1,
-        ThirdLine = 2,
-    }
-
     public class TowerUpgradeController : MonoBehaviour
     {
         public static readonly string TowerKey = "TowerKey";
@@ -33,6 +26,12 @@ namespace Project
         private UpgradeLinePerkType[] _upgradeLinePerkTypes;
         private TowerSettings _towerSettings;
         private TowerUpgradePopup _upgradeTowerPopup;
+
+        public TowerUpgradeSettings CurrentTowerUpdateSettings
+        {
+            get;
+            private set;
+        }
 
         public IUpgradeable CurrentTower
         {
@@ -91,7 +90,7 @@ namespace Project
         public void CellTower()
         {
             CurrentTower.Cell();
-            CurrentTower = null;
+            ChangeCurrentTower(null);
         }
 
         //TODO: Пересмотреть данный метод
@@ -129,7 +128,7 @@ namespace Project
             {
                 if (hit.collider.TryGetComponent(out IUpgradeable tower))
                 {
-                    CurrentTower = tower;
+                    ChangeCurrentTower(tower);
 
                     if (_oldTower != null)
                     {
@@ -158,6 +157,12 @@ namespace Project
             }
         }
 
+        private void ChangeCurrentTower(IUpgradeable tower)
+        {
+            CurrentTower = tower;
+            CurrentTowerUpdateSettings =
+                tower != null ? _towerSettings.GetTowerUpdateSettings(CurrentTower.Type) : null;
+        }
 
         public UpgradeLinePerkType? GetLockLineType()
         {
@@ -227,7 +232,9 @@ namespace Project
 
         public void UpgradeTower(UpgradeLinePerkType upgradeLinePerkType)
         {
-            CurrentTower.Upgrade(upgradeLinePerkType);
+            var presetByLineType = CurrentTowerUpdateSettings.GetPresetByLineType(upgradeLinePerkType);
+            CurrentTower.Upgrade(upgradeLinePerkType, presetByLineType);
+
         }
 
         public int GetUpgradeLevel(UpgradeLinePerkType perkLineType)

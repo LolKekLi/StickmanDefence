@@ -13,5 +13,12 @@ namespace Project
             get;
             private set;
         }
+
+        [field: SerializeField]
+        public TowerViewModel[] TowerViewModels
+        {
+            get;
+            private set;
+        }
     }
 }
