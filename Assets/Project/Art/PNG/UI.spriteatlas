@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 47e5e7fafbf5eca4da4a7ed8921737f8, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: d5e276104735df449b7acbc5f69cd418, type: 3}
+  - {fileID: 21300000, guid: 5c96d0207624daf40ad39ab54e61fc56, type: 3}
+  - {fileID: 21300000, guid: 55c9e3816b257fa40bc6e8ae5f33f1a9, type: 3}
+  - {fileID: 21300000, guid: 68712391dc5f4284397aa20979327dbb, type: 3}
+  - {fileID: 21300000, guid: a5048c12d7888a7448d0532282778d2b, type: 3}
+  - {fileID: 21300000, guid: 3bfba5039b1a56441b5dcac87222deae, type: 3}
+  - {fileID: 21300000, guid: 3209b8937117059419b40562393386e1, type: 3}
+  - {fileID: 21300000, guid: f1d104441fc215d4ab8e4aa3cf017c52, type: 3}
+  - {fileID: 21300000, guid: c698c274ca4aa494b889eff4151b3c3d, type: 3}
+  - {fileID: 21300000, guid: 1aef5b254d06645408cdc4684d984180, type: 3}
+  - {fileID: 21300000, guid: c114fe25f3978ff4d89ca0052c970b54, type: 3}
+  - {fileID: 21300000, guid: 570c8e26613d54d46b7e47b3e2db465a, type: 3}
+  - {fileID: 21300000, guid: 9f2cc846cb94a3c4daac83c4f663f367, type: 3}
+  - {fileID: 21300000, guid: 6f5c01878c806ed40aa324d2139a9d38, type: 3}
+  - {fileID: 21300000, guid: fc54761828a730d4fac11de82a3b0a42, type: 3}
+  - {fileID: 21300000, guid: 8f0f8338a941af04baacbe3946138c32, type: 3}
+  - {fileID: 21300000, guid: d50694b83f8da2f498d7b2d82a41215b, type: 3}
+  - {fileID: 21300000, guid: a218e8d8d57007a428b34978f1ffee82, type: 3}
+  - {fileID: 21300000, guid: d62ac4198297c3a4e8a6452cdcc71bab, type: 3}
+  - {fileID: 21300000, guid: 1a583459170c397419f52e8c17b2587f, type: 3}
+  - {fileID: 21300000, guid: c6d3af598d5687a42901b5a01052c89b, type: 3}
+  - {fileID: 21300000, guid: 59a6a2f9919cb6f479fb04a78eccf7fe, type: 3}
+  - {fileID: 21300000, guid: 0ae8261aa8c9e554fbd7af2d2debe2c7, type: 3}
+  - {fileID: 21300000, guid: 87e788da6eb218541928e679c17e64ae, type: 3}
+  - {fileID: 21300000, guid: 282e6aea2c7e0ac4bb4d158a43334aad, type: 3}
+  - {fileID: 21300000, guid: bc505eeaf74ad4a42b275b78d360bd7d, type: 3}
+  - {fileID: 21300000, guid: 20c4c04b74a6fed479ac398620af45b8, type: 3}
+  - {fileID: 21300000, guid: 2526b69bbcb4f7541878a746e89d1fc7, type: 3}
+  - {fileID: 21300000, guid: 5f2bec8c4ee5d7a459856ee5638a9585, type: 3}
+  - {fileID: 21300000, guid: c1da519d3d2a80943b54d5063fb789ac, type: 3}
+  - {fileID: 21300000, guid: ada49fedbf0699442b7acef975bb81e8, type: 3}
+  - {fileID: 21300000, guid: 58576f3e9fc8bbf4dbc75be40331bef0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ControllButtonIcon
+  - 8
+  - 5
+  - 7
+  - 3
+  - Star 4
+  - soundIcon
+  - PlayButtom
+  - RadialBack
+  - MusicIcon
+  - 6
+  - StartUpLogo
+  - 4
+  - PPManIcon
+  - SantaAsssssIcon
+  - BackButton
+  - GunnerManIcon
+  - BaglerASSSSIcon
+  - 10
+  - 1
+  - ControllButtonIcon1
+  - HomeIcon
+  - GranarManIcon
+  - 2
+  - SettingButton
+  - ShotGunManIcon
+  - Retasrticon
+  - "\u043F\u0443\u043B\u044F"
+  - 9
+  - ResumeButton
+  - cashIcon
+  - SniperManIcon
+  m_RenderDataMap: {}
+  m_Tag: UI
+  m_IsVariant: 0

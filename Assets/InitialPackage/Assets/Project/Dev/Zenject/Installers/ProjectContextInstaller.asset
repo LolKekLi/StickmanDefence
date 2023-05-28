@@ -19,3 +19,5 @@ MonoBehaviour:
   _towerSettings: {fileID: 11400000, guid: bff6bf9406043db45ae56e721b5ac8b9, type: 2}
   _enemySettings: {fileID: 11400000, guid: 017dcac80e89f034ca700196d675a824, type: 2}
   _towerHighLightSettings: {fileID: 11400000, guid: 8472908dbe480ad4cb7fc0c38876079f, type: 2}
+  _loadingSettings: {fileID: 11400000, guid: 7705a478c6ed7e14a8ca68a689d1b0d1, type: 2}
+  _assUISetting: {fileID: 11400000, guid: 86fba39790b1f64449086cb613e829d8, type: 2}

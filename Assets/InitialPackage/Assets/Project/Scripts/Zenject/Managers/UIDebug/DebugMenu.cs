@@ -49,20 +49,20 @@ namespace Project.UIDebug
         {
             _helper = new HotKeyHelper(new Dictionary<KeyCode, Action>
             {
-                { KeyCode.Z, () =>
-                {
-                    _customDebugMenu.CompleteLevel();
-                }},
-
-                { KeyCode.X, () =>
-                {
-                    _customDebugMenu.ReloadLevel();
-                }},
-                
-                { KeyCode.C, () =>
-                {
-                    _customDebugMenu.PrevLevel();
-                }}
+                // { KeyCode.Z, () =>
+                // {
+                //     _customDebugMenu.CompleteLevel();
+                // }},
+                //
+                // { KeyCode.X, () =>
+                // {
+                //     _customDebugMenu.ReloadLevel();
+                // }},
+                //
+                // { KeyCode.C, () =>
+                // {
+                //     _customDebugMenu.PrevLevel();
+                // }}
             });
         }
 

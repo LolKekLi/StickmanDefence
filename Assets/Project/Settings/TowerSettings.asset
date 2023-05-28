@@ -15,7 +15,8 @@ MonoBehaviour:
   <SmoothTime>k__BackingField: 0.025
   _towerPresets:
   - <TowerPrefab>k__BackingField: {fileID: 3171717336070501216, guid: 36be8af63dd72964bad327a47851a454, type: 3}
-    <UIIcon>k__BackingField: {fileID: 21300000, guid: 09bb274d64bfd464d9d7b90e8821c864, type: 3}
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: d50694b83f8da2f498d7b2d82a41215b, type: 3}
+    <BaseMesh>k__BackingField: 0
     <TowerLabel>k__BackingField: "\u0447\u0435\u043B \u0441 \u0431\u0430\u0437\u0443\u043A\u043E\u0439"
     <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
     <FireRate>k__BackingField: 1
@@ -26,7 +27,8 @@ MonoBehaviour:
     <AttackRadius>k__BackingField: 100
     <AttackBoxSize>k__BackingField: {x: 0, y: 0}
   - <TowerPrefab>k__BackingField: {fileID: 3171717336070501216, guid: 9054509fe25307a48845835e2a139568, type: 3}
-    <UIIcon>k__BackingField: {fileID: 21300000, guid: c519191c2d5060f40951692ae33a4ede, type: 3}
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: 0ae8261aa8c9e554fbd7af2d2debe2c7, type: 3}
+    <BaseMesh>k__BackingField: 1
     <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u043F\u0438\u0441\u0442\u043E\u043B\u0435\u0442\u043E\u043C"
     <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
     <FireRate>k__BackingField: 1

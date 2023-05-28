@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Zenject;
 
 namespace Project.UI
@@ -54,6 +55,11 @@ namespace Project.UI
         {
             _instance = this;
 
+            var cameraData = _camera.GetUniversalAdditionalCameraData();
+            cameraData.renderType = CameraRenderType.Overlay;
+
+
+            
             _windows = _windowsContainer.GetComponentsInChildren<Window>(true);
             _windows.Do(wind => wind.Preload());
 
@@ -81,8 +87,11 @@ namespace Project.UI
 
             window.Show(() =>
             {
-                Instance._stack.Pop();
-                Instance._current = Instance._stack.Peek();
+                if ( Instance._stack.Count > 1)
+                {
+                    Instance._stack.Pop();
+                    Instance._current = Instance._stack.Peek();
+                }
             });
 
             Instance._current = window;

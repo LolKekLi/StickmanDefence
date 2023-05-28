@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Project.Meta;
 using UnityEngine;
+using Zenject;
 
 namespace Project.UI
 {
@@ -11,6 +12,7 @@ namespace Project.UI
         public static event Action<Window> Hidden = delegate { };
 
         private Action _onHideAction = null;
+
         
         public abstract bool IsPopup
         {
