@@ -2,7 +2,7 @@
 {
     public class Gunner : BaseTower
     {
-        public override TowerType Type
+        public override TowerType TowerType
         {
             get => TowerType.Gunner;
         }

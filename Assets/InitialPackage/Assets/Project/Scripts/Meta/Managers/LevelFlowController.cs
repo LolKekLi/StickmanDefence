@@ -69,7 +69,7 @@ namespace Project
 
             callback?.Invoke();
 
-            UISystem.ShowWindow<GameWindow>();
+            //UISystem.ShowWindow<GameWindow>();
         }
 
         public async UniTask LoadHub()

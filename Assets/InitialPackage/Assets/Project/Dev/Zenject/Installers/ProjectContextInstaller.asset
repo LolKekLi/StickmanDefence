@@ -21,3 +21,5 @@ MonoBehaviour:
   _towerHighLightSettings: {fileID: 11400000, guid: 8472908dbe480ad4cb7fc0c38876079f, type: 2}
   _loadingSettings: {fileID: 11400000, guid: 7705a478c6ed7e14a8ca68a689d1b0d1, type: 2}
   _assUISetting: {fileID: 11400000, guid: 86fba39790b1f64449086cb613e829d8, type: 2}
+  _uiTowerSetting: {fileID: 11400000, guid: bf59ba6588a61b84f86b017205440205, type: 2}
+  _towerViewModelSettings: {fileID: 11400000, guid: ddf7c8eb09a1cbe428ee2a6753e4efa0, type: 2}

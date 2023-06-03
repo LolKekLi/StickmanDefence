@@ -20,6 +20,18 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 21300000, guid: d501e8dae3b286a44a3c9ddd12920f9d, type: 3}
     <NightIcon>k__BackingField: {fileID: 21300000, guid: d501e8dae3b286a44a3c9ddd12920f9d, type: 3}
     <Prise>k__BackingField: 100
+  - <SceneName>k__BackingField: TestScene2
+    <LevelName>k__BackingField: "\u0423\u0440\u0435\u043D\u044C 2"
+    <NightSceneName>k__BackingField: NigjhtTestScene
+    <Icon>k__BackingField: {fileID: 21300000, guid: d501e8dae3b286a44a3c9ddd12920f9d, type: 3}
+    <NightIcon>k__BackingField: {fileID: 21300000, guid: d501e8dae3b286a44a3c9ddd12920f9d, type: 3}
+    <Prise>k__BackingField: 150
+  - <SceneName>k__BackingField: TestScene3
+    <LevelName>k__BackingField: "\u0423\u0440\u0435\u043D\u044C 3"
+    <NightSceneName>k__BackingField: 
+    <Icon>k__BackingField: {fileID: 21300000, guid: d501e8dae3b286a44a3c9ddd12920f9d, type: 3}
+    <NightIcon>k__BackingField: {fileID: 21300000, guid: d501e8dae3b286a44a3c9ddd12920f9d, type: 3}
+    <Prise>k__BackingField: 300
   <MultiplierPresets>k__BackingField:
   - <Type>k__BackingField: 0
     <Multiplier>k__BackingField: 1

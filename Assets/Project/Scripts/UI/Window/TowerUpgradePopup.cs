@@ -66,6 +66,9 @@ namespace Project.UI
         [Inject]
         private TowerSettings _towerSettings = null;
 
+        [Inject]
+        private UITowerSetting _towerUiSetting;
+
         private TowerUpgradeController _towerUpgradeController;
         private Vector2 _startCloseButtonPos;
         private RectTransform _closeButtonRectTransform;
@@ -165,8 +168,7 @@ namespace Project.UI
 
             SetupPerkItems();
         }
-
-
+        
         private void RefreshUpgradeLevelIndicators(UpgradeLinePerkType? upgradeLinePerkType)
         {
             _upgardePerkItems.Do(x =>
@@ -232,7 +234,7 @@ namespace Project.UI
 
         private void SetupTowerInfo()
         {
-            var towerPreset = _towerSettings.GetTowerPresetByType(_targetTower.Type);
+            var towerPreset = _towerUiSetting.GetUITowerPreset(_targetTower.TowerViewModelType);
 
             _towerIcon.sprite = towerPreset.UIIcon;
             _towerLabel.text = towerPreset.TowerLabel;

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Project.LevelSettings">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Project.LevelSettings.DifficultMultiplierPreset">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\InitialPackage\Assets\Project\Scripts\Settings\LevelSettings.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Project.LevelSettings.LevelPreset">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\InitialPackage\Assets\Project\Scripts\Settings\LevelSettings.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAgABAAAAAAAACAA=</HashCode>
+      <FileName>Assets\InitialPackage\Assets\Project\Scripts\Settings\LevelSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.ProjectContextInstaller">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAgABAQBAARAAmAAAAAAAAAAAAAAACAKAQAABIAAIAA=</HashCode>
+      <FileName>Assets\Project\Scripts\UI\Window\ProjectContextInstaller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

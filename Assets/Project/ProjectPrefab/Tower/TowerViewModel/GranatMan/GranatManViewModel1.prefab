@@ -124,6 +124,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GranatManViewModel1
       objectReference: {fileID: 0}
+    - target: {fileID: 1939369722897087341, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
+      propertyPath: <ModelType>k__BackingField
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
 --- !u!4 &8781438719225323231 stripped

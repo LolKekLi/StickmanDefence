@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DamageType>k__BackingField: 0
   <LifeTime>k__BackingField: 30
-  <Speed>k__BackingField: 30
+  <Speed>k__BackingField: 60
   <Mesh>k__BackingField: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  <BaseDamage>k__BackingField: 1

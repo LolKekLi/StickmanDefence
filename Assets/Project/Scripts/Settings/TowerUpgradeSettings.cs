@@ -6,9 +6,13 @@ namespace Project
 {
     public enum UpdateType
     {
+       
+        
         Damage,
         FireSpeed,
         FireRadius,
+        
+        None =50,
     }
 
     [CreateAssetMenu(fileName = "TowerUpgradeSettings", menuName = "MySettings/TowerUpgradeSettings", order = 0)]
@@ -52,8 +56,15 @@ namespace Project
                 private set;
             }
 
-            [field: SerializeField, ShowIf("UpdateType", true)]
-            public TowerMeshType TowerMeshType
+            [field: SerializeField, ShowIf("NeedChangeVisual", true)]
+            public TowerViewModelType TowerMeshType
+            {
+                get;
+                private set;
+            }
+            
+            [field: SerializeField, ShowIf("NeedChangeVisual", true)]
+            public FirePreset FirePreset
             {
                 get;
                 private set;

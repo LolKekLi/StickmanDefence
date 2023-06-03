@@ -8,8 +8,11 @@ namespace Project
         [SerializeField]
         private MeshFilter _meshRenderer = null;
 
+        [SerializeField]
+        private TrailRenderer _trailRenderer;
+
         private int _damageAbility = 0;
-        private int _damage = 1;
+        private float _damage = 1;
 
         private float _lifeTime = 0f;
         private float _speed = 0f;
@@ -42,6 +45,11 @@ namespace Project
         {
             base.BeforeReturnToPool();
 
+            if (_trailRenderer)
+            {
+                _trailRenderer.Clear();
+            }
+            
             if (_shootCor != null)
             {
                 StopCoroutine(_shootCor);
@@ -49,7 +57,7 @@ namespace Project
             }
         }
 
-        public int GetDamage()
+        public float GetDamage()
         {
             _damageAbility--;
 
@@ -58,7 +66,7 @@ namespace Project
                 Free();
             }
 
-            return _damage + (int)(_damage * _damageUpdateProcent / 100);
+            return _damage + (_damage * (_damageUpdateProcent / 100));
         }
 
         private IEnumerator ShootCor(Vector3 direction)

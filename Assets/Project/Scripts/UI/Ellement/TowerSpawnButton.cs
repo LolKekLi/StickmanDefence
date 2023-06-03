@@ -37,7 +37,7 @@ namespace Project.UI
             _button.onClick.AddListener(OnButtonClick);
         }
 
-        public void Setup(TowerSettings.TowerPreset towerPreset, int index, Action<int> onClick)
+        public void Setup(UITowerSetting.UITowerPreset towerPreset, int index, Action<int> onClick)
         {
             _index = index;
 

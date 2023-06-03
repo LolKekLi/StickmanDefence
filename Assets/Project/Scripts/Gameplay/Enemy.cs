@@ -12,7 +12,7 @@ namespace Project
         [SerializeField]
         private EnemyType _spawnEnemyType = default;
 
-        private int _hp = 0;
+        private float _hp = 0;
         private float _speed = 0;
 
         private Action _onFreeAction = null;
@@ -57,11 +57,12 @@ namespace Project
 
         private void TakeDamage(Bullet bullet)
         {
+            var damage = bullet.GetDamage();
+            
             var bulletDamageType = bullet.DamageType;
 
-            _hp -= bullet.GetDamage();
-
-
+            _hp -= damage;
+            
             if (_hp <= 0)
             {
                 Die();

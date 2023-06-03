@@ -5,6 +5,66 @@ using UnityEngine;
 
 namespace Project
 {
+    [Serializable]
+    public class FirePreset
+    {
+        [field: SerializeField]
+        public BulletSettings BulletSettings
+        {
+            get;
+            private set;
+        }
+
+        [field: SerializeField]
+        public float FireRate
+        {
+            get;
+            private set;
+        }
+
+        [field: SerializeField]
+        public FireType FireType
+        {
+            get;
+            private set;
+        }
+
+        [field: SerializeField, ShowIf("FireType", FireType.Multi)]
+        public uint BulletCount
+        {
+            get;
+            private set;
+        }
+
+        [field: SerializeField, ShowIf("FireType", FireType.Multi)]
+        public uint DelayBetweenBullet
+        {
+            get;
+            private set;
+        }
+
+        [field: SerializeField]
+        public AttackRadiusType AttackRadiusType
+        {
+            get;
+            private set;
+        }
+
+        [field: SerializeField, ShowIf("AttackRadiusType", AttackRadiusType.Circle)]
+        public float AttackRadius
+        {
+            get;
+            private set;
+        }
+
+        [field: SerializeField, ShowIf("AttackRadiusType", AttackRadiusType.Box)]
+        public Vector2 AttackBoxSize
+        {
+            get;
+            private set;
+        }
+    }
+
     [CreateAssetMenu(fileName = "TowerSettings", menuName = "MySettings/Tower Settings", order = 0)]
     public class TowerSettings : ScriptableObject
     {
@@ -17,79 +77,16 @@ namespace Project
                 get;
                 private set;
             }
-
-            [field: SerializeField, PreviewField(100), HideLabel]
-            public Sprite UIIcon
+            
+            [field: SerializeField]
+            public TowerViewModelType BaseViewModelType
             {
                 get;
-                private set;
+                set;
             }
 
             [field: SerializeField]
-            public TowerMeshType BaseMesh
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField, TextArea]
-            public string TowerLabel
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField]
-            public BulletSettings BulletSettings
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField]
-            public float FireRate
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField]
-            public FireType FireType
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField, ShowIf("FireType", FireType.Multi)]
-            public uint BulletCount
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField, ShowIf("FireType", FireType.Multi)]
-            public uint DelayBetweenBullet
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField]
-            public AttackRadiusType AttackRadiusType
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField, ShowIf("AttackRadiusType", AttackRadiusType.Circle)]
-            public float AttackRadius
-            {
-                get;
-                private set;
-            }
-
-            [field: SerializeField, ShowIf("AttackRadiusType", AttackRadiusType.Box)]
-            public Vector2 AttackBoxSize
+            public FirePreset FirePreset
             {
                 get;
                 private set;
@@ -112,7 +109,7 @@ namespace Project
 
         public TowerPreset GetTowerPresetByType(TowerType type)
         {
-            var towerPreset = _towerPresets.FirstOrDefault(x => x.TowerPrefab.Type == type);
+            var towerPreset = _towerPresets.FirstOrDefault(x => x.TowerPrefab.TowerType == type);
 
             if (towerPreset != null)
             {
@@ -128,7 +125,7 @@ namespace Project
 
         public TowerUpgradeSettings GetTowerUpdateSettings(TowerType type)
         {
-            var towerPreset = _towerUpgradeSettings.FirstOrDefault(x => x.TowerType == type );
+            var towerPreset = _towerUpgradeSettings.FirstOrDefault(x => x.TowerType == type);
 
             if (towerPreset != null)
             {

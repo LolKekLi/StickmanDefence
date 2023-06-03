@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ded48a6fb14f7f8f88633f7202f4b1, type: 3}
+  m_Name: GridSettings
+  m_EditorClassIdentifier: 
+  <GridSize>k__BackingField: {x: 64.81, y: 74.38}
+  <Spacing>k__BackingField: 18.2
+  <LineSpace>k__BackingField: 18.2
+  <ElementBoarderSize>k__BackingField: 6.99
+  <YPos>k__BackingField: 0

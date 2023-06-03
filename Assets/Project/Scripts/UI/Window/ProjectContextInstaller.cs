@@ -34,6 +34,12 @@ namespace Project
 
         [SerializeField]
         private AssUISetting _assUISetting;
+
+        [SerializeField]
+        private UITowerSetting _uiTowerSetting;
+
+        [SerializeField]
+        private TowerViewModelSettings _towerViewModelSettings;
         
         
         public override void InstallBindings()
@@ -68,6 +74,8 @@ namespace Project
             Container.BindInstance(_towerHighLightSettings).AsCached();
             Container.BindInstance(_loadingSettings).AsCached();
             Container.BindInstance(_assUISetting).AsCached();
+            Container.BindInstance(_uiTowerSetting).AsCached();
+            Container.BindInstance(_towerViewModelSettings).AsCached();
         }
 
         private void BindControllers()
@@ -84,6 +92,8 @@ namespace Project
             BindManager(AnalyticsManager.GetManager);
             BindManager(AdsManager.GetManager);
             BindManager(InAppManager.GetManager);
+            BindManager(TowerFactory.GetManager);
+            BindManager(TowerViewModelFactory.GetManager);
             
 #if FORCE_DEBUG
             BindManager(UIDebug.DebugMenu.GetManager);

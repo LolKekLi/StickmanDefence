@@ -18,8 +18,193 @@ MonoBehaviour:
     <UIIcon>k__BackingField: {fileID: 0}
     <Cost>k__BackingField: 0
     <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 1
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  - <UpdateType>k__BackingField: 1
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
     <NeedChangeVisual>k__BackingField: 0
     <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
     <UpdateDescription>k__BackingField: 
-  _secondLineUpdatePresets: []
-  _thirdLineUpdatePresets: []
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  _secondLineUpdatePresets:
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  _thirdLineUpdatePresets:
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 
+  - <UpdateType>k__BackingField: 0
+    <UIIcon>k__BackingField: {fileID: 0}
+    <Cost>k__BackingField: 0
+    <Value>k__BackingField: 0
+    <NeedChangeVisual>k__BackingField: 0
+    <TowerMeshType>k__BackingField: 0
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 0}
+      <FireRate>k__BackingField: 0
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 0
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <UpdateDescription>k__BackingField: 

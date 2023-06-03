@@ -16,6 +16,7 @@ namespace Project
         {
             Container.Bind<TowerController>().FromInstance(_towerController).AsCached();
             Container.Inject(_uiSystem);
+            
         }
     }
 }

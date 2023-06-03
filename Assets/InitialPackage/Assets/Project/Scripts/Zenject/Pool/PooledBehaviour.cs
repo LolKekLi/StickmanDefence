@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -16,7 +17,8 @@ namespace Project
 
         public PooledObjectType Type
         {
-            get => _type;
+            get =>
+                _type;
         }
 
         public bool IsFree
@@ -27,17 +29,23 @@ namespace Project
 
         public float FreeTimeout
         {
-            get => _freeTimeout;
-            
+            get =>
+                _freeTimeout;
+
             protected set
             {
                 _freeTimeout = value;
-                
+
                 if (_freeTimeout > 0)
                 {
                     StartCoroutine(FreeCor());
                 }
             }
+        }
+
+        private void OnDisable()
+        {
+            
         }
 
         public virtual void Prepare(PooledObjectType pooledType)
@@ -59,25 +67,23 @@ namespace Project
 
         protected virtual void BeforeReturnToPool()
         {
-
         }
 
         protected virtual void ReturnToPool()
         {
-            transform.parent = _defaultParent;   
+            transform.parent = _defaultParent;
             gameObject.SetActive(false);
         }
 
         public virtual void Init()
         {
-
         }
 
         public void Free()
         {
             BeforeReturnToPool();
             ReturnToPool();
-            
+
             IsFree = true;
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.UI.ProceduralImage;
 
@@ -67,8 +68,9 @@ namespace Project.UI
         }
 
 #if UNITY_EDITOR
+        [FormerlySerializedAs("_back")]
         [SerializeField, Space]
-        private UniformModifier _back;
+        private UniformModifier _backUni;
 
         [SerializeField]
         private UniformModifier _front;
@@ -82,12 +84,12 @@ namespace Project.UI
 
         private void OnValidate()
         {
-            if (Application.isPlaying || !_back || !_front)
+            if (Application.isPlaying || !_backUni || !_front)
             {
                 return;
             }
             
-            _back.Radius = _value;
+            _backUni.Radius = _value;
             _front.Radius = _value - _offset;
         }
 #endif

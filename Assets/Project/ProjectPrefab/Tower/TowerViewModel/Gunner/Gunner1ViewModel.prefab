@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8998298242714631574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7092859001438733654}
+  m_Layer: 0
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7092859001438733654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8998298242714631574}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0.369}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8281938842979274434}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1642148927
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29,46 +59,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.03
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.57
+      value: 0.61
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.07
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70886797
+      value: 0.35283953
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7036761
+      value: -0.48425138
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.042073578
+      value: -0.6053818
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.02399984
+      value: -0.5239445
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -88.476
+      value: -102.552
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -76.651
+      value: -21.666016
       objectReference: {fileID: 0}
     - target: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 71.295
+      value: -85.23999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
+--- !u!4 &8281938842979274434 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8281938844579478269, guid: 95bfa097858bfaa4a852893caa015330, type: 3}
+  m_PrefabInstance: {fileID: 1642148927}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6782123131648083218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96,6 +131,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gunner1ViewModel
       objectReference: {fileID: 0}
+    - target: {fileID: 1939369722897087341, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
+      propertyPath: <ModelType>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939369722897087341, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
+      propertyPath: <FirePosition>k__BackingField
+      value: 
+      objectReference: {fileID: 7092859001438733654}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
 --- !u!4 &368571686933627636 stripped

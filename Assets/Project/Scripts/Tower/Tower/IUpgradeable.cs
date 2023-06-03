@@ -1,8 +1,15 @@
-﻿namespace Project
+﻿using System;
+
+namespace Project
 {
     public interface IUpgradeable
     {
-        TowerType Type
+        TowerType TowerType
+        {
+            get;
+        }
+
+        TowerViewModelType TowerViewModelType
         {
             get;
         }
@@ -12,7 +19,10 @@
         void Cell();
         string GetTransformName();
         int GetUpgradeLevel(UpgradeLinePerkType perkLineType);
-        void Upgrade(UpgradeLinePerkType upgradeLinePerkType, TowerUpgradeSettings.UpdatePreset[] presetByLineType);
+
+        void Upgrade(UpgradeLinePerkType upgradeLinePerkType, TowerUpgradeSettings.UpdatePreset[] presetByLineType, 
+            Action<TowerViewModelType, FirePreset> changeViewModelCallback);
+
         UpdateInfo GetUpgradeInfo();
     }
 }

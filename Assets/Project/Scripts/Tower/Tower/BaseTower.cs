@@ -1,57 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 namespace Project
 {
-    public class UpdateInfo
-    {
-        public UpgradeLinePerkType? MaxUpgradeType
-        {
-            get;
-            private set;
-        }
-
-        public UpgradeLinePerkType? LockLineType
-        {
-            get;
-            private set;
-        }
-
-        public Dictionary<UpgradeLinePerkType, int> LevelInfo
-        {
-            get;
-            private set;
-        }
-
-        public UpdateInfo()
-        {
-            LevelInfo = new Dictionary<UpgradeLinePerkType, int>()
-            {
-                { UpgradeLinePerkType.FirstLine, 0 },
-                { UpgradeLinePerkType.SecondLine, 0 },
-                { UpgradeLinePerkType.ThirdLine, 0 },
-            };
-        }
-
-        public void Update(UpgradeLinePerkType upgradeLinePerkType)
-        {
-            LevelInfo[upgradeLinePerkType]++;
-        }
-
-        public void SetLockLineType(UpgradeLinePerkType result)
-        {
-            LockLineType = result;
-        }
-
-        public void SetMaxUpgradeType(UpgradeLinePerkType result)
-        {
-            MaxUpgradeType = result;
-        }
-    }
-
     public abstract class BaseTower : PooledBehaviour, IUpgradeable
     {
         private static readonly string BaseColorID = "_BaseColor";
@@ -60,13 +13,10 @@ namespace Project
         private static readonly string RenderModID = "_RenderingMode";
 
         [SerializeField]
-        private Transform _firePosition = null;
-
-        [SerializeField]
         private AttackRadius _attackRadius = null;
 
-        [SerializeField]
-        private SkinnedMeshRenderer _skinnedMeshRenderer = null;
+        // [SerializeField]
+        // private SkinnedMeshRenderer _skinnedMeshRenderer = null;
 
         [SerializeField]
         private LayerMask _towerLayerMask = default;
@@ -78,31 +28,33 @@ namespace Project
         private int _towerLayer;
         private int _xRayLayer;
 
-        public float _damageUpdateProcent = 0;
-        public float _fireSpeedUpdateProcent = 0;
-
         private Vector3 _velocity = Vector3.zero;
-        private Color _startColor = default;
-        private Color _spawnColor = default;
+
+        // private Color _startColor = default;
+        // private Color _spawnColor = default;
         private Action _onBuildAction = null;
         private Quaternion _startRotation = default;
         private Action _onCellAction;
 
         private TowerSettings _towerSettings = null;
-        private TowerSettings.TowerPreset _towerPreset = null;
-        private MaterialPropertyBlock _materialPropertyBlock;
 
-        private BulletSettings _bulletPreset = null;
+        private TowerSettings.TowerPreset _towerPreset = null;
+        // private MaterialPropertyBlock _materialPropertyBlock;
+
+        //private BulletSettings _bulletPreset = null;
         private PoolManager _poolManager = null;
         private Coroutine _attackCor = null;
         private Coroutine _lookAtEnemyCor = null;
         private Coroutine _rotateToOrigineCor = null;
 
         private Collider _collider;
-        private TowerHighLightSettings _highLightSettings;
+        //private TowerHighLightSettings _highLightSettings;
 
         private UpdateInfo _updateInfo = null;
-        private WaitForSeconds _attackDelay;
+
+        private BaseAttackController _attackController;
+        private TowerViewModel _towerViewModel;
+        private TowerHighLightSettings _highLightSettings;
 
         [field: SerializeField]
         public CantSpawnZone CantSpawnZone
@@ -111,9 +63,15 @@ namespace Project
             private set;
         }
 
-        public abstract TowerType Type
+        public abstract TowerType TowerType
         {
             get;
+        }
+
+        public TowerViewModelType TowerViewModelType
+        {
+            get =>
+                _towerViewModel.ModelType;
         }
 
         public bool IsCanSpawn
@@ -130,14 +88,17 @@ namespace Project
 
         public float SqrAttackRadius
         {
-            get =>
-                _towerPreset.AttackRadius * _towerPreset.AttackRadius;
+            get
+            {
+                return _attackRadius.SqrAttackRadius;
+                return _towerPreset.FirePreset.AttackRadius * _towerPreset.FirePreset.AttackRadius;
+            }
         }
 
         public Enemy Target
         {
-            get;
-            private set;
+            get =>
+                _attackController.Target;
         }
 
         public bool IsAttack
@@ -153,6 +114,7 @@ namespace Project
                 SqrAttackRadius;
         }
 
+
         [Inject]
         private void Construct(TowerHighLightSettings highLightSettings)
         {
@@ -164,10 +126,6 @@ namespace Project
             base.Prepare(pooledType);
 
             _collider = GetComponent<Collider>();
-            _materialPropertyBlock = new MaterialPropertyBlock();
-
-            _startColor = _skinnedMeshRenderer.material.color;
-            _spawnColor = new Color(_startColor.r, _startColor.g, _startColor.b, _startColor.a / 2);
         }
 
         public override void SpawnFromPool()
@@ -175,37 +133,51 @@ namespace Project
             base.SpawnFromPool();
 
             _collider.enabled = false;
-            _skinnedMeshRenderer.GetPropertyBlock(_materialPropertyBlock);
-            _materialPropertyBlock.SetFloat(OutLineWidthID, 0.5f);
-            _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
         }
 
         public void OnGetTowerFromPool(TowerSettings towerSettings, PoolManager poolManager, Action onBuildAction,
-            Action onCellAction)
+            Action onCellAction, TowerViewModel towerViewModel)
         {
             SetupLayers();
-            
-            _skinnedMeshRenderer.gameObject.layer = _towerLayer;
+
             _startRotation = transform.rotation;
             _poolManager = poolManager;
             _towerSettings = towerSettings;
 
-            _towerPreset = _towerSettings.GetTowerPresetByType(Type);
-            _bulletPreset = _towerPreset.BulletSettings;
+            _towerPreset = _towerSettings.GetTowerPresetByType(TowerType);
 
             _updateInfo = new UpdateInfo();
 
-            _attackRadius.Setup(_towerPreset.AttackRadius);
+            _attackRadius.Setup(_towerPreset.FirePreset.AttackRadius);
 
             IsSpawned = false;
 
-            _skinnedMeshRenderer.GetPropertyBlock(_materialPropertyBlock);
-            _materialPropertyBlock.SetColor(BaseColorID, _spawnColor);
+            RefreshTowerViewModel(towerViewModel);
 
             ChangeInteractionState(TowerInteractionState.Spawned);
-            SetupMesh(_towerPreset.BaseMesh);
+
             _onBuildAction = onBuildAction;
             _onCellAction = onCellAction;
+        }
+
+        public void ChangeViewModel(TowerViewModel towerViewModel, BaseAttackController attackController,
+            FirePreset firePreset)
+        {
+            _towerViewModel.Free();
+
+            RefreshTowerViewModel(towerViewModel);
+
+            _towerViewModel.OnBuild();
+
+            SetupAttackController(attackController, firePreset);
+        }
+
+        private void RefreshTowerViewModel(TowerViewModel towerViewModel)
+        {
+            _towerViewModel = towerViewModel;
+            _towerViewModel.transform.localPosition = Vector3.zero;
+            _towerViewModel.transform.localRotation = Quaternion.identity;
+            _towerViewModel.OnGetTowerFromPool(_towerLayer, _xRayLayer, _highLightSettings, _attackRadius);
         }
 
         private void SetupLayers()
@@ -225,19 +197,35 @@ namespace Project
             }
         }
 
-        public void OnBuild()
+        public void OnBuild(BaseAttackController attackController)
         {
             _collider.enabled = true;
-            _skinnedMeshRenderer.GetPropertyBlock(_materialPropertyBlock);
-            _materialPropertyBlock.SetColor(BaseColorID, _startColor);
 
             IsSpawned = true;
 
-            _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
+            _towerViewModel.OnBuild();
 
             ChangeInteractionState(TowerInteractionState.UnSelected);
 
+            SetupAttackController(attackController, _towerPreset.FirePreset);
+
             _onBuildAction?.Invoke();
+        }
+
+        private void SetupAttackController(BaseAttackController attackController, FirePreset firePreset)
+        {
+            Enemy tempTarget = null;
+
+            if (_attackController != null)
+            {
+                tempTarget = _attackController.Target;
+            }
+
+            _attackController = attackController;
+            _attackController.Setup(firePreset.BulletSettings, _towerViewModel.FirePosition, transform, firePreset,
+                _poolManager);
+
+            _attackController.Target = tempTarget;
         }
 
         public void Move(Vector3 targetPosition)
@@ -255,16 +243,8 @@ namespace Project
             }
 
             _lookAtEnemyCor = StartCoroutine(LookAtTargetCor());
-            
-            RefreshAttackDelay();
-            _attackCor = StartCoroutine(AttackCor(_bulletPreset));
-        }
-
-        private void RefreshAttackDelay()
-        {
-            var fireRate = 1 / _towerPreset.FireRate;
-            fireRate -= fireRate * _fireSpeedUpdateProcent;
-            _attackDelay = new WaitForSeconds(fireRate);
+            _attackController.RefreshAttackDelay();
+            _attackCor = StartCoroutine(AttackCor());
         }
 
         public void ToggleSpawnAbility(bool isCanSpawn)
@@ -280,12 +260,12 @@ namespace Project
 
         public void ChangeTarget(Enemy enemy)
         {
-            Target = enemy;
+            _attackController.Target = enemy;
         }
 
         public void StopAttack()
         {
-            Target = null;
+            _attackController.Target = null;
 
             if (_attackCor != null)
             {
@@ -312,23 +292,18 @@ namespace Project
             Free();
         }
 
-        private IEnumerator AttackCor(BulletSettings bulletPreset)
+        private IEnumerator AttackCor()
         {
-
             while (!Target.IsDied)
             {
-                yield return _attackDelay;
+                yield return _attackController.AttackDelay;
 
                 if (Target.IsDied)
                 {
                     break;
                 }
 
-                var bullet = _poolManager.Get<Bullet>(_poolManager.PoolSettings.Bullet, _firePosition.position,
-                    Quaternion.identity);
-
-                bullet.Setup(_bulletPreset, _damageUpdateProcent);
-                bullet.Shoot((Target.transform.position - transform.position).normalized);
+                _attackController.Fire();
             }
 
             Debug.Log("Attack cor stop attack");
@@ -388,11 +363,13 @@ namespace Project
         }
 
         void IUpgradeable.Upgrade(UpgradeLinePerkType upgradeLinePerkType,
-            TowerUpgradeSettings.UpdatePreset[] presetByLineType)
+            TowerUpgradeSettings.UpdatePreset[] presetByLineType,
+            Action<TowerViewModelType, FirePreset> changeViewModelCallback)
         {
-            _updateInfo.Update(upgradeLinePerkType);
-            var updatePreset = presetByLineType[_updateInfo.LevelInfo[upgradeLinePerkType]];
+            var i = _updateInfo.LevelInfo[upgradeLinePerkType];
+            var updatePreset = presetByLineType[i];
             var updateType = updatePreset.UpdateType;
+
 
             switch (updateType)
             {
@@ -406,32 +383,31 @@ namespace Project
                     UpdateFireRadius(updatePreset.Value);
                     break;
             }
-            
+
             if (updatePreset.NeedChangeVisual)
             {
-                SetupMesh(updatePreset.TowerMeshType);
+                if (updatePreset.FirePreset != null)
+                    changeViewModelCallback.Invoke(updatePreset.TowerMeshType, updatePreset.FirePreset);
             }
+
+            _updateInfo.Update(upgradeLinePerkType);
         }
 
-        private void SetupMesh(TowerMeshType towerMeshType)
-        {
-            
-        }
 
         private void UpdateFireRadius(float updatePresetValue)
         {
-            
+            _attackRadius.Update(updatePresetValue);
         }
 
         private void UpdateFireSpeed(float updatePresetValue)
         {
-            _fireSpeedUpdateProcent = updatePresetValue;
-            RefreshAttackDelay();
+            _attackController.UpdateFireSpeed(updatePresetValue);
+            _attackController.RefreshAttackDelay();
         }
 
         private void UpdateDamage(float updatePresetValue)
         {
-            _damageUpdateProcent = updatePresetValue;
+            _attackController.UpdateDamage(updatePresetValue);
         }
 
         UpdateInfo IUpgradeable.GetUpgradeInfo()
@@ -441,42 +417,7 @@ namespace Project
 
         private void ChangeInteractionState(TowerInteractionState interactionState)
         {
-            _skinnedMeshRenderer.GetPropertyBlock(_materialPropertyBlock);
-
-            _skinnedMeshRenderer.gameObject.layer =
-                interactionState == TowerInteractionState.CantSpawn ? _xRayLayer : _towerLayer;
-
-            switch (interactionState)
-            {
-                case TowerInteractionState.Spawned:
-                    _materialPropertyBlock.SetColor(BaseColorID, _spawnColor);
-                    _materialPropertyBlock.SetColor(OutLineColorID,
-                        _highLightSettings.GetHighlightPresetByType(interactionState).Color);
-                    _attackRadius.ToggleActive(true);
-                    _attackRadius.ChangeColor(true);
-                    break;
-
-                case TowerInteractionState.Selected:
-                    _materialPropertyBlock.SetColor(OutLineColorID,
-                        _highLightSettings.GetHighlightPresetByType(interactionState).Color);
-                    _attackRadius.ToggleActive(true);
-                    _attackRadius.ChangeColor(true);
-
-                    break;
-                case TowerInteractionState.UnSelected:
-                    _materialPropertyBlock.SetColor(BaseColorID, _startColor);
-                    _materialPropertyBlock.SetColor(OutLineColorID,
-                        _highLightSettings.GetHighlightPresetByType(interactionState).Color);
-                    _attackRadius.ToggleActive(false);
-                    break;
-                case TowerInteractionState.CantSpawn:
-                    _materialPropertyBlock.SetColor(OutLineColorID,
-                        _highLightSettings.GetHighlightPresetByType(interactionState).Color);
-                    _attackRadius.ChangeColor(false);
-                    break;
-            }
-
-            _skinnedMeshRenderer.SetPropertyBlock(_materialPropertyBlock);
+            _towerViewModel.ChangeInteractionState(interactionState);
         }
 
         public bool SeeTarget(Vector3 targetPos)
@@ -491,12 +432,7 @@ namespace Project
         {
             if (_towerPreset != null)
             {
-                Gizmos.DrawWireSphere(transform.position, _towerPreset.AttackRadius);
-            }
-
-            if (Target != null && !Target.IsDied)
-            {
-                Gizmos.DrawLine(transform.position, Target.transform.position);
+                Gizmos.DrawWireSphere(transform.position,_attackRadius.Radius);
             }
         }
 #endif

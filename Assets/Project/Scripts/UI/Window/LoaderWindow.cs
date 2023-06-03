@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Project.Settings;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Project.UI
@@ -47,6 +46,8 @@ namespace Project.UI
             }
 
             _loadingProgress.fillAmount = 1f;
+            
+            UISystem.ShowWindow<GameWindow>();
         }
     }
 }

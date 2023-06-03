@@ -1,10 +1,10 @@
-namespace Project
-{
-    public class Cannon : BaseTower
-    {
-        public override TowerType Type
-        {
-            get => TowerType.Cannon;
-        }
-    }
-}
+// namespace Project
+// {
+//     public class Cannon : BaseTower
+//     {
+//         public override TowerType TowerType
+//         {
+//             get => TowerType.Cannon;
+//         }
+//     }
+// }

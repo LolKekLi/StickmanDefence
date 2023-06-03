@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d6e0e49f55946d2b3da92c829602b82, type: 3}
+  m_Name: TowerViewModelSettings
+  m_EditorClassIdentifier: 
+  _towerViewModelPresets:
+  - <TowerViewModelType>k__BackingField: 1
+    <TowerViewModelPrefab>k__BackingField: {fileID: 4968868361278963327, guid: 8a1c1f0e42c62b443aca73d7b0ca6e7f, type: 3}
+  - <TowerViewModelType>k__BackingField: 2
+    <TowerViewModelPrefab>k__BackingField: {fileID: 765612787775533136, guid: d4affc1e0fb653846854ddf57c32ef04, type: 3}
+  - <TowerViewModelType>k__BackingField: 3
+    <TowerViewModelPrefab>k__BackingField: {fileID: 765612787775533136, guid: ac6318d1b4afa8d45bf7d83d5db3f3f6, type: 3}
+  - <TowerViewModelType>k__BackingField: 4
+    <TowerViewModelPrefab>k__BackingField: {fileID: 765612787775533136, guid: 2dccb0c26d2ab1c45b76df362b4781b6, type: 3}
+  - <TowerViewModelType>k__BackingField: 5
+    <TowerViewModelPrefab>k__BackingField: {fileID: 5301880452810158362, guid: dde15b14019ea954db6b92ed4528bad5, type: 3}
+  - <TowerViewModelType>k__BackingField: 9
+    <TowerViewModelPrefab>k__BackingField: {fileID: 4049991092635886164, guid: 334be018f5e13a042bfb01f394716758, type: 3}
+  - <TowerViewModelType>k__BackingField: 13
+    <TowerViewModelPrefab>k__BackingField: {fileID: 6103293605559217847, guid: 162e9210809f2324da9f0cc698b3f19b, type: 3}
+  - <TowerViewModelType>k__BackingField: 17
+    <TowerViewModelPrefab>k__BackingField: {fileID: 6057741336680911697, guid: cfd107bd10a0ad949a276871497056ad, type: 3}

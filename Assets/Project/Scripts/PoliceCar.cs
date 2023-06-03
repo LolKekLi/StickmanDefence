@@ -35,7 +35,7 @@ public class PoliceCar : MonoBehaviour
         var targetValue1 = 0f;
         var targetValue2 = _light2StartIntensity;
 
-        while (true)
+        while (!cancellationToken.IsCancellationRequested)
         {
             SmoothChangeLight(_light1, targetValue1, _changeTime, cancellationToken);
             await SmoothChangeLight(_light2, targetValue2, _changeTime, cancellationToken);

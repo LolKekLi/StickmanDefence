@@ -161,7 +161,7 @@ namespace Project
         {
             CurrentTower = tower;
             CurrentTowerUpdateSettings =
-                tower != null ? _towerSettings.GetTowerUpdateSettings(CurrentTower.Type) : null;
+                tower != null ? _towerSettings.GetTowerUpdateSettings(CurrentTower.TowerType) : null;
         }
 
         public UpgradeLinePerkType? GetLockLineType()
@@ -233,8 +233,11 @@ namespace Project
         public void UpgradeTower(UpgradeLinePerkType upgradeLinePerkType)
         {
             var presetByLineType = CurrentTowerUpdateSettings.GetPresetByLineType(upgradeLinePerkType);
-            CurrentTower.Upgrade(upgradeLinePerkType, presetByLineType);
-
+            CurrentTower.Upgrade(upgradeLinePerkType, presetByLineType,
+                (newViewModelType, firePreset) =>
+                {
+                    _towerController.ChangeViewModel(CurrentTower, newViewModelType, firePreset);
+                });
         }
 
         public int GetUpgradeLevel(UpgradeLinePerkType perkLineType)

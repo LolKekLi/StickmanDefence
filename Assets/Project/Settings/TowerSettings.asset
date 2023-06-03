@@ -14,29 +14,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SmoothTime>k__BackingField: 0.025
   _towerPresets:
-  - <TowerPrefab>k__BackingField: {fileID: 3171717336070501216, guid: 36be8af63dd72964bad327a47851a454, type: 3}
-    <UIIcon>k__BackingField: {fileID: 21300000, guid: d50694b83f8da2f498d7b2d82a41215b, type: 3}
-    <BaseMesh>k__BackingField: 0
-    <TowerLabel>k__BackingField: "\u0447\u0435\u043B \u0441 \u0431\u0430\u0437\u0443\u043A\u043E\u0439"
-    <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
-    <FireRate>k__BackingField: 1
-    <FireType>k__BackingField: 0
-    <BulletCount>k__BackingField: 0
-    <DelayBetweenBullet>k__BackingField: 0
-    <AttackRadiusType>k__BackingField: 0
-    <AttackRadius>k__BackingField: 100
-    <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+  - <TowerPrefab>k__BackingField: {fileID: -5074204651478872961, guid: a6ae4531ee6cf0a46946278dc21edd1d, type: 3}
+    <BaseViewModelType>k__BackingField: 9
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
+      <FireRate>k__BackingField: 1
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 20
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+  - <TowerPrefab>k__BackingField: {fileID: 9167852493201990543, guid: f3b083f36ef5ebd49a77fe3d4f34794e, type: 3}
+    <BaseViewModelType>k__BackingField: 17
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
+      <FireRate>k__BackingField: 1
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 20
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+  - <TowerPrefab>k__BackingField: {fileID: 3477060949682470497, guid: 01ac26f8493557b44a00fd4d0f557e67, type: 3}
+    <BaseViewModelType>k__BackingField: 5
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
+      <FireRate>k__BackingField: 1
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 20
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+  - <TowerPrefab>k__BackingField: {fileID: -4763531946622033660, guid: 660857e9d28decc40bd6f8142030d163, type: 3}
+    <BaseViewModelType>k__BackingField: 13
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
+      <FireRate>k__BackingField: 1
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 20
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
   - <TowerPrefab>k__BackingField: {fileID: 3171717336070501216, guid: 9054509fe25307a48845835e2a139568, type: 3}
-    <UIIcon>k__BackingField: {fileID: 21300000, guid: 0ae8261aa8c9e554fbd7af2d2debe2c7, type: 3}
-    <BaseMesh>k__BackingField: 1
-    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u043F\u0438\u0441\u0442\u043E\u043B\u0435\u0442\u043E\u043C"
-    <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
-    <FireRate>k__BackingField: 1
-    <FireType>k__BackingField: 1
-    <BulletCount>k__BackingField: 0
-    <DelayBetweenBullet>k__BackingField: 0
-    <AttackRadiusType>k__BackingField: 0
-    <AttackRadius>k__BackingField: 20
-    <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+    <BaseViewModelType>k__BackingField: 1
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
+      <FireRate>k__BackingField: 1
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 20
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
   _towerUpgradeSettings:
   - {fileID: 11400000, guid: fa2daae6cbc5f444fbe317bad72d48c2, type: 2}
+  - {fileID: 11400000, guid: 622ad9f1fb1cc254fb9ca83789b9a1c9, type: 2}
+  - {fileID: 11400000, guid: 882551c931e968a488197b68affa28eb, type: 2}
+  - {fileID: 11400000, guid: edebf55161eb3c848982286da0a2dd9d, type: 2}
+  - {fileID: 11400000, guid: b601ca50ede9a124e81fffcef6e6e18c, type: 2}
