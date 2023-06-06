@@ -23,6 +23,8 @@ namespace Project
             { TowerType.Granatman, new List<BaseTower>(5) },
             { TowerType.Sniper, new List<BaseTower>(5) },
             { TowerType.PPMan, new List<BaseTower>(5) },
+            { TowerType.Bugler, new List<BaseTower>(1) },
+            { TowerType.Santa, new List<BaseTower>(1) },
         };
 
         protected override void Init()

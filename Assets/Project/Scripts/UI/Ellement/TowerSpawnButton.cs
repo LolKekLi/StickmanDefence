@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,6 +22,8 @@ namespace Project.UI
         [SerializeField]
         private Color _unselcetedColor = Color.black;
 
+        [SerializeField]
+        private TextMeshProUGUI _costText;
         private int _index = 0;
 
         private TowerType _type = default;
@@ -37,11 +40,13 @@ namespace Project.UI
             _button.onClick.AddListener(OnButtonClick);
         }
 
-        public void Setup(UITowerSetting.UITowerPreset towerPreset, int index, Action<int> onClick)
+        public void Setup(Sprite icon, int index, int cost, Action<int> onClick)
         {
+            _costText.text = $"{cost}$";
+            
             _index = index;
 
-            _icon.sprite = towerPreset.UIIcon;
+            _icon.sprite = icon;
 
             _onClick = onClick;
 

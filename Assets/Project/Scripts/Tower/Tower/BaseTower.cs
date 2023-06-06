@@ -14,42 +14,31 @@ namespace Project
 
         [SerializeField]
         private AttackRadius _attackRadius = null;
-
-        // [SerializeField]
-        // private SkinnedMeshRenderer _skinnedMeshRenderer = null;
-
         [SerializeField]
         private LayerMask _towerLayerMask = default;
-
         [SerializeField]
         private LayerMask _xrayLayerMask = default;
+
+        [SerializeField]
+        private ParticleSystem _onChangeVisualFx;
 
         private bool _isTriggered = false;
         private int _towerLayer;
         private int _xRayLayer;
 
         private Vector3 _velocity = Vector3.zero;
-
-        // private Color _startColor = default;
-        // private Color _spawnColor = default;
         private Action _onBuildAction = null;
         private Quaternion _startRotation = default;
         private Action _onCellAction;
 
         private TowerSettings _towerSettings = null;
-
         private TowerSettings.TowerPreset _towerPreset = null;
-        // private MaterialPropertyBlock _materialPropertyBlock;
-
-        //private BulletSettings _bulletPreset = null;
         private PoolManager _poolManager = null;
         private Coroutine _attackCor = null;
         private Coroutine _lookAtEnemyCor = null;
         private Coroutine _rotateToOrigineCor = null;
 
         private Collider _collider;
-        //private TowerHighLightSettings _highLightSettings;
-
         private UpdateInfo _updateInfo = null;
 
         private BaseAttackController _attackController;
@@ -67,7 +56,7 @@ namespace Project
         {
             get;
         }
-
+        
         public TowerViewModelType TowerViewModelType
         {
             get =>
@@ -112,6 +101,11 @@ namespace Project
             get =>
                 (transform.position - Target.transform.position).sqrMagnitude >=
                 SqrAttackRadius;
+        }
+
+        public abstract bool IsAssTower
+        {
+            get;
         }
 
 
@@ -163,6 +157,8 @@ namespace Project
         public void ChangeViewModel(TowerViewModel towerViewModel, BaseAttackController attackController,
             FirePreset firePreset)
         {
+            _onChangeVisualFx?.Play();
+            
             _towerViewModel.Free();
 
             RefreshTowerViewModel(towerViewModel);
@@ -197,7 +193,7 @@ namespace Project
             }
         }
 
-        public void OnBuild(BaseAttackController attackController)
+        public virtual void OnBuild(BaseAttackController attackController)
         {
             _collider.enabled = true;
 
@@ -245,6 +241,8 @@ namespace Project
             _lookAtEnemyCor = StartCoroutine(LookAtTargetCor());
             _attackController.RefreshAttackDelay();
             _attackCor = StartCoroutine(AttackCor());
+
+            _towerViewModel.OnFire();
         }
 
         public void ToggleSpawnAbility(bool isCanSpawn)
@@ -265,6 +263,7 @@ namespace Project
 
         public void StopAttack()
         {
+            _towerViewModel.OnFireEnded();
             _attackController.Target = null;
 
             if (_attackCor != null)
@@ -285,7 +284,7 @@ namespace Project
             }
         }
 
-        public void Cell()
+        public virtual void Sell()
         {
             _onCellAction?.Invoke();
             StopAttack();
@@ -369,8 +368,7 @@ namespace Project
             var i = _updateInfo.LevelInfo[upgradeLinePerkType];
             var updatePreset = presetByLineType[i];
             var updateType = updatePreset.UpdateType;
-
-
+            
             switch (updateType)
             {
                 case UpdateType.Damage:
@@ -396,7 +394,7 @@ namespace Project
 
         private void UpdateFireRadius(float updatePresetValue)
         {
-            _attackRadius.Update(updatePresetValue);
+            _attackRadius.UpdateFireRadius(updatePresetValue);
         }
 
         private void UpdateFireSpeed(float updatePresetValue)

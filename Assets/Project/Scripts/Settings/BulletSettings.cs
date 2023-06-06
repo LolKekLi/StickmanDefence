@@ -27,14 +27,7 @@ namespace Project
             get;
             private set;
         }
-
-        [field: SerializeField]
-        public Mesh Mesh
-        {
-            get;
-            private set;
-        }
-
+        
         [field: SerializeField]
         public int BaseDamage
         {

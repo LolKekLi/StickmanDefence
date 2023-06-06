@@ -147,7 +147,7 @@ namespace Project
 
             var tower = Towers[indexOf];
             var towerViewModel = _towerViewModelFactory.Get(newViewModelType, Vector3.zero, Quaternion.identity, tower.transform);
-
+            
             tower.ChangeViewModel(towerViewModel, _attackControllerFactory.GetAttackController(firePreset.FireType), firePreset);
         }
     }

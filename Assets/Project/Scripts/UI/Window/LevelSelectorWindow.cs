@@ -10,6 +10,9 @@ namespace Project.UI
 {
     public class LevelSelectorWindow : Window
     {
+        public static EnemyWaveSettings WaveSettings;
+        public static int HpOnLvl;
+        public static int StartCashValue;
         public static string SceneNameKey = "SceneNameKey";
 
         [SerializeField]
@@ -34,17 +37,17 @@ namespace Project.UI
         private UIDifficultElement[] _uiDifficultElements;
 
         private int _selectedLevelIndex;
-       
+
 
         private AsyncReactiveProperty<int> _activeStageIndex = new AsyncReactiveProperty<int>(0);
 
         private UILevelElement[] _uiLevelElements;
-        
+
         [Inject]
         private LevelFlowController _levelFlowController;
 
         private LevelSettings _levelSettings;
-        private Dictionary<string,object> _data;
+        private Dictionary<string, object> _data;
 
         public override bool IsPopup
         {
@@ -85,10 +88,16 @@ namespace Project.UI
 
             for (var i = 0; i < _uiDifficultElements.Length; i++)
             {
-                _uiDifficultElements[i].Setup((int)(prise *
-                    _levelSettings.MultiplierPresets.FirstOrDefault(x => x.Type == _uiDifficultElements[i].Type)
-                                  .Multiplier), () =>
+                var multiplier = (int)(prise *
+                    _levelSettings.MultiplierPresets.FirstOrDefault(x =>
+                                      x.Type == _uiDifficultElements[i].Type)
+                                  .Multiplier);
+                _uiDifficultElements[i].Setup(multiplier, () =>
                 {
+                    var levelSettingsLevel = _levelSettings.Levels[_selectedLevelIndex];
+                    WaveSettings = levelSettingsLevel.EnemyWaveSettings;
+                    HpOnLvl =  levelSettingsLevel.HP;
+                    StartCashValue = levelSettingsLevel.StartCoinCount;
                     UISystem.ShowWindow<LoaderWindow>(_data);
                 });
             }

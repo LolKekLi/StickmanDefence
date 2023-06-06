@@ -1012,7 +1012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 25.690002
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1020,23 +1020,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -35.610004
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000005766748
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1044,7 +1044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -359.999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 143672116330284468, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1054,6 +1054,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GranatManViewModel4
       objectReference: {fileID: 0}
+    - target: {fileID: 3677795191328494970, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 75422003fc7632d4397f8ed7ad238504, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afe54215e39b89e4f9c98ae4f12dbf2f, type: 3}
 --- !u!4 &3796445365437275433 stripped

@@ -6,5 +6,10 @@
         {
             get => TowerType.ShotGunner;
         }
+
+        public override bool IsAssTower
+        {
+            get => false;
+        }
     }
 }

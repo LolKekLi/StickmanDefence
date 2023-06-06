@@ -4,12 +4,11 @@
     {
         Gunner = 0,
         ShotGunner,
-        Bugler,
         Granatman,
         Sniper,
-        PPMan
-        //Cannon = 1,
-        
+        PPMan,
+        Bugler,
+        Santa,
     }
 
     public enum TowerViewModelType
@@ -35,5 +34,6 @@
         PPMan1,
         PPMan2,
         PPMan3,
+        Santa
     }
 }

@@ -15,7 +15,7 @@ namespace Project
             public const string SkinClaimProgress = "SkinClaimProgress{0}_{1}";
             public const string SelectedSkin = "SelectedSkin_{0}";
             
-            public const string AssType = "SelectedSkin_{0}";
+            public const string AceType = "AceKay";
         }
 
         public static int LevelIndex
@@ -36,10 +36,10 @@ namespace Project
             set { PlayerPrefs.SetInt(Keys.Coins, value); }
         }
 
-        public static int AssTowerType
+        public static int AceTowerType
         {
-            get { return PlayerPrefs.GetInt(Keys.AssType, 0); }
-            set { PlayerPrefs.SetInt(Keys.AssType, value); }
+            get { return PlayerPrefs.GetInt(Keys.AceType, 0); }
+            set { PlayerPrefs.SetInt(Keys.AceType, value); }
         }
 
         public static int GetSkinClaimProgress(SkinType skinType, SkinPartType partType)

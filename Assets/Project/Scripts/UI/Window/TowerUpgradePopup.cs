@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 
@@ -10,8 +11,12 @@ namespace Project.UI
 {
     public class TowerUpgradePopup : Window
     {
+        [FormerlySerializedAs("_cellButton")]
         [SerializeField]
-        private Button _cellButton = null;
+        private Button _sellButton = null;
+
+        [SerializeField]
+        private TextMeshProUGUI _sellCostText;
 
         [SerializeField]
         private Image _towerIcon = null;
@@ -106,7 +111,7 @@ namespace Project.UI
             base.Start();
 
             _closeButton.onClick.AddListener(OnClose);
-            _cellButton.onClick.AddListener(OnCellTower);
+            _sellButton.onClick.AddListener(OnCellTower);
 
             _moveToken = UniTaskUtil.RefreshToken(ref _moveTokenSource);
         }
@@ -160,6 +165,10 @@ namespace Project.UI
 
         private void SetupElements()
         {
+            var towerPresetByType = _towerSettings.GetTowerPresetByType(_targetTower.TowerType);
+
+            _sellCostText.text = $"{towerPresetByType.Cost / 2}$";
+
             var upgradeLinePerkType = _towerUpgradeController.GetMaxUpgradeType();
 
             OnFindMaxUpgradeType(upgradeLinePerkType);
@@ -168,7 +177,7 @@ namespace Project.UI
 
             SetupPerkItems();
         }
-        
+
         private void RefreshUpgradeLevelIndicators(UpgradeLinePerkType? upgradeLinePerkType)
         {
             _upgardePerkItems.Do(x =>
@@ -301,10 +310,7 @@ namespace Project.UI
                 _isMoving = true;
 
                 var startPosition = _backgroundRectTransform.anchoredPosition;
-
-                // var currentDuration = Math.Abs(startPosition.x - endPos.x) * _duration /
-                //     (_startPositionRight.x - _endPositionRight.x);
-
+                
                 await UniTaskExtensions.Lerp(
                     x => { _backgroundRectTransform.anchoredPosition = Vector2.Lerp(startPosition, endPos, x); },
                     _duration, _tweenCurve, token);

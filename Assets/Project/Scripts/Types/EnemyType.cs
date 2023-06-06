@@ -4,7 +4,8 @@
     {
         None = 0,
         Base = 1,
-        Red = 2,
-        WithBodyArmor = 3,
+        Fast = 2,
+        Armored = 3,
+        BOSSSSSSS = 4,
     }
 }

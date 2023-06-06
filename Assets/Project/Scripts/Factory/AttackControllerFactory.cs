@@ -8,6 +8,7 @@
 
             {
                 FireType.Single => new SimpleAttackController(),
+                FireType.Granat => new GranatAttackController(),
                 _ => null
             };
         }

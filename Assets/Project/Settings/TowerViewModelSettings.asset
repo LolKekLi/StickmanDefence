@@ -23,9 +23,37 @@ MonoBehaviour:
     <TowerViewModelPrefab>k__BackingField: {fileID: 765612787775533136, guid: 2dccb0c26d2ab1c45b76df362b4781b6, type: 3}
   - <TowerViewModelType>k__BackingField: 5
     <TowerViewModelPrefab>k__BackingField: {fileID: 5301880452810158362, guid: dde15b14019ea954db6b92ed4528bad5, type: 3}
+  - <TowerViewModelType>k__BackingField: 7
+    <TowerViewModelPrefab>k__BackingField: {fileID: 5301880452810158362, guid: 9841050adef87a34f80474503da6541b, type: 3}
+  - <TowerViewModelType>k__BackingField: 6
+    <TowerViewModelPrefab>k__BackingField: {fileID: 5301880452810158362, guid: dee45452b4786e940b3c2ed9ece85f58, type: 3}
+  - <TowerViewModelType>k__BackingField: 8
+    <TowerViewModelPrefab>k__BackingField: {fileID: 5301880452810158362, guid: d27c7c3fd728e814a9b70a88b0d29250, type: 3}
   - <TowerViewModelType>k__BackingField: 9
     <TowerViewModelPrefab>k__BackingField: {fileID: 4049991092635886164, guid: 334be018f5e13a042bfb01f394716758, type: 3}
+  - <TowerViewModelType>k__BackingField: 10
+    <TowerViewModelPrefab>k__BackingField: {fileID: 4049991092635886164, guid: 3970e7555b6e72f43ad4dec4c020cada, type: 3}
+  - <TowerViewModelType>k__BackingField: 12
+    <TowerViewModelPrefab>k__BackingField: {fileID: 4049991092635886164, guid: d0134905ceb02754f9c7edecb14c23f9, type: 3}
+  - <TowerViewModelType>k__BackingField: 11
+    <TowerViewModelPrefab>k__BackingField: {fileID: 4049991092635886164, guid: d776b4a2105b10a478b8c990cda45df0, type: 3}
   - <TowerViewModelType>k__BackingField: 13
     <TowerViewModelPrefab>k__BackingField: {fileID: 6103293605559217847, guid: 162e9210809f2324da9f0cc698b3f19b, type: 3}
+  - <TowerViewModelType>k__BackingField: 14
+    <TowerViewModelPrefab>k__BackingField: {fileID: 6103293605559217847, guid: faff5a6b474b8ab4789ac12c88619637, type: 3}
+  - <TowerViewModelType>k__BackingField: 16
+    <TowerViewModelPrefab>k__BackingField: {fileID: 6103293605559217847, guid: b7da21a4b6aef68439e5f89b8511e9e9, type: 3}
+  - <TowerViewModelType>k__BackingField: 15
+    <TowerViewModelPrefab>k__BackingField: {fileID: 6103293605559217847, guid: 3258632e8932714418f3bbc270dd06b6, type: 3}
   - <TowerViewModelType>k__BackingField: 17
     <TowerViewModelPrefab>k__BackingField: {fileID: 6057741336680911697, guid: cfd107bd10a0ad949a276871497056ad, type: 3}
+  - <TowerViewModelType>k__BackingField: 19
+    <TowerViewModelPrefab>k__BackingField: {fileID: 6057741336680911697, guid: 2884a9bba9eb38347bc927a3da579c54, type: 3}
+  - <TowerViewModelType>k__BackingField: 18
+    <TowerViewModelPrefab>k__BackingField: {fileID: 6057741336680911697, guid: 2872a02cedad11f419f789dac1d2a5e7, type: 3}
+  - <TowerViewModelType>k__BackingField: 20
+    <TowerViewModelPrefab>k__BackingField: {fileID: 6057741336680911697, guid: f0c9330955485cd4fb39b3a228160da0, type: 3}
+  - <TowerViewModelType>k__BackingField: 0
+    <TowerViewModelPrefab>k__BackingField: {fileID: 1530086889821106755, guid: f3de7158ef482ea47a7098de60982b09, type: 3}
+  - <TowerViewModelType>k__BackingField: 21
+    <TowerViewModelPrefab>k__BackingField: {fileID: 3559678782378203897, guid: 9cc4a2f1edba6324ebc1604a4cfd37ca, type: 3}

@@ -40,31 +40,20 @@ namespace Project
             }
 
             [field: SerializeField]
-            public EnemyDiedPreset[] EnemyDiedPreset
+            public int Damage
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField]
+            public int Cost
             {
                 get;
                 private set;
             }
         }
-        
-        [Serializable]
-        public class EnemyDiedPreset
-        {
-            [field: SerializeField, HorizontalGroup("Split")]
-            public EnemyType SpawnEnemyTypeBeforeDied
-            {
-                get;
-                private set;
-            }   
-
-            [field: SerializeField, HorizontalGroup("Split")]
-            public int Count
-            {
-                get;
-                private set;
-            }
-        }
-
+       
         [SerializeField]
         private EnemyPreset[] _enemyPresets = null;
 

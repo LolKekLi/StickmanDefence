@@ -17,25 +17,64 @@ MonoBehaviour:
     <UIIcon>k__BackingField: {fileID: 21300000, guid: d50694b83f8da2f498d7b2d82a41215b, type: 3}
     <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0441 \u043F\u0438\u0441\u0442\u043E\u043B\u0435\u0442\u043E\u043C"
   - <TowerViewModelType>k__BackingField: 2
-    <UIIcon>k__BackingField: {fileID: 21300000, guid: d50694b83f8da2f498d7b2d82a41215b, type: 3}
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: d254b0e3463111d4c93a892e4b1f3ad8, type: 3}
     <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u043E\u0431\u0440\u0435\u0437\u043E\u043C"
   - <TowerViewModelType>k__BackingField: 3
-    <UIIcon>k__BackingField: {fileID: 21300000, guid: d50694b83f8da2f498d7b2d82a41215b, type: 3}
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: e1b1a0cc58a8c3e4481236ae19041e74, type: 3}
     <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0442\u0438\u0445\u0438\u043C
       \u043F\u0438\u0441\u0442\u043E\u043B\u0435\u0442\u043E\u043C"
   - <TowerViewModelType>k__BackingField: 4
-    <UIIcon>k__BackingField: {fileID: 21300000, guid: d50694b83f8da2f498d7b2d82a41215b, type: 3}
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: 8b6c0fee9d28bfd4abf2b2a52db576e6, type: 3}
     <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u043F\u0435\u0439\u043D\u0442\u0431\u043E\u043B\u044C\u043D\u044B\u043C
       \u043C\u0430\u0440\u043A\u0435\u0440\u043E\u043C"
   - <TowerViewModelType>k__BackingField: 5
     <UIIcon>k__BackingField: {fileID: 21300000, guid: bc505eeaf74ad4a42b275b78d360bd7d, type: 3}
-    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0434\u0440\u0430\u0431\u0430\u0432\u0438\u043A\u043E\u043C\n"
+    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0434\u0440\u043E\u0431\u0430\u0432\u0438\u043A\u043E\u043C"
+  - <TowerViewModelType>k__BackingField: 6
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: 495033c4ed427b34f9777f7586f13ddc, type: 3}
+    <TowerLabel>k__BackingField: "\u041C\u0435\u043D\u0442 \u0441 \u0434\u0440\u043E\u0431\u0430\u0432\u0438\u043A\u043E\u043C"
+  - <TowerViewModelType>k__BackingField: 7
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: a179501332b5c4940ad67d63b5e9bb91, type: 3}
+    <TowerLabel>k__BackingField: "\u0411\u0435\u0437\u0443\u043C\u043D\u044B\u0439
+      \u043C\u0430\u043A\u0441"
+  - <TowerViewModelType>k__BackingField: 8
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: 67ac105990a30784ea8b8138c22ba57d, type: 3}
+    <TowerLabel>k__BackingField: "\u041F\u0430\u043D\u043A-\u0440\u043E\u043A\u0435\u0440"
   - <TowerViewModelType>k__BackingField: 9
     <UIIcon>k__BackingField: {fileID: 21300000, guid: 0ae8261aa8c9e554fbd7af2d2debe2c7, type: 3}
-    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0433\u0440\u0430\u043D\u0442\u0430\u043C\u0438 "
+    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0433\u0440\u0430\u043D\u0430\u0442\u043E\u0439"
+  - <TowerViewModelType>k__BackingField: 10
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: 1ef87bf2e69eb884cb90fb4109101de2, type: 3}
+    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u043D\u0430 \u043F\u0443\u0448\u043A\u0435"
+  - <TowerViewModelType>k__BackingField: 11
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: fe0e7243a6c40634388aeb94b662db90, type: 3}
+    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0434\u0438\u043D\u0430\u043C\u0438\u0442\u043E\u043C"
+  - <TowerViewModelType>k__BackingField: 12
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: 423fb523f38e96c4f8375cbb5f075e1a, type: 3}
+    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u043A\u043E\u043A\u0442\u0435\u043B\u0435\u043C
+      \u043C\u043E\u043B\u043E\u0442\u043E\u0432\u0430"
   - <TowerViewModelType>k__BackingField: 13
     <UIIcon>k__BackingField: {fileID: 21300000, guid: 58576f3e9fc8bbf4dbc75be40331bef0, type: 3}
     <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0430\u0440\u0431\u0430\u043B\u0435\u0442\u043E\u043C"
+  - <TowerViewModelType>k__BackingField: 14
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: 9515f1fd8a1ffd54bbc883e66d53febf, type: 3}
+    <TowerLabel>k__BackingField: "\u0423\u043C\u043D\u044B\u0439 \u0441\u043D\u0430\u0439\u043F\u0435\u0440"
+  - <TowerViewModelType>k__BackingField: 15
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: db26d0e6e62972f4d89d88d9545c0531, type: 3}
+    <TowerLabel>k__BackingField: "\u0411\u043E\u0440\u0437\u044B\u0439 \u0441\u043D\u0430\u0439\u043F\u0435\u0440"
+  - <TowerViewModelType>k__BackingField: 16
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: fb3df9417a1d95a4896f4405b58e2e94, type: 3}
+    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0431\u0430\u0437\u0443\u043A\u043E\u0439
+      o_0"
   - <TowerViewModelType>k__BackingField: 17
     <UIIcon>k__BackingField: {fileID: 21300000, guid: 6f5c01878c806ed40aa324d2139a9d38, type: 3}
-    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0443\u0437\u0438"
+    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0443\u0437\u0438"
+  - <TowerViewModelType>k__BackingField: 18
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: bc441e2a1dcdc4145b4473e37bc291ad, type: 3}
+    <TowerLabel>k__BackingField: "\u0427\u0435\u043B \u0441 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043C"
+  - <TowerViewModelType>k__BackingField: 19
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: b18dfd94123414a4ab78907842f29bcd, type: 3}
+    <TowerLabel>k__BackingField: "\u0412\u043E\u044F\u043A\u0430"
+  - <TowerViewModelType>k__BackingField: 20
+    <UIIcon>k__BackingField: {fileID: 21300000, guid: fa6ced90c1b7ab749b4e8fcefa0bac98, type: 3}
+    <TowerLabel>k__BackingField: "\u041C\u043B\u0430\u0434\u0448\u0438\u0439 \u0432\u043E\u044F\u043A\u0430"

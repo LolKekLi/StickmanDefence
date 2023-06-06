@@ -18,14 +18,28 @@ namespace Project
         private readonly Dictionary<TowerViewModelType, List<TowerViewModel>> Towers =
             new Dictionary<TowerViewModelType, List<TowerViewModel>>()
             {
+                { TowerViewModelType.BaseGunner, new List<TowerViewModel>(5) },
                 { TowerViewModelType.Gunner1, new List<TowerViewModel>(5) },
                 { TowerViewModelType.Gunner2, new List<TowerViewModel>(5) },
-                { TowerViewModelType.BaseGunner, new List<TowerViewModel>(5) },
                 { TowerViewModelType.Gunner3, new List<TowerViewModel>(5) },
                 { TowerViewModelType.ShotGunner, new List<TowerViewModel>(5) },
+                { TowerViewModelType.ShotGunner1, new List<TowerViewModel>(5) },
+                { TowerViewModelType.ShotGunner2, new List<TowerViewModel>(5) },
+                { TowerViewModelType.ShotGunner3, new List<TowerViewModel>(5) },
                 { TowerViewModelType.Granatman, new List<TowerViewModel>(5) },
+                { TowerViewModelType.Granatman1, new List<TowerViewModel>(5) },
+                { TowerViewModelType.Granatman2, new List<TowerViewModel>(5) },
+                { TowerViewModelType.Granatman3, new List<TowerViewModel>(5) },
                 { TowerViewModelType.Sniper, new List<TowerViewModel>(5) },
+                { TowerViewModelType.Sniper1, new List<TowerViewModel>(5) },
+                { TowerViewModelType.Sniper2, new List<TowerViewModel>(5) },
+                { TowerViewModelType.Sniper3, new List<TowerViewModel>(5) },
                 { TowerViewModelType.PPMan, new List<TowerViewModel>(5) },
+                { TowerViewModelType.PPMan1, new List<TowerViewModel>(5) },
+                { TowerViewModelType.PPMan2, new List<TowerViewModel>(5) },
+                { TowerViewModelType.PPMan3, new List<TowerViewModel>(5) },
+                { TowerViewModelType.Santa, new List<TowerViewModel>(1) },
+                { TowerViewModelType.Bugler, new List<TowerViewModel>(1) },
             };
         
         protected override void Init()
@@ -64,6 +78,8 @@ namespace Project
                 _diContainer.Inject(freeTower);
                 Towers[type].Add(freeTower);
             }
+            
+            freeTower.Setup(type);
 
             var freeTowerTransform = freeTower.transform;
             freeTowerTransform.position = position;

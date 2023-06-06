@@ -40,8 +40,11 @@ namespace Project
 
         [SerializeField]
         private TowerViewModelSettings _towerViewModelSettings;
-        
-        
+
+        [SerializeField]
+        private UltimateSettings _ultimateSettings;
+
+
         public override void InstallBindings()
         {
             InstallSignalBus();
@@ -76,6 +79,7 @@ namespace Project
             Container.BindInstance(_assUISetting).AsCached();
             Container.BindInstance(_uiTowerSetting).AsCached();
             Container.BindInstance(_towerViewModelSettings).AsCached();
+            Container.BindInstance(_ultimateSettings).AsCached();
         }
 
         private void BindControllers()

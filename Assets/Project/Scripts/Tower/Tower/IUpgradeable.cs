@@ -16,7 +16,7 @@ namespace Project
 
         void UnSelected();
         void Selected();
-        void Cell();
+        void Sell();
         string GetTransformName();
         int GetUpgradeLevel(UpgradeLinePerkType perkLineType);
 

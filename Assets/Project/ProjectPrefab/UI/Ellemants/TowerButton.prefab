@@ -151,6 +151,7 @@ MonoBehaviour:
   _sectedImage: {fileID: 1415304623452252123}
   _selcetedColor: {r: 0.6627451, g: 1, b: 0.94117653, a: 1}
   _unselcetedColor: {r: 0.5254902, g: 0.54509807, b: 0.72156864, a: 1}
+  _costText: {fileID: 8233107414601988932}
 --- !u!222 &6201626288029379314
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -283,7 +284,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: 13.747398, y: -14.241602}
+  m_SizeDelta: {x: 4.3208, y: -23.1463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5620581473398746621
 CanvasRenderer:
@@ -313,7 +314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bc505eeaf74ad4a42b275b78d360bd7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58576f3e9fc8bbf4dbc75be40331bef0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -495,7 +496,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 81.3142, y: 104.0402}
+  m_SizeDelta: {x: 117.3182, y: 150.1068}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1429547540595645386
 CanvasRenderer:

@@ -6,5 +6,10 @@
         {
             get => TowerType.PPMan;
         }
+
+        public override bool IsAssTower
+        {
+            get => false;
+        }
     }
 }

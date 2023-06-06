@@ -69,6 +69,27 @@ namespace Project
                 get;
                 private set;
             }
+
+            [field: SerializeField]
+            public EnemyWaveSettings EnemyWaveSettings
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField]
+            public int HP
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField]
+            public int StartCoinCount
+            {
+                get;
+                private set;
+            }
         }
 
         [field: SerializeField]

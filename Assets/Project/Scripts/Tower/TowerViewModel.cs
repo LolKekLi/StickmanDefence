@@ -10,6 +10,8 @@ public class TowerViewModel : PooledBehaviour
     private static readonly string OutLineColorID = "_OutlineColor";
     private static readonly string RenderModID = "_RenderingMode";
 
+    private readonly int FireKey = Animator.StringToHash("IsFire");
+
     [SerializeField, Space]
     private SkinnedMeshRenderer _skinnedMeshRenderer = null;
 
@@ -38,7 +40,7 @@ public class TowerViewModel : PooledBehaviour
         get;
         private set;
     }
-    
+
     public override void Prepare(PooledObjectType pooledType)
     {
         base.Prepare(pooledType);
@@ -46,6 +48,11 @@ public class TowerViewModel : PooledBehaviour
         _materialPropertyBlock = new MaterialPropertyBlock();
         _startColor = _skinnedMeshRenderer.material.color;
         _spawnColor = new Color(_startColor.r, _startColor.g, _startColor.b, _startColor.a / 2);
+    }
+
+    public void Setup(TowerViewModelType type)
+    {
+        ModelType = type;
     }
 
     public override void SpawnFromPool()
@@ -67,6 +74,26 @@ public class TowerViewModel : PooledBehaviour
         _skinnedMeshRenderer.gameObject.layer = _towerLayer;
         _skinnedMeshRenderer.GetPropertyBlock(_materialPropertyBlock);
         _materialPropertyBlock.SetColor(BaseColorID, _spawnColor);
+    }
+
+    public void OnFire()
+    {
+        if (!_animator)
+        {
+            return;
+        }
+        
+        _animator.SetBool(FireKey, true);
+    }
+
+    public void OnFireEnded()
+    {
+        if (!_animator)
+        {
+            return;
+        }
+        
+        _animator.SetBool(FireKey, false);
     }
 
     public void OnBuild()
@@ -117,6 +144,7 @@ public class TowerViewModel : PooledBehaviour
     }
 
 #if UNITY_EDITOR
+
     private void OnDrawGizmos()
     {
         if (FirePosition)

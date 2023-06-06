@@ -26,6 +26,7 @@ namespace Project
         private UpgradeLinePerkType[] _upgradeLinePerkTypes;
         private TowerSettings _towerSettings;
         private TowerUpgradePopup _upgradeTowerPopup;
+        private float _mousePositionX;
 
         public TowerUpgradeSettings CurrentTowerUpdateSettings
         {
@@ -89,7 +90,8 @@ namespace Project
 
         public void CellTower()
         {
-            CurrentTower.Cell();
+            GameRuleController.Instance.OnTowerCell(CurrentTower.TowerType);
+            CurrentTower.Sell();
             ChangeCurrentTower(null);
         }
 
@@ -117,7 +119,12 @@ namespace Project
                 return CurrentTower.GetUpgradeLevel(upgradeLinePerkType) < MiddleUpgradeLvl;
             }
 
-            return CurrentTower.GetUpgradeLevel(upgradeLinePerkType) < MaxUpgradeLvl;
+            var level = CurrentTower.GetUpgradeInfo().LevelInfo[upgradeLinePerkType];
+
+
+            return CurrentTower.GetUpgradeLevel(upgradeLinePerkType) < MaxUpgradeLvl &&
+                CurrentTowerUpdateSettings.GetPresetByLineType(upgradeLinePerkType)[level].Cost <=
+                GameRuleController.Instance.CashCount;
         }
 
         private void JoystickController_Clicked(Vector2 clickPosition)
@@ -128,6 +135,11 @@ namespace Project
             {
                 if (hit.collider.TryGetComponent(out IUpgradeable tower))
                 {
+                    if (tower.TowerType == (TowerType)LocalConfig.AceTowerType)
+                    {
+                        return;
+                    }
+
                     ChangeCurrentTower(tower);
 
                     if (_oldTower != null)
@@ -141,13 +153,14 @@ namespace Project
 
                     CurrentTower.Selected();
 
+                    _mousePositionX = Input.mousePosition.x;
                     if (_upgradeTowerPopup != null && _upgradeTowerPopup)
                     {
-                        _upgradeTowerPopup.RefreshData(CurrentTower, Input.mousePosition.x);
+                        _upgradeTowerPopup.RefreshData(CurrentTower, _mousePositionX);
                     }
                     else
                     {
-                        RefreshTowerPopupInfo(tower, Input.mousePosition.x);
+                        RefreshTowerPopupInfo(tower, _mousePositionX);
 
                         UISystem.ShowWindow<TowerUpgradePopup>(_upgradeTowerPopupInfo);
 
@@ -233,11 +246,19 @@ namespace Project
         public void UpgradeTower(UpgradeLinePerkType upgradeLinePerkType)
         {
             var presetByLineType = CurrentTowerUpdateSettings.GetPresetByLineType(upgradeLinePerkType);
+
+            var level = CurrentTower.GetUpgradeInfo().LevelInfo[upgradeLinePerkType];
+            
+            GameRuleController.Instance.OnTowerUpgrade(
+                (int)CurrentTowerUpdateSettings.GetPresetByLineType(upgradeLinePerkType)[level].Cost);
+
             CurrentTower.Upgrade(upgradeLinePerkType, presetByLineType,
                 (newViewModelType, firePreset) =>
                 {
                     _towerController.ChangeViewModel(CurrentTower, newViewModelType, firePreset);
                 });
+
+            _upgradeTowerPopup.RefreshData(CurrentTower, _mousePositionX);
         }
 
         public int GetUpgradeLevel(UpgradeLinePerkType perkLineType)

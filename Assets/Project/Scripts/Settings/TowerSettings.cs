@@ -2,6 +2,7 @@
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Project
 {
@@ -86,6 +87,13 @@ namespace Project
             }
 
             [field: SerializeField]
+            public int Cost
+            {
+                get;
+                private set;
+            }
+
+            [field: SerializeField]
             public FirePreset FirePreset
             {
                 get;
@@ -101,15 +109,20 @@ namespace Project
         } = 0.3f;
 
 
-        [SerializeField, TableList]
-        private TowerPreset[] _towerPresets = null;
+        [field: FormerlySerializedAs("_towerPresets")]
+        [field: SerializeField, TableList]
+        public TowerPreset[] TowerPresets
+        {
+            get;
+            private set;
+        }
 
         [SerializeField]
         private TowerUpgradeSettings[] _towerUpgradeSettings = null;
 
         public TowerPreset GetTowerPresetByType(TowerType type)
         {
-            var towerPreset = _towerPresets.FirstOrDefault(x => x.TowerPrefab.TowerType == type);
+            var towerPreset = TowerPresets.FirstOrDefault(x => x.TowerPrefab.TowerType == type);
 
             if (towerPreset != null)
             {

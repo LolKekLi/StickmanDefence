@@ -9,7 +9,7 @@ namespace Project
     public class TowerSpawnController : MonoBehaviour
     {
         private readonly int MaxRayCastDistance = 1000;
-        public static event Action TowerSpawned = delegate { };
+        public static event Action<TowerType> TowerSpawned = delegate { };
 
         [SerializeField]
         private LayerMask _ignoreRaycastLayerMask;
@@ -26,6 +26,7 @@ namespace Project
         private TowerUpgradeController _towerUpgradeController;
         private AttackControllerFactory _attackControllerFactory;
         private TowerSettings.TowerPreset _currentTowerPreset;
+        private bool _aceTowerSpawned;
 
 
         public BaseTower CurrentTower
@@ -79,9 +80,17 @@ namespace Project
         {
             if (CurrentTower.IsCanSpawn)
             {
-                TowerSpawned();
+                
+                if (_currentTowerPreset.TowerPrefab.IsAssTower)
+                {
+                    _aceTowerSpawned = true;
+                }
 
-                CurrentTower.OnBuild(_attackControllerFactory.GetAttackController(_currentTowerPreset.FirePreset.FireType));
+                
+                TowerSpawned(CurrentTower.TowerType);
+
+                CurrentTower.OnBuild(
+                    _attackControllerFactory.GetAttackController(_currentTowerPreset.FirePreset.FireType));
                 CurrentTower = null;
 
                 StopTowerSpawn();
@@ -157,7 +166,13 @@ namespace Project
 
         private void UITowerSpawnController_PointerExited(TowerType currentTowerType)
         {
-             _currentTowerPreset = _towerSettings.GetTowerPresetByType(currentTowerType);
+            if (_aceTowerSpawned && currentTowerType == (TowerType)LocalConfig.AceTowerType)
+            {
+                return;
+            }
+            
+
+            _currentTowerPreset = _towerSettings.GetTowerPresetByType(currentTowerType);
 
             StopTowerSpawn();
 
@@ -167,7 +182,7 @@ namespace Project
             }
 
             StartCoroutine(
-                TowerSpawnCor(_currentTowerPreset.TowerPrefab.TowerType, _currentTowerPreset.BaseViewModelType));
+                TowerSpawnCor(currentTowerType, _currentTowerPreset.BaseViewModelType));
         }
 
         private void UITowerSpawnController_PointerEntered()

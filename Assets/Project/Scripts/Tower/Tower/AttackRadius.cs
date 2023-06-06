@@ -84,7 +84,7 @@ namespace Project
             gameObject.SetActive(isActive);
         }
 
-        public void Update(float updatePresetValue)
+        public void UpdateFireRadius(float updatePresetValue)
         {
             _radius += (_radius * (updatePresetValue / 100));
             _transform.localScale = Vector3.one * (_radius * 0.2f);

@@ -6,5 +6,10 @@
         {
             get => TowerType.Granatman;
         }
+
+        public override bool IsAssTower
+        {
+            get => false;
+        }
     }
 }

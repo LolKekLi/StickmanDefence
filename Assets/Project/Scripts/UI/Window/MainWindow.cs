@@ -33,7 +33,7 @@ namespace Project.UI
 
         private void OnAssButtonClick()
         {
-           UISystem.ShowWindow<AssSelcetorWindow>();
+           UISystem.ShowWindow<AceSelcetorWindow>();
         }
         
         private void OnSettingButtonClick()

@@ -737,7 +737,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a891ef5b444a4a37a385268521d723ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cellButton: {fileID: 8446665251436966762}
+  _sellButton: {fileID: 8446665251436966762}
+  _sellCostText: {fileID: 7609136933555761730}
   _towerIcon: {fileID: 8272411820702204260}
   _closeButton: {fileID: 4807188356742400400}
   _clickSideDetectOffset: -600

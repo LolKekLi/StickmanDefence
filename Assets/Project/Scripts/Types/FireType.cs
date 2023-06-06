@@ -5,5 +5,6 @@
         Single,
         Multi,
         Shots,
+        Granat
     }
 }

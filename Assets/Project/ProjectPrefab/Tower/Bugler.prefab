@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3332331353982664346}
   - component: {fileID: 3592058085665997947}
   - component: {fileID: 7728396866884102171}
-  - component: {fileID: 3570908691939436113}
+  - component: {fileID: 4601364541251129874}
   m_Layer: 10
   m_Name: Bugler
   m_TagString: Untagged
@@ -79,7 +79,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3570908691939436113
+--- !u!114 &4601364541251129874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3171717336070501217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1db861bb0d334d0db601e0419093a6be, type: 3}
+  m_Script: {fileID: 11500000, guid: 49c7b7bd82df4b58adb55df042b0fbc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0

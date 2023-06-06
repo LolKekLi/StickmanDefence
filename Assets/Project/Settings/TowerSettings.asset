@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: TowerSettings
   m_EditorClassIdentifier: 
   <SmoothTime>k__BackingField: 0.025
-  _towerPresets:
+  <TowerPresets>k__BackingField:
   - <TowerPrefab>k__BackingField: {fileID: -5074204651478872961, guid: a6ae4531ee6cf0a46946278dc21edd1d, type: 3}
     <BaseViewModelType>k__BackingField: 9
+    <Cost>k__BackingField: 180
     <FirePreset>k__BackingField:
       <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
       <FireRate>k__BackingField: 1
-      <FireType>k__BackingField: 0
+      <FireType>k__BackingField: 3
       <BulletCount>k__BackingField: 0
       <DelayBetweenBullet>k__BackingField: 0
       <AttackRadiusType>k__BackingField: 0
@@ -27,6 +28,7 @@ MonoBehaviour:
       <AttackBoxSize>k__BackingField: {x: 0, y: 0}
   - <TowerPrefab>k__BackingField: {fileID: 9167852493201990543, guid: f3b083f36ef5ebd49a77fe3d4f34794e, type: 3}
     <BaseViewModelType>k__BackingField: 17
+    <Cost>k__BackingField: 120
     <FirePreset>k__BackingField:
       <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
       <FireRate>k__BackingField: 1
@@ -38,6 +40,7 @@ MonoBehaviour:
       <AttackBoxSize>k__BackingField: {x: 0, y: 0}
   - <TowerPrefab>k__BackingField: {fileID: 3477060949682470497, guid: 01ac26f8493557b44a00fd4d0f557e67, type: 3}
     <BaseViewModelType>k__BackingField: 5
+    <Cost>k__BackingField: 150
     <FirePreset>k__BackingField:
       <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
       <FireRate>k__BackingField: 1
@@ -49,6 +52,7 @@ MonoBehaviour:
       <AttackBoxSize>k__BackingField: {x: 0, y: 0}
   - <TowerPrefab>k__BackingField: {fileID: -4763531946622033660, guid: 660857e9d28decc40bd6f8142030d163, type: 3}
     <BaseViewModelType>k__BackingField: 13
+    <Cost>k__BackingField: 180
     <FirePreset>k__BackingField:
       <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
       <FireRate>k__BackingField: 1
@@ -60,6 +64,31 @@ MonoBehaviour:
       <AttackBoxSize>k__BackingField: {x: 0, y: 0}
   - <TowerPrefab>k__BackingField: {fileID: 3171717336070501216, guid: 9054509fe25307a48845835e2a139568, type: 3}
     <BaseViewModelType>k__BackingField: 1
+    <Cost>k__BackingField: 100
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
+      <FireRate>k__BackingField: 1
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 20
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+  - <TowerPrefab>k__BackingField: {fileID: 4601364541251129874, guid: f36877d8fd5aca446b3733ce31c69b80, type: 3}
+    <BaseViewModelType>k__BackingField: 0
+    <Cost>k__BackingField: 100
+    <FirePreset>k__BackingField:
+      <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
+      <FireRate>k__BackingField: 1
+      <FireType>k__BackingField: 0
+      <BulletCount>k__BackingField: 0
+      <DelayBetweenBullet>k__BackingField: 0
+      <AttackRadiusType>k__BackingField: 0
+      <AttackRadius>k__BackingField: 20
+      <AttackBoxSize>k__BackingField: {x: 0, y: 0}
+  - <TowerPrefab>k__BackingField: {fileID: 6935503131269911896, guid: 58c5b99b763859c45a34eeb9a8ab288f, type: 3}
+    <BaseViewModelType>k__BackingField: 21
+    <Cost>k__BackingField: 100
     <FirePreset>k__BackingField:
       <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
       <FireRate>k__BackingField: 1
@@ -70,8 +99,8 @@ MonoBehaviour:
       <AttackRadius>k__BackingField: 20
       <AttackBoxSize>k__BackingField: {x: 0, y: 0}
   _towerUpgradeSettings:
-  - {fileID: 11400000, guid: fa2daae6cbc5f444fbe317bad72d48c2, type: 2}
   - {fileID: 11400000, guid: 622ad9f1fb1cc254fb9ca83789b9a1c9, type: 2}
-  - {fileID: 11400000, guid: 882551c931e968a488197b68affa28eb, type: 2}
-  - {fileID: 11400000, guid: edebf55161eb3c848982286da0a2dd9d, type: 2}
-  - {fileID: 11400000, guid: b601ca50ede9a124e81fffcef6e6e18c, type: 2}
+  - {fileID: 11400000, guid: 86a0566836c14544d9b9c8a87241ce13, type: 2}
+  - {fileID: 11400000, guid: e47aa7e8a1412e549bf6f020fa987f9b, type: 2}
+  - {fileID: 11400000, guid: c8f56f0585ff7e749b0d35e378a1d084, type: 2}
+  - {fileID: 11400000, guid: f8a093e53910ad441b9a819d573b5a58, type: 2}

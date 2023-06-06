@@ -13,6 +13,13 @@ namespace Project
             get;
             private set;
         }
+        
+        [field: SerializeField]
+        public Granat Granat
+        {
+            get;
+            private set;
+        }
 
         [field: SerializeField]
         public TowerViewModel[] TowerViewModels

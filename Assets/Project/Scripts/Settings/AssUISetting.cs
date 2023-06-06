@@ -11,7 +11,7 @@ namespace Project
         public class AssUIPreset
         {
             [field: SerializeField]
-            public AssType TowerType
+            public TowerType TowerType
             {
                 get;
                 private set;
@@ -39,13 +39,17 @@ namespace Project
             }
         }
 
-        [SerializeField]
-        private AssUIPreset[] _assUIPresets;
+        [field: SerializeField]
+        public AssUIPreset[] AssUIPresets
+        {
+            get;
+            private set;
+        }
 
         
-        public AssUIPreset GetUIPreset(AssType type)
+        public AssUIPreset GetUIPreset(TowerType type)
         {
-            var preset = _assUIPresets.FirstOrDefault(x=>x.TowerType == type);
+            var preset = AssUIPresets.FirstOrDefault(x=>x.TowerType == type);
 
             if (preset == null)
             {

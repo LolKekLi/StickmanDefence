@@ -3,40 +3,15 @@ using UnityEngine;
 
 namespace Project
 {
-    public class Bullet : PooledBehaviour
+    public class Bullet : BulletBase
     {
         [SerializeField]
-        private MeshFilter _meshRenderer = null;
-
-        [SerializeField]
         private TrailRenderer _trailRenderer;
-
-        private int _damageAbility = 0;
-        private float _damage = 1;
-
-        private float _lifeTime = 0f;
-        private float _speed = 0f;
-
+        
         private Coroutine _shootCor = null;
-        private float _damageUpdateProcent;
 
-        public DamageType DamageType
-        {
-            get;
-            private set;
-        }
 
-        public void Setup(BulletSettings bulletSettings, float damageUpdateProcent)
-        {
-            _damageUpdateProcent = damageUpdateProcent;
-            _damage = bulletSettings.BaseDamage;
-            _lifeTime = bulletSettings.LifeTime;
-            _speed = bulletSettings.Speed;
-            _meshRenderer.mesh = bulletSettings.Mesh;
-            DamageType = bulletSettings.DamageType;
-        }
-
-        public void Shoot(Vector3 direction)
+        public override void Shoot(Vector3 direction)
         {
             _shootCor = StartCoroutine(ShootCor(direction));
         }
@@ -49,7 +24,7 @@ namespace Project
             {
                 _trailRenderer.Clear();
             }
-            
+
             if (_shootCor != null)
             {
                 StopCoroutine(_shootCor);
@@ -57,7 +32,7 @@ namespace Project
             }
         }
 
-        public float GetDamage()
+        public override float GetDamage()
         {
             _damageAbility--;
 

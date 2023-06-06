@@ -12,12 +12,15 @@ namespace Project
         [SerializeField]
         private EnemyType _spawnEnemyType = default;
 
+        [SerializeField]
         private float _hp = 0;
         private float _speed = 0;
+        private int _damage = 0;
 
         private Action _onFreeAction = null;
 
         private Coroutine _followPathCor = null;
+        private Action<int> _onReachFinishPosition;
 
         public bool IsDied
         {
@@ -33,14 +36,17 @@ namespace Project
             }
         }
 
-        public void Setup(EnemySettings.EnemyPreset enemyPreset, Action action)
+        public void Setup(EnemySettings.EnemyPreset enemyPreset, Action onDiedAction, Action<int> onReachFinishPosition)
         {
+            _onReachFinishPosition = onReachFinishPosition;
             IsDied = false;
 
             _hp = enemyPreset.HP;
             _speed = enemyPreset.MoveSpeed;
 
-            _onFreeAction = action;
+            _damage = enemyPreset.Damage;
+
+            _onFreeAction = onDiedAction;
         }
 
         public void StartFollowPath(PathCreator path, EndOfPathInstruction endOfPathInstruction)
@@ -100,6 +106,12 @@ namespace Project
                 yield return null;
             }
 
+            OnReachFinish();
+        }
+
+        private void OnReachFinish()
+        {
+            _onReachFinishPosition?.Invoke(_damage);
             Free();
         }
 
