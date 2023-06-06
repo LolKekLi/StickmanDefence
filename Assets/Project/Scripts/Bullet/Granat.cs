@@ -5,9 +5,6 @@ namespace Project
 {
     public class Granat : BulletBase
     {
-        [SerializeField]
-        private AnimationCurve _curve;
-
         private Coroutine _shootCor = null;
 
         public override void Shoot(Vector3 direction)
@@ -34,8 +31,6 @@ namespace Project
             while (time <= _lifeTime)
             {
                 time += Time.deltaTime;
-
-                //direction = direction.ChangeY(_curve.Evaluate(direction.y));
                 
                 var deltaTime = direction * (Time.deltaTime * _speed);
 
@@ -51,6 +46,7 @@ namespace Project
 
         public override float GetDamage()
         {
+            Free();
             return 0;
         }
     }

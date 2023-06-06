@@ -5,6 +5,8 @@ using Zenject;
 
 public class TowerViewModel : PooledBehaviour
 {
+    public event Action Fire = delegate {  };
+    
     private static readonly string BaseColorID = "_BaseColor";
     private static readonly string OutLineWidthID = "_OutlineWidth";
     private static readonly string OutLineColorID = "_OutlineColor";
@@ -94,6 +96,11 @@ public class TowerViewModel : PooledBehaviour
         }
         
         _animator.SetBool(FireKey, false);
+    }
+
+    public void FireAnim()
+    {
+        Fire();
     }
 
     public void OnBuild()

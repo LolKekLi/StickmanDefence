@@ -19,7 +19,7 @@ MonoBehaviour:
     <Cost>k__BackingField: 180
     <FirePreset>k__BackingField:
       <BulletSettings>k__BackingField: {fileID: 11400000, guid: cefe5f78932123d4da5522423d22e2c9, type: 2}
-      <FireRate>k__BackingField: 1
+      <FireRate>k__BackingField: 0.465
       <FireType>k__BackingField: 3
       <BulletCount>k__BackingField: 0
       <DelayBetweenBullet>k__BackingField: 0

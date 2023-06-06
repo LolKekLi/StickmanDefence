@@ -5171,7 +5171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemySpawner: {fileID: 1775608427}
-  _delayBeforeStartWave: 200000
+  _delayBeforeStartWave: 10
 --- !u!4 &427784651 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: d153a8045fa3a8143b860fc787040f99, type: 3}

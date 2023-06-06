@@ -30,7 +30,7 @@ namespace Project
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out Bullet bullet))
+            if (other.TryGetComponent(out BulletBase bullet))
             {
                 TakeDamage(bullet);
             }
@@ -49,6 +49,11 @@ namespace Project
             _onFreeAction = onDiedAction;
         }
 
+        private void OnEnable()
+        {
+            UltimateController.KillAll += Die;
+        }
+        
         public void StartFollowPath(PathCreator path, EndOfPathInstruction endOfPathInstruction)
         {
             _followPathCor = StartCoroutine(FollowPathCor(path, endOfPathInstruction));
@@ -56,12 +61,13 @@ namespace Project
 
         protected override void BeforeReturnToPool()
         {
+            UltimateController.KillAll -= Die;
             _onFreeAction?.Invoke();
 
             base.BeforeReturnToPool();
         }
 
-        private void TakeDamage(Bullet bullet)
+        private void TakeDamage(BulletBase bullet)
         {
             var damage = bullet.GetDamage();
             

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Project.UI;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace Project
 {
     public class UltimateController : MonoBehaviour
     {
+        public static event Action KillAll = delegate {  };
+        
         [SerializeField]
         private Ultimate[] _ultimates;
 
@@ -16,7 +19,7 @@ namespace Project
 
         private void OnDisable()
         {
-            GameWindow.UltimateApplied += GameWindow_UltimateApplied;
+            GameWindow.UltimateApplied -= GameWindow_UltimateApplied;
         }
 
         private void GameWindow_UltimateApplied(UltimateType ultimateType)
@@ -29,7 +32,11 @@ namespace Project
                 return;
             }
 
-            ultimate.Apply();
+            ultimate.Apply(() =>
+            {
+                KillAll();
+            });
+
         }
     }
 }

@@ -35,14 +35,14 @@ namespace Project
         private TowerSettings.TowerPreset _towerPreset = null;
         private PoolManager _poolManager = null;
         private Coroutine _attackCor = null;
-        private Coroutine _lookAtEnemyCor = null;
-        private Coroutine _rotateToOrigineCor = null;
+        protected Coroutine _lookAtEnemyCor = null;
+        protected Coroutine _rotateToOrigineCor = null;
 
         private Collider _collider;
         private UpdateInfo _updateInfo = null;
 
-        private BaseAttackController _attackController;
-        private TowerViewModel _towerViewModel;
+        protected BaseAttackController _attackController;
+        protected TowerViewModel _towerViewModel;
         private TowerHighLightSettings _highLightSettings;
 
         [field: SerializeField]
@@ -92,8 +92,8 @@ namespace Project
 
         public bool IsAttack
         {
-            get =>
-                _attackCor != null;
+            get;
+            protected set;
         }
 
         public bool IsLostTarget
@@ -128,6 +128,8 @@ namespace Project
 
             _collider.enabled = false;
         }
+        
+        
 
         public void OnGetTowerFromPool(TowerSettings towerSettings, PoolManager poolManager, Action onBuildAction,
             Action onCellAction, TowerViewModel towerViewModel)
@@ -230,8 +232,10 @@ namespace Project
                 Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _towerSettings.SmoothTime);
         }
 
-        public void Attack()
+        public virtual void Attack()
         {
+
+            IsAttack = true;
             if (_rotateToOrigineCor != null)
             {
                 StopCoroutine(_rotateToOrigineCor);
@@ -261,8 +265,9 @@ namespace Project
             _attackController.Target = enemy;
         }
 
-        public void StopAttack()
+        public virtual  void StopAttack()
         {
+            IsAttack = false;
             _towerViewModel.OnFireEnded();
             _attackController.Target = null;
 
@@ -310,7 +315,7 @@ namespace Project
             StopAttack();
         }
 
-        private IEnumerator LookAtTargetCor()
+        protected IEnumerator LookAtTargetCor()
         {
             while (!Target.IsDied)
             {

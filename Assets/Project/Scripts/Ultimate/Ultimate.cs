@@ -1,4 +1,5 @@
-﻿using Project;
+﻿using System;
+using Project;
 using UnityEngine;
 
 public abstract class Ultimate : MonoBehaviour
@@ -8,5 +9,5 @@ public abstract class Ultimate : MonoBehaviour
         get;
     }
     
-    public abstract void Apply();
+    public abstract void Apply(Action action);
 }

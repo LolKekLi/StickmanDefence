@@ -1,4 +1,6 @@
-﻿using Project;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using Project;
 using UnityEngine;
 
 public class BuglerThief : Ultimate
@@ -11,8 +13,12 @@ public class BuglerThief : Ultimate
         get => UltimateType.BuglerThief;
     }
 
-    public override void Apply()
+    public async override void Apply(Action unknown)
     {
         _particle.Play();
+
+        await UniTask.Delay(TimeSpan.FromSeconds(2f));
+        
+        unknown.Invoke();
     }
 }
