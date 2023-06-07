@@ -18,4 +18,4 @@ MonoBehaviour:
     <MoveSpeed>k__BackingField: 5
     <HP>k__BackingField: 2
     <Damage>k__BackingField: 10
-    <Cost>k__BackingField: 0
+    <Cost>k__BackingField: 50

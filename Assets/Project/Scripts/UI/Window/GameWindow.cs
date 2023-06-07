@@ -119,6 +119,7 @@ namespace Project.UI
 
         private void EnemySpawner_WaveStarted(int index)
         {
+            RefreshWaveCounter(index+1);
             _waveAnoncer.text = $"WAVE {index + 1}";
             _waveAnonscerTweeen.Play();
         }

@@ -38,6 +38,8 @@ namespace Project
 
         public void Setup(EnemySettings.EnemyPreset enemyPreset, Action onDiedAction, Action<int> onReachFinishPosition)
         {
+            _spawnEnemyType = enemyPreset.Type;
+            
             _onReachFinishPosition = onReachFinishPosition;
             IsDied = false;
 

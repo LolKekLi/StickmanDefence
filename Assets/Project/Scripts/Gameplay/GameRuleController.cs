@@ -11,11 +11,9 @@ public class GameRuleController : MonoBehaviour
     public static event Action<int> CashCnaged = delegate { };
     public static event Action<int> HPChanged = delegate { };
 
-    [SerializeField]
-    private EnemySpawner _enemySpawner;
+    [SerializeField] private EnemySpawner _enemySpawner;
 
-    [SerializeField]
-    private float _delayBeforeStartWave;
+    [SerializeField] private float _delayBeforeStartWave;
 
     private int _currentHp;
     private int _cashCount;
@@ -24,11 +22,11 @@ public class GameRuleController : MonoBehaviour
 
     public static GameRuleController Instance;
 
-    [Inject]
-    private TowerSettings _towerSettings;
+    [Inject] private TowerSettings _towerSettings;
 
-    [Inject]
-    private LevelFlowController _levelFlowController;
+    [Inject] private LevelFlowController _levelFlowController;
+
+    [Inject] private EnemySettings _enemySettings;
 
     public int CashCount
     {
@@ -45,11 +43,19 @@ public class GameRuleController : MonoBehaviour
 
         _currentHp = LevelSelectorWindow.HpOnLvl;
         _cashCount = LevelSelectorWindow.StartCashValue;
+        
+        Debug.Log(_enemySettings);
     }
 
     private void OnEnable()
     {
         TowerSpawnController.TowerSpawned += TowerSpawnController_TowerSpawned;
+        Enemy.Died += Enemy_Died;
+    }
+
+    private void Enemy_Died(EnemyType type)
+    {
+        ChangeCash(_enemySettings.GetEnemyPreset(type).Cost);
     }
 
     private void OnDisable()
@@ -68,7 +74,7 @@ public class GameRuleController : MonoBehaviour
             await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeStartWave), cancellationToken: cancellationToken);
 
             _enemySpawner.SpawnEnemyLoop(LevelSelectorWindow.WaveSettings, cancellationToken, OnEnemyReachPosition)
-                         .Forget();
+                .Forget();
         }
         catch (OperationCanceledException e)
         {
@@ -79,8 +85,7 @@ public class GameRuleController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            _cashCount += 1000;
-            CashCnaged(_cashCount);
+            ChangeCash(1000);
         }
     }
 
@@ -98,19 +103,22 @@ public class GameRuleController : MonoBehaviour
 
     private void TowerSpawnController_TowerSpawned(TowerType towerType)
     {
-        _cashCount -= _towerSettings.GetTowerPresetByType(towerType).Cost;
-        CashCnaged(_cashCount);
+        ChangeCash(-_towerSettings.GetTowerPresetByType(towerType).Cost);
     }
 
     public void OnTowerCell(TowerType towerType)
     {
-        _cashCount += (_towerSettings.GetTowerPresetByType(towerType).Cost / 2);
-        CashCnaged(_cashCount);
+        ChangeCash(_towerSettings.GetTowerPresetByType(towerType).Cost / 2);
     }
 
     public void OnTowerUpgrade(int cost)
     {
-        _cashCount -= cost;
+        ChangeCash(-cost);
+    }
+
+    private void ChangeCash(int cost)
+    {
+        _cashCount += cost;
         CashCnaged(_cashCount);
     }
 
